@@ -23,7 +23,7 @@ public class Customer : MonoBehaviour
     public Mood mood {get{return myMood;}}
     
     //order vars
-    private List<string> myOrder = new List<string>();
+    [SerializeField] private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     private List<Image> orderUi = new List<Image>();
     private int orderUiIndex;
@@ -90,6 +90,7 @@ public class Customer : MonoBehaviour
     public void CheckOrder(List<string> given){
         int wrongIngredient = myOrder.Count;
         List<string> check = new List<string>(given);
+        check.RemoveAt(0); //remove the base
         foreach(string i in given){
             if (myOrder.Remove(i)){
                 wrongIngredient--;
