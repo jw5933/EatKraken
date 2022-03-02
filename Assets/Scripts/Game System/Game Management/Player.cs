@@ -116,6 +116,7 @@ public class Player : MonoBehaviour
         HandleHasItem();
         heldItem = item;
         //disable collider
+        Debug.Log(heldItem.name);
         Collider c = heldItem.GetComponent<Collider>();
         if (c !=null) c.enabled = false;
         Collider2D c2 = heldItem.GetComponent<Collider2D>();
@@ -134,6 +135,7 @@ public class Player : MonoBehaviour
 
     //drop the held item, if its type matches what is wanted by caller 
     public GameObject DropItem(string type){
+        Debug.Log("dropping item");
         GameObject held = null;
         if (type == "ingredient" && heldIngredient!= null && heldIngredient.type!= Ingredient.Type.Base){
             held = heldItem;

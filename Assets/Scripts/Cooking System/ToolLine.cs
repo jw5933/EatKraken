@@ -77,6 +77,7 @@ public class ToolLine: MonoBehaviour
         if (distance >= minDistance * minDistance){
             i.ChangeState();
             i.RemoveToolLine(this);
+            Destroy(this.gameObject);
         }
         else{
             mySpriteRend.color = Color.yellow;

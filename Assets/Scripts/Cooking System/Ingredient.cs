@@ -37,7 +37,7 @@ public class Ingredient : MonoBehaviour
     //tool and visual lines
     [SerializeField] private Tool.Required myRequired = Tool.Required.None;
     public Tool.Required required {get{return myRequired;}}
-    private List<ToolLine> myToolLines = new List<ToolLine>();
+    [SerializeField] private List<ToolLine> myToolLines = new List<ToolLine>(); //debugging
     private bool hovered;
 
     //vectors
@@ -62,7 +62,7 @@ public class Ingredient : MonoBehaviour
     //pick up item
     private void OnMouseDown(){ //if the player isnt holding anything, pick up this ingredient
         if (!player.handFree) return;
-        //Debug.Log(this.gameObject.name);
+        Debug.Log(this.gameObject.name);
         
         if (myArea != null){
             myArea.HandlePickUp();
@@ -74,6 +74,7 @@ public class Ingredient : MonoBehaviour
     
     //check if this ingredient is on a cutting board and accepts the tool held by player
     private void OnMouseEnter(){
+        Debug.Log("entered ingredient: " + this.name);
         if (AtEndState()) return;
         if (!hovered && myArea !=null && myArea.type == SharedArea.AreaType.CuttingBoard && !player.handFree){
             hovered = true;
@@ -118,11 +119,13 @@ public class Ingredient : MonoBehaviour
     }
 
     private void ActivateToolLines(){ //show tool lines
+        Debug.Log("activing tool lines");
         foreach (ToolLine t in myToolLines){
             t.gameObject.SetActive(true);
         }
     }
     public void InactivateToolLines(){
+        Debug.Log("deactivating tool lines");
         foreach (ToolLine t in myToolLines){ //hide tool lines
             t.gameObject.SetActive(false);
         }
@@ -130,7 +133,6 @@ public class Ingredient : MonoBehaviour
 
     public void RemoveToolLine(ToolLine t){
         myToolLines.Remove(t);
-        Destroy(t.gameObject);
     }
     
     public void ChangeState(){ //check if the image state of the object needs to be changed based on motions used

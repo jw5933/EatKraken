@@ -7,6 +7,7 @@ using UnityEditor;
 public class SpawnerEditor : Editor
 {
     public override void OnInspectorGUI(){
+        DrawDefaultInspector();
         IngredientSpawner s = (IngredientSpawner) target;
 
         if(GUILayout.Button("Spawn Ingredient")){

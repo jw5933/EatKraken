@@ -14,14 +14,17 @@ public class SharedArea: MonoBehaviour
     private Player player;
     private GameManager gm;
 
+    Collider myCollider;
+
     // ==============   functions   ==============
     private void Awake(){
         player = FindObjectOfType<Player>();
         gm = FindObjectOfType<GameManager>();
+        myCollider = GetComponent<Collider>();
     }
 
     public void OnMouseDown(){
-        Debug.Log(this.name);
+        Debug.Log("hit area");
 
         if(player!=null && !player.handFree){
             if (freeArea) PlaceObjectOnShared();
@@ -60,11 +63,13 @@ public class SharedArea: MonoBehaviour
             t.area = this;
         }
         freeArea = false;
+        myCollider.enabled = false;
         myItem.transform.position = this.transform.position + (gm.in3d? new Vector3(0,0.1f,0): new Vector3(0,0,-1));
     }
 
     public void HandlePickUp(){
         freeArea = true;
+        myCollider.enabled = true;
         myItem = null;
     }
 }
