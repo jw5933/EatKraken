@@ -63,12 +63,13 @@ public class Ingredient : MonoBehaviour
     private void OnMouseDown(){ //if the player isnt holding anything, pick up this ingredient
         if (!player.handFree) return;
         Debug.Log(this.gameObject.name);
+
+        player.PickUpItem(this.gameObject);
         
         if (myArea != null){
             myArea.HandlePickUp();
             myArea = null;
         }
-        player.PickUpItem(this.gameObject);
         InactivateToolLines();
     }
     

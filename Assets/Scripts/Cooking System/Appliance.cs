@@ -70,6 +70,7 @@ public class Appliance : MonoBehaviour
     //what to do when the timed carb tool is finished
     private void HandleFinishedTimedCooking(){
         if (myIngredient != null) myIngredient.ChangeState();
+        myIngredient.transform.position = this.transform.position + new Vector3(0,0,0.2f);
         myIngredient.gameObject.SetActive(true);
     }
 }

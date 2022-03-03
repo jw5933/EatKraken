@@ -34,21 +34,23 @@ public class Customer : MonoBehaviour
     [SerializeField] private float myNeutralWaitTime;
     [SerializeField] private float myAngryWaitTime;
     private Timer waitTimer;
-    GameManager gm;
 
     //econ vars
     [Header("Tipping")]
     [SerializeField] private float myTipPercent;
     [SerializeField] private float myGenerousTipPercent;
     [SerializeField] private int myLeniency;
+    private float coinHappy, coinNeutral, coinAngry;
+    public float maxCoins {get{return coinHappy;}}
 
     //references
-    private Economy econ;
+    private GameManager gm;
+    private EventManager em;
 
     // ==============   methods   ==============
     public void Awake(){
-        econ = FindObjectOfType<Economy>();
         gm = FindObjectOfType<GameManager>();
+        em = FindObjectOfType<EventManager>();
         
         waitTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         waitTimer.Init(myHappyWaitTime, EndTimerHandler);
@@ -57,6 +59,12 @@ public class Customer : MonoBehaviour
         CreateAppearance();
         //ensure inactive
         this.gameObject.SetActive(false);
+    }
+
+    public void CalculateCoins(){
+        coinAngry = myOrderPrice + (myOrderPrice*myTipPercent)/2;
+        coinNeutral = myOrderPrice + myOrderPrice*myTipPercent;
+        coinHappy = myOrderPrice + myOrderPrice*myGenerousTipPercent;
     }
 
     public void CreateOrder(){
@@ -114,13 +122,13 @@ public class Customer : MonoBehaviour
         Debug.Log("Customer will pay for something.");
         switch(myMood){
             case Mood.Angry:
-                econ.AddPlayerCoins(myOrderPrice + (myOrderPrice*myTipPercent)/2);
+                em.ChangeCoins(coinAngry, coinHappy);
             break;
             case Mood.Neutral:
-                econ.AddPlayerCoins(myOrderPrice + myOrderPrice*myTipPercent);
+                em.ChangeCoins(coinNeutral, coinHappy);
             break;
             case Mood.Happy:
-                econ.AddPlayerCoins(myOrderPrice + myOrderPrice*myGenerousTipPercent);
+                em.ChangeCoins(coinHappy, coinHappy);
             break;
         }
         Leave();
@@ -148,7 +156,8 @@ public class Customer : MonoBehaviour
                 waitTimer.Init(myAngryWaitTime, EndTimerHandler);
             break;
             case Mood.Angry:
-                Destroy(this.gameObject);
+                em.ChangeCoins(0, coinHappy);
+                Leave();
             break;
         }
         waitTimer.StartTimer();

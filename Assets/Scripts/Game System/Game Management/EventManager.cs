@@ -10,7 +10,9 @@ public class EventManager : MonoBehaviour
     //location change
     public Action<Location> OnLocationChange;
     //day time change
-    public Action<float, int> OnTimeChange;
+    public Action<float> OnTimeChange;
+    //player coins change
+    public Action<float, float> OnCoinChange;
 
     // ==============   methods   ==============
     public void ChangeLocation(Location next){
@@ -21,7 +23,11 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void ChangeTime(float nextTime, int phase){
-        if (OnTimeChange != null) OnTimeChange(nextTime, phase);
+    public void ChangeTime(float nextTime){
+        if (OnTimeChange != null) OnTimeChange(nextTime);
+    }
+
+    public void ChangeCoins(float coinMade, float coinMax){
+        if (OnCoinChange != null) OnCoinChange(coinMade, coinMax);
     }
 }

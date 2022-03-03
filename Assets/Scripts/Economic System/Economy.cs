@@ -9,7 +9,11 @@ public class Economy : MonoBehaviour
     private float playerCoins;
     public float playerAccount{get{return playerCoins;}}
 
-    public void AddPlayerCoins(float coins){//adjust player's coins
+    private void Awake(){
+        EventManager em = FindObjectOfType<EventManager>();
+        em.OnCoinChange += AddPlayerCoins;
+    }
+    public void AddPlayerCoins(float coins, float x){//adjust player's coins
         playerCoins += coins;
         coinsText.text = "Balance: $" + playerCoins;
     }
