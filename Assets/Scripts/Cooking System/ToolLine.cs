@@ -50,7 +50,7 @@ public class ToolLine: MonoBehaviour
         //find point on plane
         if(i.plane.Raycast(ray, out enter)){
             initialPos = ray.GetPoint(enter);
-            Debug.Log(string.Format("{0} {1}", "initial: ", initialPos.ToString()));
+            //Debug.Log(string.Format("{0} {1}", "initial: ", initialPos.ToString()));
             Debug.DrawLine(initialPos, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.yellow, 100f);
         }
     }
@@ -72,7 +72,7 @@ public class ToolLine: MonoBehaviour
         Vector3 offset = projection - initialPos;
         float distance = offset.sqrMagnitude;
 
-        Debug.Log(string.Format("{0} {1} {2} {3}", "initial: ", initialPos.ToString(), ", offset: ", offset.ToString()));
+        //(string.Format("{0} {1} {2} {3}", "initial: ", initialPos.ToString(), ", offset: ", offset.ToString()));
         
         if (distance >= minDistance * minDistance){
             i.ChangeState();

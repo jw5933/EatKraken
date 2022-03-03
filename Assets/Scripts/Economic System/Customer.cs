@@ -83,7 +83,7 @@ public class Customer : MonoBehaviour
 
         myCustomer = Instantiate(gm.customerSkeleton, gm.customerView).GetComponent<SpriteRenderer>();
         myCustomer.gameObject.GetComponent<UIActivate>().obj = this.gameObject;
-        myCustomer.sprite = mySprites[currSpriteState];
+        myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
     }
 
@@ -93,6 +93,7 @@ public class Customer : MonoBehaviour
 
         //IDEA: spawn along a line in 3D space & move forward until colliding with object in fromt; each step increase size
         myCustomerAnim.SetTrigger("MoveToFront");
+        waitTimer.StartTimer();
     }
 
     public void CheckOrder(List<string> given){
@@ -151,9 +152,12 @@ public class Customer : MonoBehaviour
         switch(myMood){
             case Mood.Happy:
                 waitTimer.Init(myNeutralWaitTime, EndTimerHandler);
+                myCustomer.sprite = mySprites[currSpriteState++];
             break;
             case Mood.Neutral:
                 waitTimer.Init(myAngryWaitTime, EndTimerHandler);
+                Debug.Log(currSpriteState);
+                myCustomer.sprite = mySprites[currSpriteState];
             break;
             case Mood.Angry:
                 em.ChangeCoins(0, coinHappy);

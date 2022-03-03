@@ -27,7 +27,7 @@ public class DragDropObject : MonoBehaviour
     }
 
     public void OnMouseDown(){
-        Debug.Log(this.name);
+        //Debug.Log(this.name);
         switch (myType){
             case Type.Base:
                 if (!player.handFree) player.AddToCurrentOrder();
