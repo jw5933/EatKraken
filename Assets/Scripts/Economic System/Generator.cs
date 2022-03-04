@@ -113,7 +113,7 @@ public class Generator : MonoBehaviour
         Customer newCustomer = phaseCustomerL[dm.phase][customersSpawned++];
         cm.LineupCustomer(newCustomer);
         //FIX: delete below; only the cm needs to lineup customer
-        newCustomer.gameObject.SetActive(true);
+        //newCustomer.gameObject.SetActive(true);
         newCustomer.Init(); 
     }
 

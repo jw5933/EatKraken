@@ -16,9 +16,9 @@ public class EventManager : MonoBehaviour
 
     // ==============   methods   ==============
     public void ChangeLocation(Location next){
-        Debug.Log("called location change in Event Manager");
+        //Debug.Log("called location change in Event Manager");
         if (OnLocationChange != null){
-            Debug.Log("On location change has subs");
+            //Debug.Log("On location change has subs");
             OnLocationChange(next); //if there is a subscriber
         }
     }

@@ -69,9 +69,9 @@ public class CameraManager : MonoBehaviour
 
         ShowUI();
 
-        //move the customer view to be above the new cam;
+        /* //move the customer view to be above the new cam;
         Vector3 newCustomerViewPos = new Vector3 (virtualCams[camIndex].transform.position.x, customerView.transform.position.y, 0);
-        customerView.transform.position = newCustomerViewPos;
+        customerView.transform.position = newCustomerViewPos; */
 
         /* //move order view
         Vector3 newOrderViewPos = new Vector3 (virtualCams[camIndex].transform.position.x, orderView.transform.position.y, 0);

@@ -29,6 +29,10 @@ public class Ingredient : MonoBehaviour
     public Sprite initialSprite {get{return imageStates[0];}}
     private SpriteRenderer mySpriteRenderer;
 
+    //final image state
+    [SerializeField] private Sprite[] finalImageStates;
+    private int myFinalImageState;
+
     //player interaction
     [SerializeField] private int motionsToStateChange = 1; //needed number of motions to change state
     [HideInInspector][SerializeField] private int myMotionsLeft; //number of motions left until state change -> resets to neededMotions
@@ -149,6 +153,11 @@ public class Ingredient : MonoBehaviour
     public bool AtEndState(){ //check if this ingredient has reached its end state
         if (myImageState >= imageStates.Length-1) return true;
         return false;
+    }
+
+    public void HandleAddToOrder(){
+        if (myFinalImageState >= finalImageStates.Length) return;
+        mySpriteRenderer.sprite = finalImageStates[myFinalImageState++];
     }
 
     public void ResetVars(){ //reset some variables: tool lines, 

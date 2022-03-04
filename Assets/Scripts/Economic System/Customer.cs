@@ -86,9 +86,14 @@ public class Customer : MonoBehaviour
         mySprites = myPossibleSprites[a].sprites;
 
         myCustomer = Instantiate(gm.customerSkeleton, gm.customerView).GetComponent<SpriteRenderer>();
-        myCustomer.gameObject.GetComponent<UIActivate>().obj = this.gameObject;
+        myCustomer.gameObject.GetComponent<UIActivate>().action = Activate;
         myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
+    }
+
+    private void Activate(){
+        this.gameObject.SetActive(true);
+        waitTimer.StartTimer();
     }
 
     public void Init(){
@@ -97,7 +102,6 @@ public class Customer : MonoBehaviour
 
         //IDEA: spawn along a line in 3D space & move forward until colliding with object in fromt; each step increase size
         myCustomerAnim.SetTrigger("MoveToFront");
-        waitTimer.StartTimer();
     }
 
     public void CheckOrder(List<string> given){

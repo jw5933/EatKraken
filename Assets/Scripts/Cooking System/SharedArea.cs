@@ -64,7 +64,7 @@ public class SharedArea: MonoBehaviour
         }
         freeArea = false;
         myCollider.enabled = false;
-        myItem.transform.position = this.transform.position + (gm.in3d? new Vector3(0,0.1f,0): new Vector3(0,0,-1));
+        myItem.transform.position = this.transform.position + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
     }
 
     public void HandlePickUp(){

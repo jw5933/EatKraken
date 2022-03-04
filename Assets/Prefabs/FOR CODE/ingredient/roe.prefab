@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6946837463386383392}
   - component: {fileID: 6946837463386383395}
   - component: {fileID: 6946837463386383394}
-  - component: {fileID: 1159609371736888605}
+  - component: {fileID: 635855088242911154}
   m_Layer: 0
   m_Name: roe
   m_TagString: Untagged
@@ -101,31 +101,22 @@ MonoBehaviour:
   myPrice: 5
   imageStates:
   - {fileID: 21300000, guid: 03521319bb7544a609b6aa57ef58dffc, type: 3}
+  myImageState: 0
+  finalImageStates: []
   motionsToStateChange: 0
+  myMotionsLeft: 0
   myRequired: 0
---- !u!61 &1159609371736888605
-BoxCollider2D:
+  myToolLines: []
+--- !u!65 &635855088242911154
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6946837463386383393}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.009155273, y: 0.045775235}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.5901237, y: 2.198557}
-  m_EdgeRadius: 0
+  m_Size: {x: 3.71983, y: 2.3253582, z: 0}
+  m_Center: {x: 0.00000019868214, y: 0.08001099, z: 0}

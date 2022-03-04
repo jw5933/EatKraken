@@ -37,7 +37,7 @@ public class DayManager : MonoBehaviour
     }
 
     private void UpdateOnLocationChange(Location next){
-        Debug.Log("called Update on Location in Day Manager");
+        //Debug.Log("called Update on Location in Day Manager");
         //update the generator
         timePerStage = next.timeStages;
         //ResetVars();
