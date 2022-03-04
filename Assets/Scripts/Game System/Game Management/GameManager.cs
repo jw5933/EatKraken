@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // ==============   variables   ==============
+    [Header("General")]
     [SerializeField] bool gameIn3d;
     public bool in3d {get{return gameIn3d;}}
     //parents
@@ -57,12 +58,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CheckRestart();
-
     }
 
     private void CheckRestart(){
         if (Input.GetKeyDown(KeyCode.R)){
-            SceneManager.LoadSceneAsync("MainScene");
+            string n = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(n);
         }
     }
 

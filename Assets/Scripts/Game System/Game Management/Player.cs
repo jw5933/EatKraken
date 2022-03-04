@@ -82,10 +82,6 @@ public class Player : MonoBehaviour
     }
 
     private void CheckInput(){
-        if (Input.GetKeyDown(KeyCode.R)){
-            SceneManager.LoadSceneAsync("MainScene");
-        }
-
         ValidateCreateProtein();
     }
 

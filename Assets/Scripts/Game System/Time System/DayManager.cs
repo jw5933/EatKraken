@@ -16,9 +16,7 @@ public class DayManager : MonoBehaviour
     public int numOfPhases {get{return timePerStage.Length;}}
 
     //FIX: delete
-    [SerializeField] Image tempIcon;
-    [SerializeField] Sprite dayIcon;
-    [SerializeField] Sprite nightIcon;
+    [SerializeField] SpriteRenderer customerBackground;
 
     [SerializeField] Text timeText;
 
@@ -40,9 +38,9 @@ public class DayManager : MonoBehaviour
 
     private void UpdateOnLocationChange(Location next){
         Debug.Log("called Update on Location in Day Manager");
-        dayTimer.StopTimer();
         //update the generator
         timePerStage = next.timeStages;
+        //ResetVars();
     }
 
     private void HandleDayChange(){
@@ -53,7 +51,7 @@ public class DayManager : MonoBehaviour
         }
         phaseIndex++;
         //FIX: change the visuals
-        if (phaseIndex < timeStageImages.Length) tempIcon.sprite = timeStageImages[phaseIndex];
+        if (phaseIndex < timeStageImages.Length) customerBackground.sprite = timeStageImages[phaseIndex];
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
     }
 
@@ -62,13 +60,14 @@ public class DayManager : MonoBehaviour
     }
 
     private void Init(float time){
-        em.ChangeTime(time); //let subscribers know time has changed
+        em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
         //dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         dayTimer.Init(time, HandleDayChange, timeText);
         dayTimer.StartTimer();
     }
 
     public void ResetVars(){
+        dayTimer.StopTimer();
         phaseIndex = 0;
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
     }

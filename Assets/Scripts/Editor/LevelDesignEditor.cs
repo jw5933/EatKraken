@@ -13,15 +13,26 @@ public class LevelDesignEditor : Editor
     Object currLoc;
     LevelDesignScript level;
     
-    SerializedProperty phases;
+    int phase;
     private ReorderableList list;
+    /* void OnEnable(){
+        phase = serializedObject.FindProperty("phase");
+    } */
 
     public override void OnInspectorGUI(){
         //gameInfo
-        DrawDefaultInspector();
-
-        level = (LevelDesignScript)target;
         
+        serializedObject.Update();
+        level = (LevelDesignScript)target;
+
+        phase = EditorGUILayout.IntSlider("Phase", phase, 0, level.phases.Length-1);
+        
+        if (GUILayout.Button("Go To Phase")){
+            serializedObject.ApplyModifiedProperties();
+            level.GoToPhase(phase);
+        }
+
+        DrawDefaultInspector();
 
         /*if (GUILayout.Button("Wake Up Level")){
             level.Awake();

@@ -37,7 +37,6 @@ public class Generator : MonoBehaviour
     void Awake(){
         em = FindObjectOfType<EventManager>(true);
         //subscribe to events
-        em.OnLocationChange += UpdateOnLocationChange;
         em.OnTimeChange += UpdateOnTimeChange;
 
         gm = FindObjectOfType<GameManager>();
@@ -46,6 +45,7 @@ public class Generator : MonoBehaviour
         ld = FindObjectOfType<LevelDesignScript>();
 
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
+        em.OnLocationChange += UpdateOnLocationChange;
     }
 
     private void UpdateOnLocationChange(Location next){
@@ -57,12 +57,11 @@ public class Generator : MonoBehaviour
         customersPerStage = next.customersPerStage;
         proteinPrefabs = next.proteins;
         dm.ResetVars();
-
         CreatePCList();
     }
 
-    private void UpdateOnTimeChange(float time){
-        maxCustomers = customersPerStage[dm.phase];
+    private void UpdateOnTimeChange(float time, int phase){
+        maxCustomers = customersPerStage[phase];
         customersSpawned = 0;
 
         //start timer
@@ -72,10 +71,11 @@ public class Generator : MonoBehaviour
     }
 
     private void CreatePCList(){
+        Debug.Log("creating list");
         for (int phase = 0; phase < customersPerStage.Length; phase++){
             phaseCustomerL.Add(CreateCustomer(phase, customersPerStage[phase]));
         }
-        ld.CreateNewArrays(customersPerStage.Length);
+        ld.UpdateInfo(customersPerStage.Length);
     }
 
     private List<Customer> CreateCustomer(int phase, int max){ //create a customer with random ingredients
@@ -86,6 +86,7 @@ public class Generator : MonoBehaviour
             int c = Random.Range(0, customerPrefabs.Count);
             Customer newCustomer = Instantiate(customerPrefabs[c], gm.orderParent).GetComponent<Customer>();
             customerPrefabs.RemoveAt(c);
+            newCustomer.phase = phase;
             
             //adjust customer: base, protein, ingredient
             int num = gm.maxIngredients;
@@ -101,8 +102,6 @@ public class Generator : MonoBehaviour
                 int i = Random.Range(0, ingredientPrefabs.Count);
                 newCustomer.AddToOrder(ingredientPrefabs[i].initialSprite, ingredientPrefabs[i].name, ingredientPrefabs[i].price);
             }
-            newCustomer.phase = phase;
-
             newCustomer.CalculateCoins();
             phaseList.Add(newCustomer);
         }
