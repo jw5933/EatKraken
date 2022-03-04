@@ -27,6 +27,9 @@ public class Customer : MonoBehaviour
     private float myOrderPrice;
     private List<Image> orderUi = new List<Image>();
     private int orderUiIndex;
+    private Text orderText;
+    private int myTimePhase;
+    public int phase{set{myTimePhase = value;}}
 
     //timer vars
     [Header("Wait Times")]
@@ -51,13 +54,12 @@ public class Customer : MonoBehaviour
     public void Awake(){
         gm = FindObjectOfType<GameManager>();
         em = FindObjectOfType<EventManager>();
-        
-        waitTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-        waitTimer.Init(myHappyWaitTime, EndTimerHandler);
 
         CreateOrder();
         CreateAppearance();
         //ensure inactive
+        waitTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
+        waitTimer.Init(myHappyWaitTime, EndTimerHandler, orderText);
         this.gameObject.SetActive(false);
     }
 
@@ -70,8 +72,10 @@ public class Customer : MonoBehaviour
     public void CreateOrder(){
         orderUiIndex = 0;
         GameObject order = Instantiate(gm.orderPrefab, this.transform);
+        orderText = order.transform.GetChild(1).GetComponent<Text>(); //FIX: DELETE
         foreach(Transform child in order.transform){
-            orderUi.Add(child.gameObject.GetComponent<Image>());
+            Image i = child.gameObject.GetComponent<Image>();
+            if (i !=null) orderUi.Add(i);
         }
         RectTransform r = order.GetComponent<RectTransform>();
         GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
@@ -115,6 +119,7 @@ public class Customer : MonoBehaviour
         if (wrongIngredient > myLeniency){
             myMood = Mood.Angry;
             Debug.Log("Customer will leave without paying anything.");
+            Leave();
         }
         else PayForOrder(); 
         //UpdateGenerator();
@@ -123,13 +128,13 @@ public class Customer : MonoBehaviour
         Debug.Log("Customer will pay for something.");
         switch(myMood){
             case Mood.Angry:
-                em.ChangeCoins(coinAngry, coinHappy);
+                em.ChangeCoins(coinAngry, coinHappy, myTimePhase);
             break;
             case Mood.Neutral:
-                em.ChangeCoins(coinNeutral, coinHappy);
+                em.ChangeCoins(coinNeutral, coinHappy, myTimePhase);
             break;
             case Mood.Happy:
-                em.ChangeCoins(coinHappy, coinHappy);
+                em.ChangeCoins(coinHappy, coinHappy, myTimePhase);
             break;
         }
         Leave();
@@ -151,18 +156,19 @@ public class Customer : MonoBehaviour
         //waitTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         switch(myMood){
             case Mood.Happy:
-                waitTimer.Init(myNeutralWaitTime, EndTimerHandler);
+                waitTimer.Init(myNeutralWaitTime, EndTimerHandler, orderText);
                 myCustomer.sprite = mySprites[currSpriteState++];
+                myMood = Mood.Neutral;
             break;
             case Mood.Neutral:
-                waitTimer.Init(myAngryWaitTime, EndTimerHandler);
-                Debug.Log(currSpriteState);
+                waitTimer.Init(myAngryWaitTime, EndTimerHandler, orderText);
                 myCustomer.sprite = mySprites[currSpriteState];
+                myMood = Mood.Angry;
             break;
             case Mood.Angry:
-                em.ChangeCoins(0, coinHappy);
+                em.ChangeCoins(0, coinHappy, myTimePhase);
                 Leave();
-            break;
+            return;
         }
         waitTimer.StartTimer();
     }

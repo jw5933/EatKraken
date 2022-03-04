@@ -13,7 +13,7 @@ public class Economy : MonoBehaviour
         EventManager em = FindObjectOfType<EventManager>();
         em.OnCoinChange += AddPlayerCoins;
     }
-    public void AddPlayerCoins(float coins, float x){//adjust player's coins
+    public void AddPlayerCoins(float coins, float x, int xx){//adjust player's coins
         playerCoins += coins;
         coinsText.text = "Balance: $" + playerCoins;
     }

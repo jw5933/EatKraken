@@ -17,14 +17,14 @@ public class Phase {
 
 public class LevelDesignScript : MonoBehaviour
 {
-    DayManager dm;
+    //DayManager dm;
     EventManager em;
     Generator g;
     Map map;
     public Phase[] phases;
 
     public void Awake(){
-        dm = FindObjectOfType<DayManager>();
+        //dm = FindObjectOfType<DayManager>();
         g = FindObjectOfType<Generator>();
         map = FindObjectOfType<Map>();
         em = FindObjectOfType<EventManager>();
@@ -34,13 +34,13 @@ public class LevelDesignScript : MonoBehaviour
     }
     //economy
     //update the amount of money earned and customers served in current phase
-    private void UpdateOnCoinChange(float made, float max){
-        if (made <= 0) phases[dm.phase].customersLeft += 1;
-        else phases[dm.phase].customersServed += 1;
+    private void UpdateOnCoinChange(float made, float max, int phase){
+        if (made <= 0) phases[phase].customersLeft += 1;
+        else phases[phase].customersServed += 1;
 
         float lost = max - made;
-        phases[dm.phase].moneyEarned += made;
-        phases[dm.phase].moneyLost += lost;
+        phases[phase].moneyEarned += made;
+        phases[phase].moneyLost += lost;
     }
 
     //update phase info
@@ -80,7 +80,7 @@ public class LevelDesignScript : MonoBehaviour
     }
 
     public void WakeUpManagers(){
-        dm.Awake();
+        //dm.Awake();
     }
 
 }

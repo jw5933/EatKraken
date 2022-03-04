@@ -11,15 +11,15 @@ public class PhaseDrawer : PropertyDrawer
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUILayout.LabelField("Phase #: ", property.FindPropertyRelative("phaseNum").intValue.ToString());
-        GUILayout.Label("Economy");
-        EditorGUILayout.LabelField("Max Coins", property.FindPropertyRelative("moneyMax").floatValue.ToString());
-        EditorGUILayout.LabelField("Coins Earned", property.FindPropertyRelative("moneyEarned").floatValue.ToString());
-        EditorGUILayout.LabelField("Coins Not Earned", property.FindPropertyRelative("moneyLost").floatValue.ToString());
+        GUILayout.Label("Economy (Coins) Overview");
+        EditorGUILayout.LabelField("Max", property.FindPropertyRelative("moneyMax").floatValue.ToString());
+        EditorGUILayout.LabelField("Earned", property.FindPropertyRelative("moneyEarned").floatValue.ToString());
+        EditorGUILayout.LabelField("Lost", property.FindPropertyRelative("moneyLost").floatValue.ToString());
         GUILayout.Space(10);
-        GUILayout.Label("Customer");
-        EditorGUILayout.LabelField("Customers This Phase", property.FindPropertyRelative("customerMax").intValue.ToString());
-        EditorGUILayout.LabelField("Customers Served", property.FindPropertyRelative("customersServed").intValue.ToString());
-        EditorGUILayout.LabelField("Customers Left", property.FindPropertyRelative("customersLeft").intValue.ToString());
+        GUILayout.Label("Customer Overview");
+        EditorGUILayout.LabelField("Total", property.FindPropertyRelative("customerMax").intValue.ToString());
+        EditorGUILayout.LabelField("Served", property.FindPropertyRelative("customersServed").intValue.ToString());
+        EditorGUILayout.LabelField("Left", property.FindPropertyRelative("customersLeft").intValue.ToString());
         GUILayout.Space(40);
     }
 }

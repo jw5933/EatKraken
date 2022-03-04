@@ -16,8 +16,7 @@ public class Generator : MonoBehaviour
     private List<List<Customer>> phaseCustomerL = new List<List<Customer>>();
     public List<Customer> GetCustomerListForPhase(int i){ return phaseCustomerL[i]; }
 
-    //variable by phase
-    private int phase;
+    //variable by time phase
     private int[] customersPerStage;
     public int[] cps {get{return customersPerStage;}}
     private int customersSpawned;
@@ -73,13 +72,13 @@ public class Generator : MonoBehaviour
     }
 
     private void CreatePCList(){
-        for (int i = 0; i < customersPerStage.Length; i++){
-            phaseCustomerL.Add(CreateCustomer(customersPerStage[i]));
+        for (int phase = 0; phase < customersPerStage.Length; phase++){
+            phaseCustomerL.Add(CreateCustomer(phase, customersPerStage[phase]));
         }
         ld.CreateNewArrays(customersPerStage.Length);
     }
 
-    private List<Customer> CreateCustomer(int max){ //create a customer with random ingredients
+    private List<Customer> CreateCustomer(int phase, int max){ //create a customer with random ingredients
         List <Customer> phaseList = new List<Customer>();
         
         for (int index = 0; index < max; index++){
@@ -102,6 +101,8 @@ public class Generator : MonoBehaviour
                 int i = Random.Range(0, ingredientPrefabs.Count);
                 newCustomer.AddToOrder(ingredientPrefabs[i].initialSprite, ingredientPrefabs[i].name, ingredientPrefabs[i].price);
             }
+            newCustomer.phase = phase;
+
             newCustomer.CalculateCoins();
             phaseList.Add(newCustomer);
         }
