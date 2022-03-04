@@ -51,9 +51,9 @@ MonoBehaviour:
   myPossibleSprites:
   - {fileID: 1558224288033603309, guid: d281cda74f450496db490452f5ac5cb2, type: 3}
   myOrder: []
-  myHappyWaitTime: 2
-  myNeutralWaitTime: 2
-  myAngryWaitTime: 1
+  myHappyWaitTime: 15
+  myNeutralWaitTime: 10
+  myAngryWaitTime: 7
   myTipPercent: 0.1
   myGenerousTipPercent: 0.2
   myLeniency: 0
