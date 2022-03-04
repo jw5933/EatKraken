@@ -29,6 +29,10 @@ public class Ingredient : MonoBehaviour
     public Sprite initialSprite {get{return imageStates[0];}}
     private SpriteRenderer mySpriteRenderer;
 
+    //final image state
+    [SerializeField] private Sprite[] finalImageStates;
+    private int myFinalImageState;
+
     //player interaction
     [SerializeField] private int motionsToStateChange = 1; //needed number of motions to change state
     [HideInInspector][SerializeField] private int myMotionsLeft; //number of motions left until state change -> resets to neededMotions
@@ -62,19 +66,20 @@ public class Ingredient : MonoBehaviour
     //pick up item
     private void OnMouseDown(){ //if the player isnt holding anything, pick up this ingredient
         if (!player.handFree) return;
-        Debug.Log(this.gameObject.name);
+        //Debug.Log(this.gameObject.name);
+
+        player.PickUpItem(this.gameObject);
         
         if (myArea != null){
             myArea.HandlePickUp();
             myArea = null;
         }
-        player.PickUpItem(this.gameObject);
         InactivateToolLines();
     }
     
     //check if this ingredient is on a cutting board and accepts the tool held by player
     private void OnMouseEnter(){
-        Debug.Log("entered ingredient: " + this.name);
+        //Debug.Log("entered ingredient: " + this.name);
         if (AtEndState()) return;
         if (!hovered && myArea !=null && myArea.type == SharedArea.AreaType.CuttingBoard && !player.handFree){
             hovered = true;
@@ -119,13 +124,13 @@ public class Ingredient : MonoBehaviour
     }
 
     private void ActivateToolLines(){ //show tool lines
-        Debug.Log("activing tool lines");
+        //Debug.Log("activing tool lines");
         foreach (ToolLine t in myToolLines){
             t.gameObject.SetActive(true);
         }
     }
     public void InactivateToolLines(){
-        Debug.Log("deactivating tool lines");
+        //Debug.Log("deactivating tool lines");
         foreach (ToolLine t in myToolLines){ //hide tool lines
             t.gameObject.SetActive(false);
         }
@@ -148,6 +153,11 @@ public class Ingredient : MonoBehaviour
     public bool AtEndState(){ //check if this ingredient has reached its end state
         if (myImageState >= imageStates.Length-1) return true;
         return false;
+    }
+
+    public void HandleAddToOrder(){
+        if (myFinalImageState >= finalImageStates.Length) return;
+        mySpriteRenderer.sprite = finalImageStates[myFinalImageState++];
     }
 
     public void ResetVars(){ //reset some variables: tool lines, 

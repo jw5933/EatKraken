@@ -11,17 +11,23 @@ public class EventManager : MonoBehaviour
     public Action<Location> OnLocationChange;
     //day time change
     public Action<float, int> OnTimeChange;
+    //player coins change
+    public Action<float, float, int> OnCoinChange;
 
     // ==============   methods   ==============
     public void ChangeLocation(Location next){
-        Debug.Log("called location change in Event Manager");
+        //Debug.Log("called location change in Event Manager");
         if (OnLocationChange != null){
-            Debug.Log("On location change has subs");
+            //Debug.Log("On location change has subs");
             OnLocationChange(next); //if there is a subscriber
         }
     }
 
     public void ChangeTime(float nextTime, int phase){
         if (OnTimeChange != null) OnTimeChange(nextTime, phase);
+    }
+
+    public void ChangeCoins(float coinMade, float coinMax, int timePhase){
+        if (OnCoinChange != null) OnCoinChange(coinMade, coinMax, timePhase);
     }
 }

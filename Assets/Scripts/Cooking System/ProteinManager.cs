@@ -34,7 +34,7 @@ public class ProteinManager : MonoBehaviour
 
     public void AnimateCreateProtein(){
         anim.speed = animClip.length/proteinCountdown;
-        Debug.Log("speed anim will go at: " + anim.speed);
+        //Debug.Log("speed anim will go at: " + anim.speed);
         anim.SetTrigger("Protein");
     }
 

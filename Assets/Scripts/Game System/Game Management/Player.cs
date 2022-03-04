@@ -82,10 +82,6 @@ public class Player : MonoBehaviour
     }
 
     private void CheckInput(){
-        if (Input.GetKeyDown(KeyCode.R)){
-            SceneManager.LoadSceneAsync("MainScene");
-        }
-
         ValidateCreateProtein();
     }
 
@@ -179,23 +175,38 @@ public class Player : MonoBehaviour
     }
 
     //add held ingredient to the order
-    public void AddToCurrentOrder(){
+    public Vector3 AddToCurrentOrder(Vector3 pos){
         if (heldIngredient!= null && heldIngredient.AtEndState()){
             //check if the type is accepted, if it is then add the ingredient
             if (CheckCanAddIngredient(heldIngredient.type, currentOrder.Count)){
                 currentOrder.Add(heldIngredient);
-                UpdateOrderUI(heldIngredient.name); //FIX: delete
-                heldIngredient.gameObject.SetActive(false);
-                HandleNoItems();
+                heldIngredient.GetComponent<Collider>().enabled = false;
+                //Update the visuals to reflect addition of ingredient
+                return UpdateOrderVisual(pos);
             }
         }
+        return pos;
     }
+
     private bool CheckCanAddIngredient(Ingredient.Type t, int ingredientsAdded){
         if((ingredientsAdded == 0 && t == Ingredient.Type.Base) 
         || (ingredientsAdded == 1 && t == Ingredient.Type.Carb) 
         || (ingredientsAdded >=2 && (t != Ingredient.Type.Base && t != Ingredient.Type.Carb)))
             return true;
         return false;
+    }
+
+    private Vector3 UpdateOrderVisual(Vector3 pos){ //FIX: delete
+        tempOrderText.text = tempOrderText.text + "  " + heldIngredient.name;
+        heldIngredient.gameObject.SetActive(false); //FIX: DELETE
+        heldIngredient.HandleAddToOrder();
+        heldIngredient.transform.position = pos;
+        Vector3 iSize = Vector3.zero;
+        if(heldIngredient.type != Ingredient.Type.Base && heldIngredient.type != Ingredient.Type.Carb){
+            iSize = heldIngredient.GetComponent<Renderer>().bounds.size;
+        }
+        HandleNoItems();
+        return pos + new Vector3(0, iSize.y, 0);
     }
 
     public void ClearOrder(){
@@ -205,10 +216,6 @@ public class Player : MonoBehaviour
         }
         currentOrder.Clear();
         tempOrderText.text = "Order:";//FIX: delete
-    }
-
-    private void UpdateOrderUI(string name){ //FIX: delete
-        tempOrderText.text = tempOrderText.text + "  " + name;
     }
     
     public bool ValidateToolLines(Ingredient i){ //validate by checking if player is holding the required tool

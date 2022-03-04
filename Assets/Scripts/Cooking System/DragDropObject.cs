@@ -8,9 +8,12 @@ public class DragDropObject : MonoBehaviour
     enum Type { //the types of drag + drop
         Base,
         Serve,
-        Consume
+        Consume,
+        Trash
     };
     [SerializeField] private Type myType;
+    [SerializeField] bool finalizeOrder;
+    Vector3 nextIngredientPosition;
 
     private Player player;
     private CustomerManager cm;
@@ -24,17 +27,18 @@ public class DragDropObject : MonoBehaviour
         player = FindObjectOfType<Player>();
         cm = FindObjectOfType<CustomerManager>();
         hm = FindObjectOfType<HealthManager>();
+        if (myType == Type.Base) nextIngredientPosition = this.GetComponent<Renderer>().bounds.max;
     }
 
     public void OnMouseDown(){
         Debug.Log(this.name);
         switch (myType){
             case Type.Base:
-                if (!player.handFree) player.AddToCurrentOrder();
+                if (!player.handFree) nextIngredientPosition = player.AddToCurrentOrder(nextIngredientPosition);
                 else{
                     //pick up base
                     if (myArea != null) myArea.HandlePickUp();
-                    player.PickUpItem(this.gameObject);
+                    HandlePickUp();
                 }
             break;
 
@@ -56,6 +60,21 @@ public class DragDropObject : MonoBehaviour
                     player.ClearOrder();
                 }
             break;
+
+            case Type.Trash:
+                if (!player.handFree){
+                    GameObject o = player.DropItem("ingredient");
+                    if (o==null) return;
+                    Destroy(o);
+                }
+            break;
+        }
+    }
+
+    private void HandlePickUp(){
+        if (!finalizeOrder){
+            player.PickUpItem(this.gameObject);
+            return;
         }
     }
 }

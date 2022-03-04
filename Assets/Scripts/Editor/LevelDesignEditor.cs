@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 [CustomEditor(typeof(LevelDesignScript))]
 public class LevelDesignEditor : Editor
@@ -12,14 +13,31 @@ public class LevelDesignEditor : Editor
     Object currLoc;
     LevelDesignScript level;
     
-    public override void OnInspectorGUI(){
-        DrawDefaultInspector();
+    int phase;
+    private ReorderableList list;
+    /* void OnEnable(){
+        phase = serializedObject.FindProperty("phase");
+    } */
 
+    public override void OnInspectorGUI(){
+        //gameInfo
+        
+        serializedObject.Update();
         level = (LevelDesignScript)target;
 
-        if (GUILayout.Button("Wake Up Level")){
+        phase = EditorGUILayout.IntSlider("Phase", phase, 0, level.phases.Length-1);
+        
+        if (GUILayout.Button("Go To Phase")){
+            serializedObject.ApplyModifiedProperties();
+            level.GoToPhase(phase);
+        }
+
+        DrawDefaultInspector();
+
+        /*if (GUILayout.Button("Wake Up Level")){
             level.Awake();
         }
+        
         if (GUILayout.Button("Update Locations")){
             labels.Clear();
             locMap.Clear();
@@ -46,8 +64,9 @@ public class LevelDesignEditor : Editor
 
         if (GUILayout.Button("Go To Previous Phase")){
 
-        }
+        }*/
     }
+
     void UpdateLocation(){
         Debug.Log(index);
         if (level != null) level.GoNextLocation(locMap[index]);

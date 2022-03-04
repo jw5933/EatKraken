@@ -7,7 +7,6 @@ public class CameraManager : MonoBehaviour
 {
     // ==============   variables   ==============
     [SerializeField] private GameObject customerView;
-    [SerializeField] private GameObject orderView;
 
     private GameObject cam;
     [SerializeField] private List <CinemachineVirtualCamera> virtualCams;
@@ -70,13 +69,13 @@ public class CameraManager : MonoBehaviour
 
         ShowUI();
 
-        //move the customer view to be above the new cam;
+        /* //move the customer view to be above the new cam;
         Vector3 newCustomerViewPos = new Vector3 (virtualCams[camIndex].transform.position.x, customerView.transform.position.y, 0);
-        customerView.transform.position = newCustomerViewPos;
+        customerView.transform.position = newCustomerViewPos; */
 
-        //move order view
+        /* //move order view
         Vector3 newOrderViewPos = new Vector3 (virtualCams[camIndex].transform.position.x, orderView.transform.position.y, 0);
-        orderView.transform.position = newOrderViewPos;
+        orderView.transform.position = newOrderViewPos; */
     }
 
     public void SwapUpDownCam(){

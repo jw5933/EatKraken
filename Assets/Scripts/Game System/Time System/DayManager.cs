@@ -10,18 +10,20 @@ public class DayManager : MonoBehaviour
     [HideInInspector][SerializeField] Timer dayTimer;
     private float[] timePerStage;
     [SerializeField] Sprite[] timeStageImages;
-    private int stageIndex;
+    private int phaseIndex = -1;
+
+    public int phase {get{return phaseIndex;}}
+    public int numOfPhases {get{return timePerStage.Length;}}
 
     //FIX: delete
-    [SerializeField] Image tempIcon;
-    [SerializeField] Sprite dayIcon;
-    [SerializeField] Sprite nightIcon;
+    [SerializeField] SpriteRenderer customerBackground;
 
     [SerializeField] Text timeText;
 
     GameManager gm;
     EventManager em;
     CustomerManager cm;
+    LevelDesignScript ld;
 
     // ==============   methods   ==============
     public void Awake(){
@@ -29,29 +31,28 @@ public class DayManager : MonoBehaviour
         em.OnLocationChange += UpdateOnLocationChange;
         gm = FindObjectOfType<GameManager>();
         cm = FindObjectOfType<CustomerManager>();
+        ld = FindObjectOfType<LevelDesignScript>();
 
         dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
     }
 
     private void UpdateOnLocationChange(Location next){
-        Debug.Log("called Update on Location in Day Manager");
-        dayTimer.StopTimer();
+        //Debug.Log("called Update on Location in Day Manager");
         //update the generator
         timePerStage = next.timeStages;
-    }
-
-    public void ResetVars(){
-        stageIndex = 0;
-        if (stageIndex < timePerStage.Length) Init(timePerStage[stageIndex]);
+        //ResetVars();
     }
 
     private void HandleDayChange(){
-        //FIX: change the visuals
-        tempIcon.sprite = nightIcon;
-
-        if (stageIndex < timePerStage.Length) Init(timePerStage[stageIndex]);
-        else
+        if (phaseIndex+1 >= timePerStage.Length){
             if (!cm.lineUpIsEmpty) WorkOvertime();
+            //FIX: show working overtime
+            return;
+        }
+        phaseIndex++;
+        //FIX: change the visuals
+        if (phaseIndex < timeStageImages.Length) customerBackground.sprite = timeStageImages[phaseIndex];
+        if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
     }
 
     private void WorkOvertime(){ //FIX
@@ -59,9 +60,15 @@ public class DayManager : MonoBehaviour
     }
 
     private void Init(float time){
-        em.ChangeTime(time, stageIndex++); //let subscribers know time has changed
+        em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
         //dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         dayTimer.Init(time, HandleDayChange, timeText);
         dayTimer.StartTimer();
+    }
+
+    public void ResetVars(){
+        dayTimer.StopTimer();
+        phaseIndex = 0;
+        if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
     }
 }
