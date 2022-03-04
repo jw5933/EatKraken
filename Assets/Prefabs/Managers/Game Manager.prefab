@@ -43,7 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7778c0e05c55b43cda0f485eea21bcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameIn3d: 0
+  currScene:
+    m_Handle: 0
+  gameIn3d: 1
   theOrderParent: {fileID: 0}
   theIngredientParent: {fileID: 0}
   theCustomerView: {fileID: 0}
