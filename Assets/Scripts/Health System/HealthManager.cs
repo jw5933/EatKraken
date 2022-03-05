@@ -38,7 +38,7 @@ public class HealthManager : MonoBehaviour
 
     public void MinusPlayerHearts(float hearts){//adjust player health
         if (playerHearts >= maxHearts && hearts < 0) return;
-        playerHearts = Mathf.min(playerHearts-hearts, maxHearts);
+        playerHearts = Mathf.Min(playerHearts-hearts, maxHearts);
         Debug.Log("player health: " + playerHearts);
         prevHeart = currentHeart;
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
