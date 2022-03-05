@@ -38,7 +38,7 @@ public class HealthManager : MonoBehaviour
 
     public void MinusPlayerHearts(float hearts){//adjust player health
         if (playerHearts >= maxHearts && hearts < 0) return;
-        playerHearts -= hearts;
+        playerHearts = Mathf.min(playerHearts-hearts, maxHearts);
         Debug.Log("player health: " + playerHearts);
         prevHeart = currentHeart;
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
@@ -70,7 +70,7 @@ public class HealthManager : MonoBehaviour
         }
 
         if (i >= gm.maxIngredients){// 1 heart
-            MinusPlayerHearts(-1);
+            MinusPlayerHearts(-2);
         }
         if (hasProtein){
             MinusPlayerHearts(-0.5f);
