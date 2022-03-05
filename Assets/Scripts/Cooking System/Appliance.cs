@@ -56,7 +56,7 @@ public class Appliance : MonoBehaviour
         if (i == null) return;
         myIngredient = i.GetComponent<Ingredient>(); 
         //don't cook the wrong ingredient, or ingredients that are already cooked
-        if (myIngredient.type != Ingredient.Type.Carb || myIngredient.state > maxState){
+        if (myIngredient.type != Ingredient.Type.Carb || myIngredient.state >= maxState){
             player.PickUpItem(myIngredient.gameObject);
             return;
         }
