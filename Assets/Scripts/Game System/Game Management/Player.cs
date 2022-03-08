@@ -35,16 +35,20 @@ public class Player : MonoBehaviour
          //FIX: add keycodes as needed
      };
 
+
+    //vectors & planes
+    Vector3 mousePos;
+    Plane mousePlane;
+    Plane currentPlane;
+    public Plane currPlane {set{currentPlane = value;}}
+    Vector3 mouseDistanceFromCamera;
+    float mouseDistanceZ = 15f;
+    bool canMoveInSpace = true;
+    public bool inSpace {set{canMoveInSpace = value;}}
+
     CameraManager cam;
     ProteinManager pm;
     GameManager gm;
-
-    Vector3 mousePos;
-    Plane mousePlane;
-    Vector3 mouseDistanceFromCamera;
-
-     //This is the distance the clickable plane is from the camera. Set it in the Inspector before running.
-    [SerializeField] float mouseDistanceZ = -15f;
 
     // ==============   functions   ==============
     private void Awake(){
@@ -52,9 +56,10 @@ public class Player : MonoBehaviour
         pm = GetComponent<ProteinManager>();
         gm = FindObjectOfType<GameManager>();
 
-        mouseDistanceFromCamera = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z - mouseDistanceZ);
+        mouseDistanceFromCamera = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z + mouseDistanceZ);
         //Create a new plane with normal (0,0,1) at the position away from the camera you define in the Inspector. This is the plane that you can click so make sure it is reachable.
         mousePlane = new Plane(Vector3.up, mouseDistanceFromCamera);
+        ResetPlane();
     }
     public void Update(){
         if (heldItem !=null) UpdateMouseItem();
@@ -72,13 +77,18 @@ public class Player : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             //Initialise the enter variable
             float enter = 0.0f;
-            Debug.DrawLine(Camera.main.ScreenToWorldPoint(Input.mousePosition), mouseDistanceFromCamera, Color.green);
+            
             //move the object to where the mouse is
-            if (mousePlane.Raycast(ray, out enter)){
+            if (currentPlane.Raycast(ray, out enter)){
                 mousePos = ray.GetPoint(enter);
-                heldItem.transform.position = new Vector3(mousePos.x, heldItem.transform.position.y, mousePos.z);
+                Debug.DrawLine(Camera.main.ScreenToWorldPoint(Input.mousePosition), mousePos, Color.green);
+                heldItem.transform.position = new Vector3(mousePos.x, canMoveInSpace? heldItem.transform.position.y : mousePos.y, mousePos.z);
             }
         }
+    }
+
+    public void ResetPlane(){
+        currentPlane = mousePlane;
     }
 
     private void CheckInput(){

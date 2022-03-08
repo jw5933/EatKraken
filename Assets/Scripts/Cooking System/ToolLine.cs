@@ -16,19 +16,23 @@ public class ToolLine: MonoBehaviour
     private float minDistance;
     private Vector3 initialPos;
 
-    Ingredient i;
+    Ingredient ingredient;
 
     // ==============   functions   ==============
     private void Awake(){
         player = FindObjectOfType<Player>();
         mySpriteRend = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<Collider2D>();
+        ingredient = transform.parent.GetComponent<Ingredient>();
 
-        minDistance = myCollider.bounds.size.y * minPercentOfDist;
+        minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
     }
 
     private void OnMouseEnter(){
         if (player.handFree) return;
+        //make sure player is moving on this items (parent) plane
+        player.currPlane = ingredient.plane;
+        player.inSpace = false;
         if (iCanClick){
             mySpriteRend.color = Color.green;
         }
@@ -43,12 +47,12 @@ public class ToolLine: MonoBehaviour
     private void OnMouseDown(){
         if (player.handFree || !iCanClick) return;
 
-        i = transform.parent.GetComponent<Ingredient>();
+        ingredient = transform.parent.GetComponent<Ingredient>();
         //Initialize variables
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float enter = 0.0f;
         //find point on plane
-        if(i.plane.Raycast(ray, out enter)){
+        if(ingredient.plane.Raycast(ray, out enter)){
             initialPos = ray.GetPoint(enter);
             //Debug.Log(string.Format("{0} {1}", "initial: ", initialPos.ToString()));
             Debug.DrawLine(initialPos, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.yellow, 100f);
@@ -64,7 +68,7 @@ public class ToolLine: MonoBehaviour
         float enter = 0.0f;
         Vector3 projection = Vector3.zero;
         //find point on plane
-        if(i.plane.Raycast(ray, out enter)){
+        if(ingredient.plane.Raycast(ray, out enter)){
             projection = ray.GetPoint(enter);
             Debug.DrawLine(projection, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.yellow, 100f);
         }
@@ -75,8 +79,8 @@ public class ToolLine: MonoBehaviour
         //(string.Format("{0} {1} {2} {3}", "initial: ", initialPos.ToString(), ", offset: ", offset.ToString()));
         
         if (distance >= minDistance * minDistance){
-            i.ChangeState();
-            i.RemoveToolLine(this);
+            ingredient.ChangeState();
+            ingredient.RemoveToolLine(this);
             Destroy(this.gameObject);
         }
         else{
