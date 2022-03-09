@@ -98,8 +98,6 @@ public class Ingredient : MonoBehaviour
     }
 
     private void UpdatePlane(){
-        // Vector3 max = myCollider.bounds.max;
-        // Vector3 min = myCollider.bounds.min;
         Vector3 center = myCollider.bounds.center;
         //get the vector sides
         Vector3 side1 = transform.right + center;

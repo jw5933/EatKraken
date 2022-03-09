@@ -185,14 +185,15 @@ public class Player : MonoBehaviour
     }
 
     //add held ingredient to the order
-    public Vector3 AddToCurrentOrder(Vector3 pos){
+    public Vector3 AddToCurrentOrder(Vector3 pos, Vector3 angle, Transform t){
         if (heldIngredient!= null && heldIngredient.AtEndState()){
             //check if the type is accepted, if it is then add the ingredient
             if (CheckCanAddIngredient(heldIngredient.type, currentOrder.Count)){
                 currentOrder.Add(heldIngredient);
                 heldIngredient.GetComponent<Collider>().enabled = false;
+                heldIngredient.transform.SetParent(t);
                 //Update the visuals to reflect addition of ingredient
-                return UpdateOrderVisual(pos);
+                return UpdateOrderVisual(pos, angle);
             }
         }
         return pos;
@@ -206,15 +207,19 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    private Vector3 UpdateOrderVisual(Vector3 pos){ //FIX: delete
+    private Vector3 UpdateOrderVisual(Vector3 pos, Vector3 angle){ //FIX: delete
         tempOrderText.text = tempOrderText.text + "  " + heldIngredient.name;
-        heldIngredient.gameObject.SetActive(false); //FIX: DELETE
-        heldIngredient.HandleAddToOrder();
-        heldIngredient.transform.position = pos;
+        //heldIngredient.gameObject.SetActive(false); //FIX: DELETE
+        Bounds b = heldIngredient.GetComponent<Renderer>().bounds;
+        heldIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
+        heldIngredient.transform.position = pos - new Vector3 (0, b.size.y/2, 0);
+        heldIngredient.transform.Rotate(angle - heldIngredient.transform.eulerAngles, Space.World);
+        
         Vector3 iSize = Vector3.zero;
         if(heldIngredient.type != Ingredient.Type.Base && heldIngredient.type != Ingredient.Type.Carb){
-            iSize = heldIngredient.GetComponent<Renderer>().bounds.size;
+            iSize += new Vector3 (0, b.size.y, 0);
         }
+
         HandleNoItems();
         return pos + new Vector3(0, iSize.y, 0);
     }

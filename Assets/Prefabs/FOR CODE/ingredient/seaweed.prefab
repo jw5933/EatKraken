@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &3479131738579656288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,5 +118,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.8414326, y: 3.9612842, z: 0}
-  m_Center: {x: -0.059926033, y: -2.579901, z: 0}
+  m_Size: {x: 3.8, y: 3.8, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}

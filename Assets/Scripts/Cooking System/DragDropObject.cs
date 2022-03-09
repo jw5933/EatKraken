@@ -23,18 +23,18 @@ public class DragDropObject : MonoBehaviour
     public SharedArea area{set{myArea = value;}}
 
     // ==============   methods   ==============
-    private void Awake(){
+    private void Start(){
         player = FindObjectOfType<Player>();
         cm = FindObjectOfType<CustomerManager>();
         hm = FindObjectOfType<HealthManager>();
-        if (myType == Type.Base) nextIngredientPosition = this.GetComponent<Renderer>().bounds.max;
+        if (myType == Type.Base) nextIngredientPosition = new Vector3(0, this.GetComponent<Renderer>().bounds.max.y, this.transform.position.z-0.01f);
     }
 
     public void OnMouseDown(){
         Debug.Log(this.name);
         switch (myType){
             case Type.Base:
-                if (!player.handFree) nextIngredientPosition = player.AddToCurrentOrder(nextIngredientPosition);
+                if (!player.handFree) nextIngredientPosition = player.AddToCurrentOrder(nextIngredientPosition, this.transform.eulerAngles, this.transform);
                 else{
                     //pick up base
                     if (myArea != null) myArea.HandlePickUp();

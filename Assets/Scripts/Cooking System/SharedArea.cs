@@ -8,7 +8,7 @@ public class SharedArea: MonoBehaviour
     [SerializeField] AreaType myType = AreaType.None;
     public AreaType type {get {return myType;}}
 
-    private GameObject myItem;
+    [SerializeField] private GameObject myItem;
 
     private bool freeArea = true;
     private Player player;
@@ -21,6 +21,17 @@ public class SharedArea: MonoBehaviour
         player = FindObjectOfType<Player>();
         gm = FindObjectOfType<GameManager>();
         myCollider = GetComponent<Collider>();
+        InitialSnapToArea();
+    }
+
+    private void InitialSnapToArea(){
+        if (myItem !=null) {
+            freeArea = false;
+            myCollider.enabled = false;
+            myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+            DragDropObject o = myItem.GetComponent<DragDropObject>();
+            if (o !=null) o.area = this;
+        }
     }
 
     public void OnMouseDown(){
@@ -64,7 +75,7 @@ public class SharedArea: MonoBehaviour
         }
         freeArea = false;
         myCollider.enabled = false;
-        myItem.transform.position = this.transform.position + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+        myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
     }
 
     public void HandlePickUp(){
