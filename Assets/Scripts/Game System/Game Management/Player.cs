@@ -131,13 +131,10 @@ public class Player : MonoBehaviour
         Collider2D c2 = heldItem.GetComponent<Collider2D>();
         if (c2 !=null) c2.enabled = false;
         
-        if (item.GetComponent<Ingredient>()){
-            heldIngredient = item.GetComponent<Ingredient>();
-        }
-        else if(item.GetComponent<Tool>()){
-            heldTool = item.GetComponent<Tool>();
-        }
-        else {
+        //get the type of item player picked up
+        heldIngredient = item.GetComponent<Ingredient>();
+        heldTool = item.GetComponent<Tool>();
+        if (heldIngredient == null && heldTool == null) {
             isHoldingBase = true;
         }
     }

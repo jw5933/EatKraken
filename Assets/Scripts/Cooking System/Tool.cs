@@ -7,6 +7,7 @@ public class Tool : MonoBehaviour
     // ==============   variables   ==============
     public enum Required {None, Slice}
     [SerializeField] private Required myRequired = Required.None;
+    public Required type {get{return myRequired;}}
 
     [SerializeField] private SharedArea myArea;
     public SharedArea area{get{return myArea;} set{myArea = value;}}
