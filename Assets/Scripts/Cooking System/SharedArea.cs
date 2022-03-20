@@ -29,7 +29,7 @@ public class SharedArea: MonoBehaviour
             freeArea = false;
             myCollider.enabled = false;
             myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
-            DragDropObject o = myItem.GetComponent<DragDropObject>();
+            BaseObject o = myItem.GetComponent<BaseObject>();
             if (o !=null) o.area = this;
         }
     }
@@ -63,7 +63,7 @@ public class SharedArea: MonoBehaviour
         else if (myType == AreaType.Base){
             myItem = player.DropItem("base");
             if (myItem == null) return;
-            myItem.GetComponent<DragDropObject>().area = this;
+            myItem.GetComponent<BaseObject>().area = this;
         }
         else{
             myItem = player.DropItem("tool");

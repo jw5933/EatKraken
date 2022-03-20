@@ -6,18 +6,19 @@ using UnityEngine.UI;
 
 public class Timer: MonoBehaviour
 {
+    // ==============   variables   ==============
     private float time;
-    UnityAction endAction;
+    UnityAction callerAction;
     IEnumerator myCoroutine;
     Text myText;
     
-
+    // ==============   methods   ==============
     public void Init (float newTime, UnityAction newAction){
-        endAction = newAction;
+        callerAction = newAction;
         time = newTime;
     }
     public void Init (float newTime, UnityAction newAction, Text text){
-        endAction = newAction;
+        callerAction = newAction;
         time = newTime;
         myText = text;
     }
@@ -42,7 +43,7 @@ public class Timer: MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         if (myText !=null) myText.text = "" + time;
-        endAction();
+        callerAction();
         //Destroy(this);
     }
 }

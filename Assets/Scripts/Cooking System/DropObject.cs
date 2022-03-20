@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragDropObject : MonoBehaviour
+public class DropObject : MonoBehaviour
 {
     // ==============   variables   ==============
     enum Type { //the types of drag + drop
-        Base,
         Serve,
         Consume,
         Trash
     };
     [SerializeField] private Type myType;
-    [SerializeField] bool finalizeOrder;
-    Vector3 nextIngredientPosition;
 
     private Player player;
     private CustomerManager cm;
@@ -27,21 +24,11 @@ public class DragDropObject : MonoBehaviour
         player = FindObjectOfType<Player>();
         cm = FindObjectOfType<CustomerManager>();
         hm = FindObjectOfType<HealthManager>();
-        if (myType == Type.Base) nextIngredientPosition = new Vector3(0, this.GetComponent<Renderer>().bounds.max.y, this.transform.position.z-0.01f);
     }
 
     public void OnMouseDown(){
         Debug.Log(this.name);
         switch (myType){
-            case Type.Base:
-                if (!player.handFree) nextIngredientPosition = player.AddToCurrentOrder(nextIngredientPosition, this.transform.eulerAngles, this.transform);
-                else{
-                    //pick up base
-                    if (myArea != null) myArea.HandlePickUp();
-                    HandlePickUp();
-                }
-            break;
-
             case Type.Serve:
                 if (player.holdingBase && player.order.Count > 0){
                     //Debug.Log("serving");
@@ -68,13 +55,6 @@ public class DragDropObject : MonoBehaviour
                     Destroy(o);
                 }
             break;
-        }
-    }
-
-    private void HandlePickUp(){
-        if (!finalizeOrder){
-            player.PickUpItem(this.gameObject);
-            return;
         }
     }
 }

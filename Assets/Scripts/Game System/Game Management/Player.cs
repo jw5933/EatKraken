@@ -35,20 +35,23 @@ public class Player : MonoBehaviour
          //FIX: add keycodes as needed
      };
 
-
     //vectors & planes
     Vector3 mousePos;
+    Vector3 mouseDistanceFromCamera;
+
     Plane mousePlane;
     Plane currentPlane;
-    public Plane currPlane {set{currentPlane = value;}}
-    Vector3 mouseDistanceFromCamera;
+    public Plane currPlane {set{currentPlane = value;} get{return currentPlane;}}
+    
     float mouseDistanceZ = 15f;
     bool canMoveInSpace = true;
     public bool inSpace {set{canMoveInSpace = value;}}
 
+    //references
     CameraManager cam;
     ProteinManager pm;
     GameManager gm;
+
 
     // ==============   functions   ==============
     private void Awake(){
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour
             //move the object to where the mouse is
             if (currentPlane.Raycast(ray, out enter)){
                 mousePos = ray.GetPoint(enter);
-                Debug.DrawLine(Camera.main.ScreenToWorldPoint(Input.mousePosition), mousePos, Color.green);
+                //Debug.DrawLine(Camera.main.ScreenToWorldPoint(Input.mousePosition), mousePos, Color.green);
                 heldItem.transform.position = new Vector3(mousePos.x, canMoveInSpace? heldItem.transform.position.y : mousePos.y, mousePos.z);
             }
         }

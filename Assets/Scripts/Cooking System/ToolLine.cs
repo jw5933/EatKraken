@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolLine: MonoBehaviour
+public class ToolLine: Draggable
 {
     // ==============   variables   ==============
     private Player player;
@@ -13,7 +13,6 @@ public class ToolLine: MonoBehaviour
 
     [SerializeField] private float minPercentOfDist;
     private Collider2D myCollider;
-    private float minDistance;
     private Vector3 initialPos;
 
     Ingredient ingredient;
@@ -24,8 +23,9 @@ public class ToolLine: MonoBehaviour
         mySpriteRend = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<Collider2D>();
         ingredient = transform.parent.GetComponent<Ingredient>();
+        this.myPlane = ingredient.plane;
 
-        minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
+        this.minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
     }
 
     private void OnMouseEnter(){
@@ -46,50 +46,26 @@ public class ToolLine: MonoBehaviour
 
     private void OnMouseDown(){
         if (player.handFree || !iCanClick) return;
-
-        ingredient = transform.parent.GetComponent<Ingredient>();
         //Initialize variables
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float enter = 0.0f;
-        //find point on plane
-        if(ingredient.plane.Raycast(ray, out enter)){
-            initialPos = ray.GetPoint(enter);
-            //Debug.Log(string.Format("{0} {1}", "initial: ", initialPos.ToString()));
-            Debug.DrawLine(initialPos, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.yellow, 100f);
-        }
+        initialPos = base.GetProjectionOnPlane();
     }
 
     private void OnMouseUpAsButton(){
         if (player.handFree || !iCanClick) return;
-        //Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - initialPos;
-        
-        //Initialize variables
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float enter = 0.0f;
-        Vector3 projection = Vector3.zero;
-        //find point on plane
-        if(ingredient.plane.Raycast(ray, out enter)){
-            projection = ray.GetPoint(enter);
-            Debug.DrawLine(projection, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.yellow, 100f);
-        }
+        Vector3 endPos = base.GetProjectionOnPlane();
 
-        Vector3 offset = projection - initialPos;
-        float distance = offset.sqrMagnitude;
-
-        //(string.Format("{0} {1} {2} {3}", "initial: ", initialPos.ToString(), ", offset: ", offset.ToString()));
-        
-        if (distance >= minDistance * minDistance){
-            ingredient.ChangeState();
-            ingredient.RemoveToolLine(this);
-            Destroy(this.gameObject);
-        }
-        else{
-            mySpriteRend.color = Color.yellow;
-        }
+        base.VerifyDistance(endPos, initialPos);
+    }
+    public override void HandleDragged(){
+        ingredient.ChangeState();
+        ingredient.RemoveToolLine(this);
+        Destroy(this.gameObject);
+    }
+    public override void HandleNotDragged(){
+        mySpriteRend.color = Color.yellow;
     }
 
     public void ResetVars(){
-        initialPos = Vector3.zero;
         mySpriteRend.color = Color.white;
     }
 }

@@ -102,17 +102,18 @@ public class Ingredient : MonoBehaviour
         //get the vector sides
         Vector3 side1 = transform.right + center;
         Vector3 side2 = transform.up + center;
+        
         //get the perpendicular vector
         Vector3 perp = Vector3.Cross(side1, side2);
+        
         //normalize perp vector
         Vector3 norm = perp.normalized;
-        //Vector3 norm = transform.forward;
         myPlane = new Plane(norm, center);
 
         //debugging
         // Debug.DrawLine(transform.right + center, center, Color.red, 100f);
         // Debug.DrawLine(transform.up + center, center, Color.green, 100f);
-        Debug.DrawLine(norm + center, center, Color.blue, 100f);
+        //Debug.DrawLine(norm + center, center, Color.blue, 100f);
     }
 
     public void ValidateToolLines(){ //allows tool lines to be used (green)

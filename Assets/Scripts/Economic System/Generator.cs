@@ -71,11 +71,11 @@ public class Generator : MonoBehaviour
     }
 
     private void CreatePCList(){
-        Debug.Log("creating list");
+        //Debug.Log("creating list");
         for (int phase = 0; phase < customersPerStage.Length; phase++){
             phaseCustomerL.Add(CreateCustomer(phase, customersPerStage[phase]));
         }
-        ld.UpdateInfo(customersPerStage.Length);
+        if (ld !=null) ld.UpdateInfo(customersPerStage.Length);
     }
 
     private List<Customer> CreateCustomer(int phase, int max){ //create a customer with random ingredients
