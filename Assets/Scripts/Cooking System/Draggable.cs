@@ -8,7 +8,7 @@ public class Draggable: MonoBehaviour
 protected Plane myPlane;
 protected float minDistance;
 
-    public virtual Vector3 GetProjectionOnPlane(){
+    public Vector3 GetProjectionOnPlane(){
         //Initialize variables
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float enter = 0.0f;
@@ -19,7 +19,9 @@ protected float minDistance;
         return Vector3.zero;
     }
     
-    public virtual void VerifyDistance(Vector3 end, Vector3 start){
+    public void VerifyDistance(Vector3 end, Vector3 start){
+        Debug.Log(end.ToString());
+        Debug.Log(start.ToString());
         Vector3 offset = end - start;
         float distance = offset.sqrMagnitude;
 

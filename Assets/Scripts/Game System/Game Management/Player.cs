@@ -146,19 +146,32 @@ public class Player : MonoBehaviour
     public GameObject DropItem(string type){
         //Debug.Log("dropping item");
         GameObject held = null;
-        if (type == "ingredient" && heldIngredient!= null /*&& heldIngredient.type!= Ingredient.Type.Base*/){
-            held = heldItem;
-            heldIngredient = null;
-            heldItem = null;
-        }
-        else if (type == "tool" && heldTool!= null){
-            held = heldItem;
-            heldTool = null;
-            heldItem = null;
-        }
-        else if (type == "base" && heldIngredient== null && heldTool== null){
-            held = heldItem;
-            heldItem = null;
+        switch(type){
+            case "ingredient":
+                if(heldIngredient!= null){
+                    held = heldItem;
+                    heldIngredient = null;
+                    heldItem = null;
+                }
+            break;
+            case "tool":
+                if (heldTool!= null){
+                    held = heldItem;
+                    heldTool = null;
+                    heldItem = null;
+                }
+            break;
+            case "base":
+                if (heldIngredient== null && heldTool== null){
+                    held = heldItem;
+                    heldItem = null;
+                }
+            break;
+            
+            case "any":
+                held = heldItem;
+                heldItem = null;
+            break;
         }
         //if no item is being held, reset some vars; if there an object that will be returned to caller, enable back its collider
         if (heldItem == null) HandleNoItems();
@@ -215,7 +228,7 @@ public class Player : MonoBehaviour
         //heldIngredient.gameObject.SetActive(false); //FIX: DELETE
         Bounds b = heldIngredient.GetComponent<Renderer>().bounds;
         heldIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
-        heldIngredient.transform.position = pos - new Vector3 (0, b.size.y/2, 0);
+        heldIngredient.transform.position = pos - new Vector3 (0, b.size.y, 0);
         heldIngredient.transform.Rotate(angle - heldIngredient.transform.eulerAngles, Space.World);
         
         Vector3 iSize = Vector3.zero;

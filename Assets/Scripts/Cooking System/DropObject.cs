@@ -15,6 +15,7 @@ public class DropObject : MonoBehaviour
     private Player player;
     private CustomerManager cm;
     private HealthManager hm;
+    private BaseObject baseObj;
 
     private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
@@ -24,6 +25,7 @@ public class DropObject : MonoBehaviour
         player = FindObjectOfType<Player>();
         cm = FindObjectOfType<CustomerManager>();
         hm = FindObjectOfType<HealthManager>();
+        baseObj = FindObjectOfType<BaseObject>();
     }
 
     public void OnMouseDown(){
@@ -37,6 +39,10 @@ public class DropObject : MonoBehaviour
                         order.Add(i.name);
                     }
                     cm.ServeCustomer(order);
+                    if (baseObj.orderobj !=null){
+                        player.DropItem("any");
+                        baseObj.orderobj.SetActive(false);
+                    }
                     player.ClearOrder(); 
                 }
             break;

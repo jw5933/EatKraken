@@ -13,7 +13,11 @@ public class BaseObject : Draggable
     public SharedArea area{set{myArea = value;}}
 
     bool finalizeOrder;
+    bool addingObject;
     Vector3 nextIngredientPosition;
+
+    [SerializeField] private GameObject orderObject;
+    public GameObject orderobj {get{return orderObject;}}
 
     private Player player;
     private Animator anim;
@@ -28,11 +32,12 @@ public class BaseObject : Draggable
             return;
         }
         finalizeOrder = true;
-        this.minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
+        minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
+        Debug.Log(minDistance);
     }
 
     private void Start(){
-        nextIngredientPosition = new Vector3(0, this.GetComponent<Renderer>().bounds.max.y, this.transform.position.z-0.01f);
+        nextIngredientPosition = new Vector3(this.transform.position.x, this.GetComponent<Renderer>().bounds.max.y, this.transform.position.z-0.01f);
         UpdatePlane();
     }
 
@@ -47,7 +52,7 @@ public class BaseObject : Draggable
         
         //normalize perp vector
         Vector3 norm = perp.normalized;
-        myPlane = new Plane(norm, center);
+        this.myPlane = new Plane(norm, center);
 
         //debugging
         // Debug.DrawLine(transform.right + center, center, Color.red, 100f);
@@ -61,19 +66,24 @@ public class BaseObject : Draggable
     }
 
     private void OnMouseDown(){
-        if (!player.handFree)
+        if (!player.handFree){
             nextIngredientPosition = player.AddToCurrentOrder(nextIngredientPosition, this.transform.eulerAngles, this.transform);
+            addingObject = true;
+        } 
         else{
             //pick up base
             if (finalizeOrder) 
                 initialPos = base.GetProjectionOnPlane();
             else
-                HandlePickUp();
+                HandlePickUp(this.gameObject);
         }
     }   
 
     private void OnMouseUpAsButton(){
-        if (!player.handFree || !finalizeOrder) return;
+        if (!player.handFree || !finalizeOrder || addingObject){
+            addingObject = false;
+            return;
+        }
         Vector3 endPos = base.GetProjectionOnPlane();
         base.VerifyDistance(endPos, initialPos);
     }
@@ -92,16 +102,20 @@ public class BaseObject : Draggable
 
     public void HandleAnimation(){
         if (player.order.Count <= 0) return;
+        orderObject.transform.position = this.transform.position;
+        orderObject.SetActive(true);
+
         foreach(Ingredient o in player.order){
             o.HandleAddToOrder();
-            o.transform.position = this.transform.position;
+            o.transform.SetParent(orderObject.transform);
+            o.transform.position = orderObject.transform.position;
         }
-        HandlePickUp();
+        HandlePickUp(orderObject);
     }
 
-    private void HandlePickUp(){
-        if (myArea != null) myArea.HandlePickUp();
-        player.PickUpItem(this.gameObject);
+    private void HandlePickUp(GameObject o){
+        if (orderObject == null && myArea != null) myArea.HandlePickUp();
+        player.PickUpItem(o);
     }
 
     public void ResetVars(){
