@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Meter : MonoBehaviour
 {
@@ -17,15 +18,20 @@ public class Meter : MonoBehaviour
 
     IEnumerator myCoroutine;
     [SerializeField] GameObject indicator;
+    RectTransform myTransform;
+    RectTransform indicatorTransform;
 
     // ==============   methods   ==============
     private void Awake(){
         gm = FindObjectOfType<GameManager>();
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
+        myTransform = this.GetComponent<RectTransform>();
+        indicatorTransform = indicator.GetComponent<RectTransform>();
     }
 
     public Timer Init(float t1, float t2, float t3, UnityAction newAction){
         totalTime = t1 + t2 + t3;
+        Debug.Log("total time: " + totalTime);
         callerAction = newAction;
         timePerStage = new float[] {t1, t2, t3};
         timer.Init(timePerStage[currStage], HandleEndStage);
@@ -34,22 +40,36 @@ public class Meter : MonoBehaviour
     }
 
     private void SetupVisuals(){
+        Rect b = myTransform.rect;
+        Vector2 startPos = Vector2.zero;
+        Vector2 upperRightAnchor = new Vector2 (0, 1);
+        //move indicator to start
+        /* indicatorTransform.anchorMax = upperRightAnchor;
+        indicatorTransform.anchorMin = upperRightAnchor;
+        indicatorTransform.pivot = upperRightAnchor;
+        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, 0); */
         //colour in the meter
-        Vector3 pos = new Vector3(this.transform.position.x, this.GetComponent<Renderer>().bounds.max.y, this.transform.position.z);
         for (int index = 0; index < stageColours.Length; index++){
             float n = timePerStage[index]/totalTime;
-            
-            GameObject c = Instantiate(this.gameObject, this.transform);
-            Destroy(c.GetComponent<Meter>());
-            
-            c.transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y * n, transform.localScale.z);
-            c.transform.position = pos;
-            
-            Bounds b = GetComponent<Renderer>().bounds;
-            c.transform.position = pos - new Vector3 (0, b.size.y, 0);
-            pos += new Vector3(0, b.size.y, 0);
 
-            c.GetComponent<SpriteRenderer>().color = stageColours[index];
+            GameObject c = Instantiate(this.gameObject, this.transform);
+            c.transform.SetSiblingIndex(0);
+            Destroy(c.GetComponent<Meter>());
+            foreach(Transform child in c.transform){
+                Destroy(child.gameObject);
+            }
+
+            RectTransform cTransform = c.GetComponent<RectTransform>();
+            cTransform.anchorMax = upperRightAnchor;
+            cTransform.anchorMin = upperRightAnchor;
+            cTransform.pivot = upperRightAnchor;
+
+            cTransform.sizeDelta = new Vector2 (cTransform.sizeDelta.x, cTransform.sizeDelta.y * n);
+            cTransform.Rotate(new Vector3(0, 0, -myTransform.rotation.eulerAngles.z));
+
+            cTransform.anchoredPosition = startPos;
+            startPos -= new Vector2(0, cTransform.rect.height);
+            c.GetComponent<Image>().color = stageColours[index];
         }
     }
 
@@ -65,12 +85,12 @@ public class Meter : MonoBehaviour
     }
 
     private IEnumerator AdjustMeterVisual(){
-        float currTime = 0;
-        Vector3 endPos = new Vector3 (indicator.transform.position.x, this.GetComponent<Renderer>().bounds.min.y, indicator.transform.position.z);
-         while(currTime < totalTime){
-            currTime += Time.deltaTime;
+        float endTime = Time.time + totalTime;
+        Vector2 endPos = new Vector2 (indicatorTransform.anchoredPosition.x, -myTransform.rect.height);
+        float step = (myTransform.rect.height/totalTime) * Time.deltaTime;
+         while(Time.time < endTime){
             // lerp meter indicator towards end goal
-            indicator.transform.position = Vector3.Lerp(indicator.transform.position, endPos, (currTime / totalTime));
+            indicatorTransform.anchoredPosition = Vector2.MoveTowards(indicatorTransform.anchoredPosition, endPos, step);
             yield return null;
         }
     }
