@@ -9,6 +9,7 @@ public class DayManager : MonoBehaviour
     //time stages
     [HideInInspector][SerializeField] Timer dayTimer;
     private float[] timePerStage;
+    public float[] timeStage {set{timePerStage = value;}}
     [SerializeField] Sprite[] timeStageImages;
     private int phaseIndex = -1;
 
@@ -28,19 +29,11 @@ public class DayManager : MonoBehaviour
     // ==============   methods   ==============
     public void Awake(){
         em = FindObjectOfType<EventManager>();
-        em.OnLocationChange += UpdateOnLocationChange;
         gm = FindObjectOfType<GameManager>();
         cm = FindObjectOfType<CustomerManager>();
         ld = FindObjectOfType<LevelDesignScript>();
 
         dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-    }
-
-    private void UpdateOnLocationChange(Location next){
-        //Debug.Log("called Update on Location in Day Manager");
-        //update the generator
-        timePerStage = next.timeStages;
-        //ResetVars();
     }
 
     private void HandleDayChange(){
@@ -60,10 +53,10 @@ public class DayManager : MonoBehaviour
     }
 
     private void Init(float time){
-        em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
         //dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         dayTimer.Init(time, HandleDayChange, timeText);
         dayTimer.StartTimer();
+        em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
     }
 
     public void ResetVars(){

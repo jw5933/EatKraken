@@ -56,6 +56,8 @@ public class Generator : MonoBehaviour
         customerPrefabs = next.customers;
         customersPerStage = next.customersPerStage;
         proteinPrefabs = next.proteins;
+
+        dm.timeStage = next.timeStages;
         dm.ResetVars();
         CreatePCList();
     }
