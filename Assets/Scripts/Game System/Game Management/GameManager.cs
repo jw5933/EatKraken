@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject theTimerPrefab;
     public GameObject timerPrefab{get{return theTimerPrefab;}}
+    
+    [SerializeField] private GameObject theMeterPrefab;
+    public GameObject meterPrefab{get{return theMeterPrefab;}}
 
     [SerializeField] private GameObject thePopUpMessagePrefab;
     public GameObject popUpMessagePrefab{get{return thePopUpMessagePrefab;}}
