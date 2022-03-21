@@ -30,6 +30,7 @@ public class Customer : MonoBehaviour
     private Text orderText;
     private int myTimePhase;
     public int phase{set{myTimePhase = value;}}
+    private GameObject order;
 
     //timer vars
     [Header("Wait Times")]
@@ -37,6 +38,9 @@ public class Customer : MonoBehaviour
     [SerializeField] private float myNeutralWaitTime;
     [SerializeField] private float myAngryWaitTime;
     private Timer waitTimer;
+
+    //timer vars
+    private Meter meter;
 
     //econ vars
     [Header("Tipping")]
@@ -56,10 +60,10 @@ public class Customer : MonoBehaviour
         em = FindObjectOfType<EventManager>();
 
         CreateOrder();
+        CreateMeter();
         CreateAppearance();
-        //ensure inactive
-        waitTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-        waitTimer.Init(myHappyWaitTime, EndTimerHandler, orderText);
+
+
         this.gameObject.SetActive(false);
     }
 
@@ -71,7 +75,7 @@ public class Customer : MonoBehaviour
 
     public void CreateOrder(){
         orderUiIndex = 0;
-        GameObject order = Instantiate(gm.orderPrefab, this.transform);
+        order = Instantiate(gm.orderPrefab, this.transform);
         orderText = order.transform.GetChild(1).GetComponent<Text>(); //FIX: DELETE
         foreach(Transform child in order.transform){
             Image i = child.gameObject.GetComponent<Image>();
@@ -79,6 +83,17 @@ public class Customer : MonoBehaviour
         }
         RectTransform r = order.GetComponent<RectTransform>();
         GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
+    }
+    private void CreateMeter(){
+        meter = Instantiate(gm.meterPrefab, order.transform).GetComponent<Meter>();
+        RectTransform meterTransform = meter.gameObject.GetComponent<RectTransform>();
+        RectTransform orderTransform = order.gameObject.GetComponent<RectTransform>();
+        float offset = 25f;
+
+        meterTransform.sizeDelta = new Vector2 (meterTransform.sizeDelta.x, orderTransform.sizeDelta.x);
+        meterTransform.anchoredPosition = new Vector2(0, -(orderTransform.rect.height + meterTransform.rect.width + offset));
+        
+        waitTimer = meter.Init(myHappyWaitTime, myNeutralWaitTime, myAngryWaitTime, EndTimerHandler);
     }
 
     public void CreateAppearance(){
@@ -93,7 +108,7 @@ public class Customer : MonoBehaviour
 
     private void Activate(){
         this.gameObject.SetActive(true);
-        waitTimer.StartTimer();
+        meter.StartMeter();
     }
 
     public void Init(){
@@ -157,15 +172,12 @@ public class Customer : MonoBehaviour
     }
 
     public void EndTimerHandler(){
-        //waitTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         switch(myMood){
             case Mood.Happy:
-                waitTimer.Init(myNeutralWaitTime, EndTimerHandler, orderText);
                 myCustomer.sprite = mySprites[currSpriteState++];
                 myMood = Mood.Neutral;
             break;
             case Mood.Neutral:
-                waitTimer.Init(myAngryWaitTime, EndTimerHandler, orderText);
                 myCustomer.sprite = mySprites[currSpriteState];
                 myMood = Mood.Angry;
             break;
@@ -174,7 +186,6 @@ public class Customer : MonoBehaviour
                 Leave();
             return;
         }
-        waitTimer.StartTimer();
     }
 
     private void Leave(){
