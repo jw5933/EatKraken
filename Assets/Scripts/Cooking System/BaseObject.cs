@@ -21,6 +21,8 @@ public class BaseObject : Draggable
 
     private Player player;
     private Animator anim;
+
+    
     // ==============   functions   ==============
     private void Awake(){
         player = FindObjectOfType<Player>();

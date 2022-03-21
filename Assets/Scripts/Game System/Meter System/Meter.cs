@@ -16,8 +16,8 @@ public class Meter : MonoBehaviour
     GameManager gm;
 
     IEnumerator myCoroutine;
-    bool changedStage;
-    
+    [SerializeField] GameObject indicator;
+
     // ==============   methods   ==============
     private void Awake(){
         gm = FindObjectOfType<GameManager>();
@@ -34,37 +34,49 @@ public class Meter : MonoBehaviour
     }
 
     private void SetupVisuals(){
-        /*
-        colour in the meter
-            calculate by degrees
-        */
+        //colour in the meter
+        Vector3 pos = new Vector3(this.transform.position.x, this.GetComponent<Renderer>().bounds.max.y, this.transform.position.z);
+        for (int index = 0; index < stageColours.Length; index++){
+            float n = timePerStage[index]/totalTime;
+            
+            GameObject c = Instantiate(this.gameObject, this.transform);
+            Destroy(c.GetComponent<Meter>());
+            
+            c.transform.localScale = new Vector3 (transform.localScale.x, transform.localScale.y * n, transform.localScale.z);
+            c.transform.position = pos;
+            
+            Bounds b = GetComponent<Renderer>().bounds;
+            c.transform.position = pos - new Vector3 (0, b.size.y, 0);
+            pos += new Vector3(0, b.size.y, 0);
+
+            c.GetComponent<SpriteRenderer>().color = stageColours[index];
+        }
     }
 
     public void StartMeter(){
         myCoroutine = AdjustMeterVisual();
         StartCoroutine(myCoroutine);
+        timer.StartTimer();
     }
 
      public void StopMeter(){
         if (myCoroutine != null) StopCoroutine(myCoroutine);
+        timer.StopTimer();
     }
 
     private IEnumerator AdjustMeterVisual(){
-       /*  while(currTime < totalTime){
-            currTime -= Time.deltaTime;
+        float currTime = 0;
+        Vector3 endPos = new Vector3 (indicator.transform.position.x, this.GetComponent<Renderer>().bounds.min.y, indicator.transform.position.z);
+         while(currTime < totalTime){
+            currTime += Time.deltaTime;
             // lerp meter indicator towards end goal
+            indicator.transform.position = Vector3.Lerp(indicator.transform.position, endPos, (currTime / totalTime));
             yield return null;
         }
-        changedStage = false; */
-        return null;
     }
 
     private void HandleEndStage(){
-        /* 
-        if not at end stage
-        initiate next stage and start the timer
-        let caller know that its stage has changed
-        */
+        callerAction();
         if(currStage + 1 < timePerStage.Length){
             timer.Init(timePerStage[++currStage], HandleEndStage);
             timer.StartTimer();
