@@ -25,8 +25,11 @@ public class HealthManager : MonoBehaviour
     GameManager gm;
     
     // ==============   methods   ==============
-    private void Start(){
+    private void Awake(){
         gm = FindObjectOfType<GameManager>();
+    }
+
+    private void Start(){
         maxHearts = playerHearts;
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
         myHearts = new Image[currentHeart+1];
@@ -42,8 +45,11 @@ public class HealthManager : MonoBehaviour
         Debug.Log("player health: " + playerHearts);
         prevHeart = currentHeart;
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
-        if (playerHearts >= 0) UpdateHealthUI();
-        else gm.HandlePlayerDeath(); //check if the player has died
+        
+        if (playerHearts >= 0) 
+            UpdateHealthUI();
+        else 
+            StartCoroutine(gm.HandleEndGame("You've overworked yourself and had to call in sick. Your boss didn't like that much, and fired you! Try again... \n Press <R> to retry.")); //check if the player has died
     }
 
     private void UpdateHealthUI(){

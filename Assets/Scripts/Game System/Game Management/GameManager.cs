@@ -46,20 +46,25 @@ public class GameManager : MonoBehaviour
     //other vars
     [Header("Game Variables")]
     [SerializeField] Location firstLocation;
+    //FIX: should update onlocationchange
+    public string currLocation {get{return firstLocation.name;}}
     [SerializeField] private int theMaxIngredients;
     public int maxIngredients {get{return theMaxIngredients;}}
+
+    //end state
+    [Header("End State")]
+    [SerializeField] private Text endText;
+    [SerializeField] private GameObject endImage;
     
 
     // ==============   methods   ==============
     
     void Awake()
     {
-        //set variables before start is called
         FindObjectOfType<Map>().selectedLocation = firstLocation;
     }
-    
-    void Update()
-    {
+
+    void Update(){
         CheckRestart();
     }
 
@@ -70,7 +75,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void HandlePlayerDeath(){ //check if the player has died (what conditions? if on no hearts?)
-
+    public IEnumerator HandleEndGame(string endString){ //check if the player has died (what conditions? if on no hearts?)
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 0;
+        endImage.SetActive(true);
+        endText.text = endString;
     }
 }

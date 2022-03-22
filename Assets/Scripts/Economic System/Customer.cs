@@ -53,6 +53,7 @@ public class Customer : MonoBehaviour
     //references
     private GameManager gm;
     private EventManager em;
+    private CustomerManager cm;
 
     // ==============   methods   ==============
     public void Awake(){
@@ -189,7 +190,7 @@ public class Customer : MonoBehaviour
     }
 
     private void Leave(){
+        FindObjectOfType<CustomerManager>().RemoveCustomer(this);
         Destroy(myCustomerAnim.gameObject);
-        Destroy(this.gameObject);
     }
 }

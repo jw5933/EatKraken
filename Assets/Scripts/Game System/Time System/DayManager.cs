@@ -11,15 +11,19 @@ public class DayManager : MonoBehaviour
     private float[] timePerStage;
     public float[] timeStage {set{timePerStage = value;}}
     [SerializeField] Sprite[] timeStageImages;
-    private int phaseIndex = -1;
+    bool isOvertime;
+    public bool overtime {get{return isOvertime;}}
 
+    private int phaseIndex = -1;
     public int phase {get{return phaseIndex;}}
     public int numOfPhases {get{return timePerStage.Length;}}
 
-    //FIX: delete
     [SerializeField] SpriteRenderer customerBackground;
-
     [SerializeField] Text timeText;
+
+    //FIX: save to location
+    private int locationDay = 1;
+    public int day{get{return locationDay;}}
 
     GameManager gm;
     EventManager em;
@@ -38,7 +42,7 @@ public class DayManager : MonoBehaviour
 
     private void HandleDayChange(){
         if (phaseIndex+1 >= timePerStage.Length){
-            if (!cm.lineUpIsEmpty) WorkOvertime();
+            if (!cm.lineUpIsEmpty) isOvertime = true;
             //FIX: show working overtime
             return;
         }
@@ -46,10 +50,6 @@ public class DayManager : MonoBehaviour
         //FIX: change the visuals
         if (phaseIndex < timeStageImages.Length) customerBackground.sprite = timeStageImages[phaseIndex];
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
-    }
-
-    private void WorkOvertime(){ //FIX
-        Debug.Log("working overtime");
     }
 
     private void Init(float time){
@@ -63,5 +63,9 @@ public class DayManager : MonoBehaviour
         dayTimer.StopTimer();
         phaseIndex = 0;
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
+    }
+
+    private void GoNextDay(){
+        locationDay++;
     }
 }
