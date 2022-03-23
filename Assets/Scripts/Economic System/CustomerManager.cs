@@ -6,7 +6,7 @@ public class CustomerManager : MonoBehaviour
 {
     // ==============   variables   ==============
     [SerializeField] private Customer firstCustomer;
-    private Customer selectedCustomer;
+    [SerializeField] private Customer selectedCustomer;
 
     private List<Customer> lineup = new List<Customer>();
     public bool lineUpIsEmpty{get{return lineup.Count == 0;}}
@@ -33,23 +33,24 @@ public class CustomerManager : MonoBehaviour
         if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame("Your customers were unhappy with your service, and complained to your boss. You got fired. Try again... \n Press <R> to retry"));
     }
 
+    public void SelectCustomer(Customer c){
+        if (selectedCustomer !=null) selectedCustomer.Deselect();
+        selectedCustomer = c;
+        selectedCustomer.Select();
+    }
+
     public void RemoveCustomer(Customer c){
         lineup.Remove(c);
         Destroy(c.gameObject);
         if (dm.overtime && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
     }
 
-    public void ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve
-        if (selectedCustomer == null) {
-            if (firstCustomer !=null){
-                firstCustomer.CheckOrder(order);
-                if (lineup.Count > 0){
-                    firstCustomer = lineup[0];
-                }
-                else firstCustomer = null;
-            }
+    public bool ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve
+        if (selectedCustomer != null) {
+            selectedCustomer.CheckOrder(order);
+            return true;
         }
-        else selectedCustomer.CheckOrder(order);
+        return false;
     }
 
     public void LineupCustomer(Customer c){ //line up the customer behind the current end one
