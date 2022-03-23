@@ -28,25 +28,31 @@ public class DropObject : MonoBehaviour
         baseObj = FindObjectOfType<BaseObject>();
     }
 
-    public void OnMouseDown(){
+    public void OnMouseUp(){
+        List<Ingredient> orderCopy = new List<Ingredient>(player.order);
         //Debug.Log(this.name);
         switch (myType){
             case Type.Serve:
                 if (player.holdingBase && player.order.Count > 0){
                     //Debug.Log("serving");
-                    cm.ServeCustomer(player.order);
-
-                    if (baseObj.orderobj !=null){
-                        player.DropItem("any");
-                        baseObj.orderobj.SetActive(false);
+                    
+                    if (cm.ServeCustomer(orderCopy)){
+                        if (baseObj.orderobj !=null){
+                            player.DropItem("any");
+                            baseObj.ResetVars();
+                        }
+                        player.ClearOrder(); 
                     }
-                    player.ClearOrder(); 
                 }
             break;
 
             case Type.Consume:
                 if (player.holdingBase && player.order.Count > 0){
-                    hm.CheckConsume(player.order);
+                    hm.CheckConsume(orderCopy);
+                    if (baseObj.orderobj !=null){
+                        player.DropItem("any");
+                        baseObj.ResetVars();
+                    }
                     player.ClearOrder();
                 }
             break;

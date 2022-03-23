@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     // ==============   variables   ==============
-    public Text tempOrderText;
     private bool isHoldingBase;
     public bool holdingBase{get{return isHoldingBase;}}
     
@@ -25,16 +24,6 @@ public class Player : MonoBehaviour
     [SerializeField] private List <Ingredient> currentOrder = new List <Ingredient>();
     public List<Ingredient> order {get {return currentOrder;}}
 
-    //vars to create protein
-    private float endTime;
-    private bool canCreateProtein;
-    private int wantedProtein;
-
-    private KeyCode[] keyCodes = {
-         KeyCode.Alpha1
-         //FIX: add keycodes as needed
-     };
-
     //vectors & planes
     Vector3 mousePos;
     Vector3 mouseDistanceFromCamera;
@@ -49,14 +38,12 @@ public class Player : MonoBehaviour
 
     //references
     CameraManager cam;
-    ProteinManager pm;
     GameManager gm;
 
 
     // ==============   functions   ==============
     private void Awake(){
         cam = FindObjectOfType<CameraManager>();
-        pm = GetComponent<ProteinManager>();
         gm = FindObjectOfType<GameManager>();
 
         mouseDistanceFromCamera = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z + mouseDistanceZ);
@@ -64,9 +51,10 @@ public class Player : MonoBehaviour
         mousePlane = new Plane(Vector3.up, mouseDistanceFromCamera);
         ResetPlane();
     }
+
     public void Update(){
         if (heldItem !=null) UpdateMouseItem();
-        CheckInput();
+        
     }
 
     private void UpdateMouseItem(){
@@ -92,33 +80,6 @@ public class Player : MonoBehaviour
 
     public void ResetPlane(){
         currentPlane = mousePlane;
-    }
-
-    private void CheckInput(){
-        ValidateCreateProtein();
-    }
-
-    private void ValidateCreateProtein(){
-        for(int n = 0; n < keyCodes.Length; n++){
-            if (Input.GetKeyDown(keyCodes[n]) && !canCreateProtein) {
-                if (!isHandFree) return;
-                canCreateProtein = true;
-                float startTime = Time.time;
-                endTime = startTime + pm.countdown;
-                Debug.Log(string.Format("start time: %d, end time: %d", startTime, endTime));
-
-                pm.AnimateCreateProtein();
-            }
-            if (Input.GetKeyUp(keyCodes[n]) && canCreateProtein) {
-                canCreateProtein = false;
-                pm.StopAnim();
-            }
-            if (Time.time >= endTime && canCreateProtein) {
-                canCreateProtein = false;
-                pm.CreateProtein(n);
-                pm.StopAnim();
-            }
-        } 
     }
 
     public void PickUpItem(GameObject item){ //pick up an item, and sort it into the correct script type
@@ -184,12 +145,11 @@ public class Player : MonoBehaviour
     }
 
     private void HandleNoItems(){
+        isHandFree = true;
         heldTool = null;
         heldIngredient = null;
         heldItem = null;
         isHoldingBase = false;
-        
-        isHandFree = true;
         //cam.ShowButtons();
     }
 
@@ -199,18 +159,19 @@ public class Player : MonoBehaviour
     }
 
     //add held ingredient to the order
-    public Vector3 AddToCurrentOrder(Vector3 pos, Vector3 angle, Transform t){
+    public bool AddToCurrentOrder(Vector3 pos, Vector3 angle, Transform t){
         if (heldIngredient!= null && heldIngredient.AtEndState()){
             //check if the type is accepted, if it is then add the ingredient
             if (CheckCanAddIngredient(heldIngredient.type, currentOrder.Count)){
                 currentOrder.Add(heldIngredient);
                 heldIngredient.GetComponent<Collider>().enabled = false;
-                heldIngredient.transform.SetParent(t);
+                heldIngredient.transform.SetParent(t, true);
                 //Update the visuals to reflect addition of ingredient
-                return UpdateOrderVisual(pos, angle);
+                UpdateOrderVisual(pos, angle);
+                return true;
             }
         }
-        return pos;
+        return false;
     }
 
     private bool CheckCanAddIngredient(Ingredient.Type t, int ingredientsAdded){
@@ -221,19 +182,11 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    private Vector3 UpdateOrderVisual(Vector3 pos, Vector3 angle){
-        Bounds b = heldIngredient.GetComponent<Renderer>().bounds;
+    private void UpdateOrderVisual(Vector3 pos, Vector3 angle){
         heldIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
-        heldIngredient.transform.position = pos - new Vector3 (0, b.size.y, 0);
+        heldIngredient.transform.position = pos;
         heldIngredient.transform.Rotate(angle - heldIngredient.transform.eulerAngles, Space.World);
-        
-        Vector3 iSize = Vector3.zero;
-        if(heldIngredient.type != Ingredient.Type.Base && heldIngredient.type != Ingredient.Type.Carb){
-            iSize += new Vector3 (0, b.size.y, 0);
-        }
-
         HandleNoItems();
-        return pos + new Vector3(0, iSize.y, 0);
     }
 
     public void ClearOrder(){
@@ -242,7 +195,6 @@ public class Player : MonoBehaviour
             Destroy(i.gameObject);
         }
         currentOrder.Clear();
-        tempOrderText.text = "Order:";//FIX: delete
     }
     
     public bool ValidateToolLines(Ingredient i){ //validate by checking if player is holding the required tool
