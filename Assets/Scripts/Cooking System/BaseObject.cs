@@ -64,7 +64,6 @@ public class BaseObject : Draggable
 
     private void OnMouseExit(){
         if (player.handFree) return;
-        ResetVars();
     }
 
     private void OnMouseDown(){
@@ -90,16 +89,16 @@ public class BaseObject : Draggable
         base.VerifyDistance(endPos, initialPos);
     }
 
-    public override void HandleDragged(){
+    protected override void HandleDragged(){
         //FIX: change visual as the player drags
         AnimateFinalize();
     }
 
-    public override void HandleNotDragged(){
+    protected override void HandleNotDragged(){
     }
 
-    public void AnimateFinalize(){
-        anim.SetTrigger("Finalize");
+    private void AnimateFinalize(){
+        if (anim != null) anim.SetTrigger("Finalize");
     }
 
     public void HandleAnimation(){
@@ -118,8 +117,5 @@ public class BaseObject : Draggable
     private void HandlePickUp(GameObject o){
         if (orderObject == null && myArea != null) myArea.HandlePickUp();
         player.PickUpItem(o);
-    }
-
-    public void ResetVars(){
     }
 }
