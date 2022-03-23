@@ -39,7 +39,7 @@ public class CustomerManager : MonoBehaviour
         if (dm.overtime && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
     }
 
-    public void ServeCustomer(List<string> order){
+    public void ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve
         if (selectedCustomer == null) {
             if (firstCustomer !=null){
                 firstCustomer.CheckOrder(order);

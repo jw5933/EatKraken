@@ -37,9 +37,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float myHappyWaitTime;
     [SerializeField] private float myNeutralWaitTime;
     [SerializeField] private float myAngryWaitTime;
-    private Timer waitTimer;
-
-    //timer vars
+    private Timer timer;
     private Meter meter;
 
     //econ vars
@@ -89,12 +87,12 @@ public class Customer : MonoBehaviour
         meter = Instantiate(gm.meterPrefab, order.transform).GetComponent<Meter>();
         RectTransform meterTransform = meter.gameObject.GetComponent<RectTransform>();
         RectTransform orderTransform = order.gameObject.GetComponent<RectTransform>();
-        float offset = 25f;
+        float offset = 0f;
 
         meterTransform.sizeDelta = new Vector2 (meterTransform.sizeDelta.x, orderTransform.sizeDelta.x);
         meterTransform.anchoredPosition = new Vector2(0, -(orderTransform.rect.height + meterTransform.rect.width + offset));
         
-        waitTimer = meter.Init(myHappyWaitTime, myNeutralWaitTime, myAngryWaitTime, EndTimerHandler);
+        timer = meter.Init(myHappyWaitTime, myNeutralWaitTime, myAngryWaitTime, 0, EndTimerHandler);
     }
 
     public void CreateAppearance(){
@@ -119,12 +117,22 @@ public class Customer : MonoBehaviour
         //IDEA: spawn along a line in 3D space & move forward until colliding with object in fromt; each step increase size
         myCustomerAnim.SetTrigger("MoveToFront");
     }
-
-    public void CheckOrder(List<string> given){
+    //check state & ingrdient
+    public void CheckOrder(List<Ingredient> given){
         int wrongIngredient = myOrder.Count;
-        List<string> check = new List<string>(given);
+        bool wrongState = false;
+        List<string> order = new List<string>();
+        //create a new list of strings to check against order, check if any ingredients are not in the right cooking state
+        foreach(Ingredient i in given){
+            if (!wrongState && i.cookedState != i.requiredState){
+                wrongState = true;
+            }
+            order.Add(i.name);
+        }
+
+        List<string> check = new List<string>(order);
         check.RemoveAt(0); //remove the base
-        foreach(string i in given){
+        foreach(string i in order){
             if (myOrder.Remove(i)){
                 wrongIngredient--;
                 check.Remove(i);
