@@ -29,16 +29,13 @@ public class DropObject : MonoBehaviour
     }
 
     public void OnMouseDown(){
-        Debug.Log(this.name);
+        //Debug.Log(this.name);
         switch (myType){
             case Type.Serve:
                 if (player.holdingBase && player.order.Count > 0){
                     //Debug.Log("serving");
-                    List<string> order = new List<string>();
-                    foreach(Ingredient i in player.order){
-                        order.Add(i.name);
-                    }
-                    cm.ServeCustomer(order);
+                    cm.ServeCustomer(player.order);
+
                     if (baseObj.orderobj !=null){
                         player.DropItem("any");
                         baseObj.orderobj.SetActive(false);
