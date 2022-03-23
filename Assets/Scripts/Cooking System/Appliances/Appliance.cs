@@ -15,6 +15,7 @@ public class Appliance : MonoBehaviour
 
     //carb cooker
     protected Ingredient myIngredient;
+    public Ingredient ingredient {set{myIngredient = value;}}
     [SerializeField] protected Ingredient.Type myIngredientType;
 
     protected Player player;
@@ -28,13 +29,16 @@ public class Appliance : MonoBehaviour
 
     //if the player presses this object, what should happen?
     public void OnMouseDown(){
+        Debug.Log("appliance on mouse down");
         switch (myType){
             case Type.Timed: //start its associated function
-                if (!player.handFree) StartTimer();
+                Debug.Log("clicked timer");
+                StartTimer();
             break;
 
             case Type.Metered:
-                if (!player.handFree) StartMeter();
+                Debug.Log("clicked metered");
+                StartMeter();
             break;
         }
     }
@@ -50,15 +54,6 @@ public class Appliance : MonoBehaviour
     }
 
     // ==============   functions   ==============
-    // start the carbohydrates (timed) cooker
-    protected bool DropIngredient(){
-        //see if the player is holding an ingredient
-        GameObject i = player.DropItem("ingredient");
-        if (i == null) return false;
-        myIngredient = i.GetComponent<Ingredient>();
-        return true;
-    }
-
     protected virtual void StartTimer(){}
 
     protected virtual void StartMeter(){}

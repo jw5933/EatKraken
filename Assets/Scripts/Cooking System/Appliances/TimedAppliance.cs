@@ -11,16 +11,26 @@ public class TimedAppliance : Appliance
 
     protected override void Awake(){
         base.Awake();
-        base.myType = Appliance.Type.Timed;
+        myType = Appliance.Type.Timed;
     }
     
     protected override void StartTimer(){
+        Debug.Log("starting timer");
         if (timer == null) timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         //don't cook the wrong ingredient, or ingredients that are already cooked
-        if (!DropIngredient() || myIngredient.type != myIngredientType || myIngredient.imgState >= maxState)
+        
+        //see if the player is holding an ingredient
+        GameObject i = player.DropItem("ingredient");
+        if (i == null) return;
+        myIngredient = i.GetComponent<Ingredient>();
+        if (myIngredient.type != myIngredientType || myIngredient.imgState >= myIngredient.maxImageState){
+            player.PickUpItem(myIngredient.gameObject);
             return;
+        }
+            
 
         //start timer
+        Debug.Log("starting timer");
         myIngredient.gameObject.SetActive(false);
         timer.Init(myCookingTime, HandleEndTimer, timedCarbText);
         timer.StartTimer();
@@ -28,8 +38,8 @@ public class TimedAppliance : Appliance
     }
 
     protected override void HandleEndTimer(){
-        if (myIngredient != null) myIngredient.ChangeImageState();
-        myIngredient.transform.position = this.transform.position + new Vector3(0,0,0.2f);
+        if (myIngredient != null) myIngredient.ChangeCookedState();
+        myIngredient.transform.position = this.transform.position + new Vector3(0,0,- 0.2f);
         myIngredient.gameObject.SetActive(true);
     }
 }
