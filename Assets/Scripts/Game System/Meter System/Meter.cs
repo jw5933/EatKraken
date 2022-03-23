@@ -11,15 +11,19 @@ public class Meter : MonoBehaviour
     private float totalTime;
     [SerializeField] private float [] timePerStage;
     [SerializeField] private Color[] stageColours = new Color[3];
+    private RectTransform[] stateImages = new RectTransform[3];
 
     private int currStage;
     UnityAction callerAction;
-    GameManager gm;
+    private float myCallerTime;
+    public float callerTime {get{return myCallerTime;}}
 
     IEnumerator myCoroutine;
     [SerializeField] GameObject indicator;
     RectTransform myTransform;
     RectTransform indicatorTransform;
+
+    GameManager gm;
 
     // ==============   methods   ==============
     private void Awake(){
@@ -27,49 +31,72 @@ public class Meter : MonoBehaviour
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         myTransform = this.GetComponent<RectTransform>();
         indicatorTransform = indicator.GetComponent<RectTransform>();
+        InitialSetUpVisuals();
     }
 
-    public Timer Init(float t1, float t2, float t3, UnityAction newAction){
+    public Timer Init(float t1, float t2, float t3, float tStart, UnityAction newAction){
+        myCallerTime = tStart;
         totalTime = t1 + t2 + t3;
         Debug.Log("total time: " + totalTime);
         callerAction = newAction;
         timePerStage = new float[] {t1, t2, t3};
+
+        //get what stage meter should be in and the indicator position
+        float indicatorTime = tStart/totalTime;
+        float indicatorPos = myTransform.rect.height * indicatorTime;
+        
+        if ((tStart -= t1) < 0){ //in stage 1
+            currStage = 0;
+        }
+        else if((tStart -= t2) < 0){ //stage 2
+            currStage = 1;
+        }
+        else{ //stage 3
+            currStage = 2;
+        }
         timer.Init(timePerStage[currStage], HandleEndStage);
-        SetupVisuals();
+        SetupVisuals(indicatorPos);
         return timer;
     }
 
-    private void SetupVisuals(){
-        Rect b = myTransform.rect;
-        Vector2 startPos = Vector2.zero;
+    private void InitialSetUpVisuals(){
         Vector2 upperRightAnchor = new Vector2 (0, 1);
         //move indicator to start
-        /* indicatorTransform.anchorMax = upperRightAnchor;
-        indicatorTransform.anchorMin = upperRightAnchor;
-        indicatorTransform.pivot = upperRightAnchor;
-        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, 0); */
-        //colour in the meter
-        for (int index = 0; index < stageColours.Length; index++){
-            float n = timePerStage[index]/totalTime;
+        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, 0);
 
+        for (int index = 0; index < stateImages.Length; index++){
+            //create each section of meter
             GameObject c = Instantiate(this.gameObject, this.transform);
             c.transform.SetSiblingIndex(0);
             Destroy(c.GetComponent<Meter>());
             foreach(Transform child in c.transform){
                 Destroy(child.gameObject);
             }
-
+            //adjust meter and add it to images
             RectTransform cTransform = c.GetComponent<RectTransform>();
             cTransform.anchorMax = upperRightAnchor;
             cTransform.anchorMin = upperRightAnchor;
             cTransform.pivot = upperRightAnchor;
-
-            cTransform.sizeDelta = new Vector2 (cTransform.sizeDelta.x, cTransform.sizeDelta.y * n);
             cTransform.Rotate(new Vector3(0, 0, -myTransform.rotation.eulerAngles.z));
-
-            cTransform.anchoredPosition = startPos;
-            startPos -= new Vector2(0, cTransform.rect.height);
             c.GetComponent<Image>().color = stageColours[index];
+
+            stateImages[index] = cTransform;
+        }
+    }
+
+    private void SetupVisuals(float indicatorPos){
+        Rect b = myTransform.rect;
+        Vector2 startPos = Vector2.zero;
+
+        //move indicator to position
+        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, indicatorPos);
+
+        for (int index = 0; index < stateImages.Length; index++){
+            float n = timePerStage[index]/totalTime;
+            //move image
+            stateImages[index].sizeDelta = new Vector2 (stateImages[index].sizeDelta.x, stateImages[index].sizeDelta.y * n);
+            stateImages[index].anchoredPosition = startPos;
+            startPos -= new Vector2(0, stateImages[index].rect.height);
         }
     }
 
@@ -81,6 +108,7 @@ public class Meter : MonoBehaviour
 
      public void StopMeter(){
         if (myCoroutine != null) StopCoroutine(myCoroutine);
+        myCallerTime += timer.GetTime();
         timer.StopTimer();
     }
 
@@ -96,11 +124,11 @@ public class Meter : MonoBehaviour
     }
 
     private void HandleEndStage(){
+        myCallerTime += timer.GetTime();
         callerAction();
         if(currStage + 1 < timePerStage.Length){
             timer.Init(timePerStage[++currStage], HandleEndStage);
             timer.StartTimer();
         }
     }
-
 }
