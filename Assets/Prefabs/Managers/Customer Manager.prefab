@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstCustomer: {fileID: 0}
+  maxLostCustomers: 3
 --- !u!114 &4807230167176973866
 MonoBehaviour:
   m_ObjectHideFlags: 0
