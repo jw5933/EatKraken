@@ -5,16 +5,19 @@ using UnityEngine;
 public class Ingredient : MonoBehaviour
 {
     // ==============   variables   ==============
-    //references
-    private Player player;
-    private SharedArea myArea;
-    public SharedArea area{set{myArea = value;}}
-
-
     //type of ingredient
     public enum Type {Base, Carb, Vegetable, Protein}
     [SerializeField] private Type myType = Ingredient.Type.Vegetable;
     public Type type {get{return myType;}}
+
+    //ingredient state
+    public enum CookedState {Raw, Cooked, Burnt}
+    private CookedState myCookedState = CookedState.Raw;
+    public CookedState cookedState {get{return myCookedState;}}
+    [SerializeField]private CookedState myRequiredState;
+    public CookedState requiredState {get{return myRequiredState;}}
+    private float myCookedTime;
+    public float cookedTime {get{return myCookedTime;} set{myCookedTime = value;}}
 
     //personalized variables for each kind of non-protein (order checking)
     [SerializeField] private string myName;
@@ -25,7 +28,7 @@ public class Ingredient : MonoBehaviour
     //image states
     [SerializeField] private Sprite[] imageStates;
     [HideInInspector][SerializeField] private int myImageState = 0; //initial state is 0
-    public int state{get{return myImageState;}}
+    public int imgState{get{return myImageState;}}
     public Sprite initialSprite {get{return imageStates[0];}}
     private SpriteRenderer mySpriteRenderer;
 
@@ -49,8 +52,13 @@ public class Ingredient : MonoBehaviour
     Plane myPlane;
     public Plane plane {get{return myPlane;}}
 
+    //references
+    private Player player;
+    private SharedArea myArea;
+    public SharedArea area{set{myArea = value;}}
+
     // ==============   methods   ==============
-    public void OnEnable(){
+    public void Awake(){
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<Collider>();
         foreach (Transform child in transform){
@@ -93,6 +101,7 @@ public class Ingredient : MonoBehaviour
             }
         }
     }
+
     private void OnMouseExit(){
         player.ResetPlane();
     }
@@ -146,13 +155,27 @@ public class Ingredient : MonoBehaviour
         myToolLines.Remove(t);
     }
     
-    public void ChangeState(){ //check if the image state of the object needs to be changed based on motions used
+    public void ChangeImageState(){ //check if the image state of the object needs to be changed based on motions used
         if (myImageState >= imageStates.Length) return;
         myMotionsLeft--;
         if (myMotionsLeft <= 0) {
             myMotionsLeft = motionsToStateChange;
             myImageState++;
             if (myImageState < imageStates.Length) mySpriteRenderer.sprite = imageStates[myImageState];
+        }
+    }
+
+    public virtual void ChangeCookedState(){
+        switch(myCookedState){
+            case CookedState.Raw:
+                myCookedState = CookedState.Cooked;
+            break;
+            case CookedState.Cooked:
+                myCookedState = CookedState.Burnt;
+            break;
+            case CookedState.Burnt:
+                //FIX: what happens if its already burnt?? -> overcooked (fire)?
+            break;
         }
     }
 
