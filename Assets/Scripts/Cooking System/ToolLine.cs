@@ -47,6 +47,7 @@ public class ToolLine: Draggable
     private void OnMouseDown(){
         if (player.handFree || !iCanClick) return;
         //Initialize variables
+        mySpriteRend.color = Color.green;
         initialPos = base.GetProjectionOnPlane();
     }
 
