@@ -56,16 +56,16 @@ public class ToolLine: Draggable
 
         base.VerifyDistance(endPos, initialPos);
     }
-    public override void HandleDragged(){
-        ingredient.ChangeState();
+    protected override void HandleDragged(){
+        ingredient.ChangeImageState();
         ingredient.RemoveToolLine(this);
         Destroy(this.gameObject);
     }
-    public override void HandleNotDragged(){
+    protected override void HandleNotDragged(){
         mySpriteRend.color = Color.yellow;
     }
 
-    public void ResetVars(){
+    protected void ResetVars(){
         mySpriteRend.color = Color.white;
     }
 }

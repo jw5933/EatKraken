@@ -122,10 +122,11 @@ public class Player : MonoBehaviour
     }
 
     public void PickUpItem(GameObject item){ //pick up an item, and sort it into the correct script type
+        if (item == null) return;
         HandleHasItem();
         heldItem = item;
         //disable collider
-        Debug.Log(heldItem.name);
+        //Debug.Log(heldItem.name);
         Collider c = heldItem.GetComponent<Collider>();
         if (c !=null) c.enabled = false;
         Collider2D c2 = heldItem.GetComponent<Collider2D>();
