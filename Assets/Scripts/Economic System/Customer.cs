@@ -26,7 +26,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     private List<Image> orderUi = new List<Image>();
-    private int orderUiIndex;
+    private List<Sprite> orderUiSprites = new List<Sprite>();
     private Text orderText;
     private int myTimePhase;
     public int phase{set{myTimePhase = value;}}
@@ -73,15 +73,13 @@ public class Customer : MonoBehaviour
     }
 
     public void CreateOrder(){
-        orderUiIndex = 0;
         order = Instantiate(gm.orderPrefab, this.transform);
-        orderText = order.transform.GetChild(1).GetComponent<Text>(); //FIX: DELETE
         foreach(Transform child in order.transform){
             Image i = child.gameObject.GetComponent<Image>();
             if (i !=null) orderUi.Add(i);
         }
         RectTransform r = order.GetComponent<RectTransform>();
-        GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
+        //GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
     }
     private void CreateMeter(){
         meter = Instantiate(gm.meterPrefab, order.transform).GetComponent<Meter>();
@@ -111,6 +109,7 @@ public class Customer : MonoBehaviour
     }
 
     public void Init(){
+        UpdateOrderUI();
         //FIX: "spawn" character -> need a way to sort them smaller when they spawn
         //and move them up as customers leave (like theyre in a line)
 
@@ -124,7 +123,7 @@ public class Customer : MonoBehaviour
         List<string> order = new List<string>();
         //create a new list of strings to check against order, check if any ingredients are not in the right cooking state
         foreach(Ingredient i in given){
-            if (!wrongState && i.cookedState != i.requiredState){
+            if (!wrongState && i.cookedState != i.requiredCookedState){
                 wrongState = true;
             }
             order.Add(i.name);
@@ -169,15 +168,24 @@ public class Customer : MonoBehaviour
     }
 
     public void AddToOrder(Sprite s, string i, float p){ //add an ingredient to this order and update the UI
-        //Debug.Log(string.Format("called add to order on {0}, orderUI Length is {1}", this.gameObject.name, orderUi.Count));
-        if (orderUiIndex >= orderUi.Count) return;
-        UpdateOrderUI(s);
+        Debug.Log(string.Format("called add to order on {0}, orderUI Length is {1}", this.gameObject.name, orderUi.Count));
+        //if (orderUiIndex >= orderUi.Count) return;
+        //UpdateOrderUI(s);
+        orderUiSprites.Add(s);
         myOrder.Add(i);
         myOrderPrice += p;
     }
 
-    private void UpdateOrderUI(Sprite s){
-        if (orderUiIndex < orderUi.Count) orderUi[orderUiIndex++].sprite = s;
+    private void UpdateOrderUI(){
+        //if (orderUiIndex < orderUi.Count) orderUi[orderUiIndex++].sprite = s;
+        int index = 0;
+        while (index < orderUi.Count){
+            orderUi[index].sprite = orderUiSprites[index];
+            index++;
+        }
+        while (index < myOrder.Count){
+            myOrder.RemoveAt(index);
+        }
     }
 
     public void EndTimerHandler(){

@@ -221,9 +221,7 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    private Vector3 UpdateOrderVisual(Vector3 pos, Vector3 angle){ //FIX: delete
-        tempOrderText.text = tempOrderText.text + "  " + heldIngredient.name;
-        //heldIngredient.gameObject.SetActive(false); //FIX: DELETE
+    private Vector3 UpdateOrderVisual(Vector3 pos, Vector3 angle){
         Bounds b = heldIngredient.GetComponent<Renderer>().bounds;
         heldIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
         heldIngredient.transform.position = pos - new Vector3 (0, b.size.y, 0);

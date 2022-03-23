@@ -1,24 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Appliance : MonoBehaviour
 {
     protected enum Type { //the types of drag + drop
         Timed,
-        Meter
+        Metered
     };
-    [SerializeField] protected Type myType;
+    protected Type myType;
 
     protected Timer timer;
     [SerializeField] protected Animator myAnimator;
-    [SerializeField] protected int maxState;
 
     //carb cooker
-    [SerializeField] protected float myCookingTime;
     protected Ingredient myIngredient;
-    [SerializeField] protected Text timedCarbText;
+    [SerializeField] protected Ingredient.Type myIngredientType;
 
     protected Player player;
     protected GameManager gm;
@@ -36,7 +33,7 @@ public class Appliance : MonoBehaviour
                 if (!player.handFree) StartTimer();
             break;
 
-            case Type.Meter:
+            case Type.Metered:
                 if (!player.handFree) StartMeter();
             break;
         }

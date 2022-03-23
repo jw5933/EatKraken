@@ -10,12 +10,14 @@ public class Ingredient : MonoBehaviour
     [SerializeField] private Type myType = Ingredient.Type.Vegetable;
     public Type type {get{return myType;}}
 
-    //ingredient state
+    //ingredient cooked state
     public enum CookedState {Raw, Cooked, Burnt}
     private CookedState myCookedState = CookedState.Raw;
     public CookedState cookedState {get{return myCookedState;}}
-    [SerializeField]private CookedState myRequiredState;
-    public CookedState requiredState {get{return myRequiredState;}}
+
+    [SerializeField] private CookedState myRequiredCookedState;
+    public CookedState requiredCookedState {get{return myRequiredCookedState;}}
+    
     private float myCookedTime;
     public float cookedTime {get{return myCookedTime;} set{myCookedTime = value;}}
 
