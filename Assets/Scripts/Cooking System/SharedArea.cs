@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SharedArea: MonoBehaviour
 {
@@ -9,12 +10,15 @@ public class SharedArea: MonoBehaviour
     public AreaType type {get {return myType;}}
 
     [SerializeField] private GameObject myItem;
+    private Appliance myAppliance;
 
     private bool freeArea = true;
     private Player player;
     private GameManager gm;
 
     Collider myCollider;
+
+    public UnityEvent FreedAreaEvent = new UnityEvent();
 
     // ==============   functions   ==============
     private void Awake(){
@@ -35,10 +39,13 @@ public class SharedArea: MonoBehaviour
     }
 
     public void OnMouseDown(){
-        //Debug.Log("hit area");
-
+        if (!freeArea) return;
         if(player!=null && !player.handFree){
-            if (freeArea) PlaceObjectOnShared();
+            PlaceObjectOnShared();
+
+            if(myAppliance !=null){
+                myAppliance.OnMouseDown();
+            }
         }
     }
 
@@ -80,6 +87,7 @@ public class SharedArea: MonoBehaviour
 
     public void HandlePickUp(){
         freeArea = true;
+        FreedAreaEvent.Invoke();
         myCollider.enabled = true;
         myItem = null;
     }
