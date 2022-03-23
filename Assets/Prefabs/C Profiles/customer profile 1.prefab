@@ -49,8 +49,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myPossibleSprites:
-  - {fileID: 1558224288033603309, guid: d281cda74f450496db490452f5ac5cb2, type: 3}
+  - {fileID: 481940709819712241, guid: b0e9efff13be74127852e3ec9ea0fe2c, type: 3}
+  - {fileID: 6099507580201162052, guid: 47569a5b16380475fa0174a37d9726f1, type: 3}
+  - {fileID: 12888857058407090, guid: 566b7c308770b4c7a945e540faf6b154, type: 3}
+  - {fileID: 8248982002431668835, guid: d571bbe013ba94a3aaed9f5543a9bb39, type: 3}
   myOrder: []
+  selectImage: {fileID: 0}
   myHappyWaitTime: 15
   myNeutralWaitTime: 10
   myAngryWaitTime: 7
