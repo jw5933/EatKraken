@@ -58,7 +58,6 @@ public class Generator : MonoBehaviour
         proteinPrefabs = next.proteins;
 
         dm.timeStage = next.timeStages;
-        dm.ResetVars();
         CreatePCList();
     }
 
@@ -78,6 +77,7 @@ public class Generator : MonoBehaviour
             phaseCustomerL.Add(CreateCustomer(phase, customersPerStage[phase]));
         }
         if (ld !=null) ld.UpdateInfo(customersPerStage.Length);
+        dm.ResetVars();
     }
 
     private List<Customer> CreateCustomer(int phase, int max){ //create a customer with random ingredients
@@ -100,7 +100,9 @@ public class Generator : MonoBehaviour
             newCustomer.AddToOrder(proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
             num--;
 
-            for (int n = num; n >= 0; n--){
+            while (num > 0){
+                num--;
+                Debug.Log(num);
                 int i = Random.Range(0, ingredientPrefabs.Count);
                 newCustomer.AddToOrder(ingredientPrefabs[i].initialSprite, ingredientPrefabs[i].name, ingredientPrefabs[i].price);
             }
@@ -119,7 +121,7 @@ public class Generator : MonoBehaviour
         newCustomer.Init(); 
     }
 
-    public void BeginCustomerTimer(){
+    private void BeginCustomerTimer(){
         if (customersSpawned >= maxCustomers) return;
         SpawnCustomer();
         //start the timer until next player spawn

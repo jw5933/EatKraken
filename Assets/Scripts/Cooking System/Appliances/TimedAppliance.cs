@@ -1,10 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimedAppliance : Appliance
 {
-    [SerializeField] Ingredient.Type myIngredientType;
+    [SerializeField] private float myCookingTime;
+    [SerializeField] private Text timedCarbText;
+    [SerializeField] private int maxState;
+
+    protected override void Awake(){
+        base.Awake();
+        base.myType = Appliance.Type.Timed;
+    }
     
     protected override void StartTimer(){
         if (timer == null) timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();

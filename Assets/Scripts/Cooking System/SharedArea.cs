@@ -18,7 +18,7 @@ public class SharedArea: MonoBehaviour
 
     Collider myCollider;
 
-    public UnityEvent FreedAreaEvent = new UnityEvent();
+    [HideInInspector] public UnityEvent FreedAreaEvent = new UnityEvent();
 
     // ==============   functions   ==============
     private void Awake(){

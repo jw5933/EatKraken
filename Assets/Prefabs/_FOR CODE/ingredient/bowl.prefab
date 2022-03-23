@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5670647635598139606
+--- !u!1 &2072393569411671097
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5670647635598139593}
-  - component: {fileID: 5670647635598139592}
-  - component: {fileID: 5670647635598139595}
-  - component: {fileID: -7040991176229040161}
+  - component: {fileID: 2072393569411671092}
+  - component: {fileID: 2072393569411671099}
+  - component: {fileID: 2072393569411671098}
+  - component: {fileID: 2072393569411671093}
   m_Layer: 0
-  m_Name: rice
+  m_Name: bowl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5670647635598139593
+--- !u!4 &2072393569411671092
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5670647635598139606}
+  m_GameObject: {fileID: 2072393569411671097}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.09, y: -0.51, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5670647635598139592
+--- !u!212 &2072393569411671099
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5670647635598139606}
+  m_GameObject: {fileID: 2072393569411671097}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,54 +72,52 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1202010163
   m_SortingLayer: 7
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c13132b100d8546819ef6b8aabd03f4c, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: f91f69141b4104819b8e2fb425dff039, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5670647635598139595
+--- !u!114 &2072393569411671098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5670647635598139606}
+  m_GameObject: {fileID: 2072393569411671097}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 914ec03ce776a42dea95c864ca579a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myType: 1
+  myType: 0
   myRequiredCookedState: 0
-  myName: white rice
-  myPrice: 1
+  myName: bowl
+  myPrice: 0
   imageStates:
-  - {fileID: 21300000, guid: c13132b100d8546819ef6b8aabd03f4c, type: 3}
-  - {fileID: 21300000, guid: 6c3839d34bdf3453fba716e46824d31b, type: 3}
+  - {fileID: 21300000, guid: f91f69141b4104819b8e2fb425dff039, type: 3}
   myImageState: 0
-  finalImageStates:
-  - {fileID: 21300000, guid: f3bf8ea3775524475b4543f3908d0082, type: 3}
-  motionsToStateChange: 1
+  finalImageStates: []
+  motionsToStateChange: 0
   myMotionsLeft: 0
   myRequired: 0
   myToolLines: []
---- !u!65 &-7040991176229040161
+--- !u!65 &2072393569411671093
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5670647635598139606}
+  m_GameObject: {fileID: 2072393569411671097}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.9621587, y: 2.3344936, z: 0}
+  m_Center: {x: 0.022002567, y: -0.33168867, z: 0}

@@ -10,18 +10,19 @@ public class MeteredAppliance : Appliance
     [SerializeField] float cookedTime;
     [SerializeField] float burntTime;
 
-    [SerializeField] SharedArea myArea;
-    [SerializeField] Ingredient.Type myIngredientType;
+    SharedArea myArea;
 
     protected override void Awake(){
         base.Awake();
+        base.myType = Appliance.Type.Metered;
+        myArea = GetComponent<SharedArea>();
         if (myArea !=null) myArea.FreedAreaEvent.AddListener(HandlePickUp);
     }
 
     protected override void StartMeter(){
         if (meter == null) meter = Instantiate(gm.meterPrefab, this.transform).GetComponent<Meter>();
 
-        if (!DropIngredient() || myIngredient.type != myIngredientType || myIngredient.imgState >= maxState)
+        if (!DropIngredient() || myIngredient.type != myIngredientType || myIngredient.cookedState >= Ingredient.CookedState.Burnt)
             return;
 
         timer = meter.Init(rawTime, cookedTime, burntTime, myIngredient.cookedTime, HandleEndTimer);

@@ -31,10 +31,10 @@ public class Meter : MonoBehaviour
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         myTransform = this.GetComponent<RectTransform>();
         indicatorTransform = indicator.GetComponent<RectTransform>();
-        InitialSetUpVisuals();
     }
 
     public Timer Init(float t1, float t2, float t3, float tStart, UnityAction newAction){
+        if (stateImages[0] == null) InitialSetUpVisuals();
         myCallerTime = tStart;
         totalTime = t1 + t2 + t3;
         Debug.Log("total time: " + totalTime);
@@ -61,10 +61,8 @@ public class Meter : MonoBehaviour
 
     private void InitialSetUpVisuals(){
         Vector2 upperRightAnchor = new Vector2 (0, 1);
-        //move indicator to start
-        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, 0);
 
-        for (int index = 0; index < stateImages.Length; index++){
+        for (int index = 0; index < 3; index++){
             //create each section of meter
             GameObject c = Instantiate(this.gameObject, this.transform);
             c.transform.SetSiblingIndex(0);

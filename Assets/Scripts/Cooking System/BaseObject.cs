@@ -76,7 +76,7 @@ public class BaseObject : Draggable
             if (finalizeOrder) 
                 initialPos = base.GetProjectionOnPlane();
             else
-                HandlePickUp(this.gameObject);
+                HandlePickUp(orderObject != null? orderObject: this.gameObject);
         }
     }   
 
