@@ -17,6 +17,7 @@ public class Meter : MonoBehaviour
     UnityAction callerAction;
     private float myCallerTime;
     public float callerTime {get{return myCallerTime;}}
+    float step;
 
     IEnumerator myCoroutine;
     [SerializeField] GameObject indicator;
@@ -24,6 +25,7 @@ public class Meter : MonoBehaviour
     RectTransform indicatorTransform;
 
     GameManager gm;
+    
 
     // ==============   methods   ==============
     private void Awake(){
@@ -35,9 +37,10 @@ public class Meter : MonoBehaviour
 
     public Timer Init(float t1, float t2, float t3, float tStart, UnityAction newAction){
         if (stateImages[0] == null) InitialSetUpVisuals();
+        
         myCallerTime = tStart;
         totalTime = t1 + t2 + t3;
-        Debug.Log("total time: " + totalTime);
+        
         callerAction = newAction;
         timePerStage = new float[] {t1, t2, t3};
 
@@ -54,18 +57,20 @@ public class Meter : MonoBehaviour
         else{ //stage 3
             currStage = 2;
         }
-        timer.Init(timePerStage[currStage], HandleEndStage);
         SetupVisuals(indicatorPos);
         return timer;
     }
 
     private void InitialSetUpVisuals(){
+        Debug.Log("initial setup of meter");
         Vector2 upperRightAnchor = new Vector2 (0, 1);
+        step = (myTransform.rect.height/totalTime) * Time.deltaTime;
 
         for (int index = 0; index < 3; index++){
             //create each section of meter
             GameObject c = Instantiate(this.gameObject, this.transform);
             c.transform.SetSiblingIndex(0);
+            c.transform.localScale = Vector3.one;
             Destroy(c.GetComponent<Meter>());
             foreach(Transform child in c.transform){
                 Destroy(child.gameObject);
@@ -83,16 +88,15 @@ public class Meter : MonoBehaviour
     }
 
     private void SetupVisuals(float indicatorPos){
-        Rect b = myTransform.rect;
         Vector2 startPos = Vector2.zero;
 
         //move indicator to position
-        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, indicatorPos);
+        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, -indicatorPos);
 
         for (int index = 0; index < stateImages.Length; index++){
             float n = timePerStage[index]/totalTime;
             //move image
-            stateImages[index].sizeDelta = new Vector2 (stateImages[index].sizeDelta.x, stateImages[index].sizeDelta.y * n);
+            stateImages[index].sizeDelta = new Vector2 (myTransform.sizeDelta.x, myTransform.sizeDelta.y * n);
             stateImages[index].anchoredPosition = startPos;
             startPos -= new Vector2(0, stateImages[index].rect.height);
         }
@@ -101,6 +105,8 @@ public class Meter : MonoBehaviour
     public void StartMeter(){
         myCoroutine = AdjustMeterVisual();
         StartCoroutine(myCoroutine);
+
+        timer.Init(timePerStage[currStage], HandleEndStage);
         timer.StartTimer();
     }
 
@@ -111,21 +117,34 @@ public class Meter : MonoBehaviour
     }
 
     private IEnumerator AdjustMeterVisual(){
-        float endTime = Time.time + totalTime;
+        float endTime = Time.time + (totalTime - myCallerTime);
         Vector2 endPos = new Vector2 (indicatorTransform.anchoredPosition.x, -myTransform.rect.height);
         float step = (myTransform.rect.height/totalTime) * Time.deltaTime;
-         while(Time.time < endTime){
+        while(Time.time < endTime){
             // lerp meter indicator towards end goal
-            indicatorTransform.anchoredPosition = Vector2.MoveTowards(indicatorTransform.anchoredPosition, endPos, step);
+            indicatorTransform.localPosition = Vector2.MoveTowards(indicatorTransform.localPosition, endPos, step);
             yield return null;
         }
     }
 
+    /* 
+    indicatorTransform
+    step
+    endPos
+     */
+    private void HandleAddedTime(){
+
+    }
+
     private void HandleEndStage(){
-        myCallerTime += timer.GetTime();
+        myCallerTime += timePerStage[currStage];
         callerAction();
+        
         if(currStage + 1 < timePerStage.Length){
-            timer.Init(timePerStage[++currStage], HandleEndStage);
+            currStage++;
+            Vector2 endPos = new Vector2 (indicatorTransform.anchoredPosition.x, - stateImages[currStage].rect.height);
+            timer.Init(timePerStage[currStage], HandleEndStage);
+            //timer.Init(timePerStage[currStage], indicatorTransform, step, endPos, HandleAddedTime, HandleEndStage);
             timer.StartTimer();
         }
     }

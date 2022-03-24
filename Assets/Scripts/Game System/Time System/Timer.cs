@@ -10,8 +10,16 @@ public class Timer: MonoBehaviour
     private float initialTime;
     private float time;
     UnityAction callerAction;
+    
     IEnumerator myCoroutine;
     Text myText;
+
+    //for meter
+    UnityAction meterAction;
+    RectTransform indicatorTransform;
+    Vector2 endPos;
+    float step;
+    
     
     // ==============   methods   ==============
     public void Init (float newTime, UnityAction newAction){
@@ -22,6 +30,13 @@ public class Timer: MonoBehaviour
     public void Init (float newTime, UnityAction newAction, Text text){
         Init(newTime, newAction);
         myText = text;
+    }
+    public void Init (float newTime, RectTransform newIndicator, float newStep, Vector2 newEndPos, UnityAction newMeterAction, UnityAction newAction){
+        Init(newTime, newAction);
+        indicatorTransform = newIndicator;
+        step = newStep;
+        endPos = newEndPos;
+        meterAction = newMeterAction;
     }
 
     public void AddToTimer(float t){
@@ -42,12 +57,11 @@ public class Timer: MonoBehaviour
 
     private IEnumerator DecrementTimer(){ //coroutine for timer
         while (time > 0){
-            if (myText !=null) myText.text = "" + time;
-            time -= 1;
-            yield return new WaitForSeconds(1);
+            if (myText !=null) myText.text = "" + time.ToString("F0");
+            time -= Time.deltaTime;
+            yield return null;
         }
         time = 0;
-        if (myText !=null) myText.text = "" + time;
         callerAction();
         //Destroy(this);
     }
