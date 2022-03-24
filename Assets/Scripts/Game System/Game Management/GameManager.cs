@@ -76,7 +76,9 @@ public class GameManager : MonoBehaviour
     private void CheckRestart(){
         if (Input.GetKeyDown(KeyCode.R)){
             string n = SceneManager.GetActiveScene().name;
+            
             SceneManager.LoadScene(n);
+            Time.timeScale = 1;
         }
     }
 

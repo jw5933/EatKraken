@@ -191,7 +191,7 @@ public class Ingredient : MonoBehaviour
     }
 
     public bool AtEndState(){ //check if this ingredient has reached its end state
-        if (myImageState >= imageStates.Length-1) return true;
+        if (myImageState >= imageStates.Length-1 ||myType == Type.Protein) return true;
         return false;
     }
 

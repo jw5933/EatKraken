@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1202010163
   m_SortingLayer: 7
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 3f9f524c677d048eda9cd4ec0e225813, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,13 +101,14 @@ MonoBehaviour:
   cookTime: 3
   burntTime: 3
   myRequiredCookedState: 1
-  myName: roe
+  myName: surf
   myPrice: 5
   imageStates:
   - {fileID: 21300000, guid: 3f9f524c677d048eda9cd4ec0e225813, type: 3}
   - {fileID: 21300000, guid: 5379371fac1ea4ecdb22444cc4864b87, type: 3}
   - {fileID: 21300000, guid: 8fd2c07192f2d4a4582e471d31c5c8ea, type: 3}
   myImageState: 0
+  perfectImageState: 0
   finalImageStates: []
   motionsToStateChange: 0
   myMotionsLeft: 0
