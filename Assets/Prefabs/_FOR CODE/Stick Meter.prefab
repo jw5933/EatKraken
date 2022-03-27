@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 6877835529472718330}
   - component: {fileID: 8126545752121162673}
   m_Layer: 5
-  m_Name: meter
+  m_Name: Stick Meter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
