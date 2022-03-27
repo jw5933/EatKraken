@@ -10,8 +10,6 @@ public class SharedArea: MonoBehaviour
     public AreaType type {get {return myType;}}
 
     [SerializeField] private GameObject myItem;
-    private Appliance myAppliance;
-    public Appliance appliance {set{myAppliance = value;}}
 
     private bool freeArea = true;
     public bool free {get{return freeArea;}}
@@ -46,10 +44,6 @@ public class SharedArea: MonoBehaviour
         if (!freeArea) return;
         if(player!=null && !player.handFree){
             PlaceObjectOnShared();
-
-            if(myAppliance !=null){
-                myAppliance.OnMouseDown();
-            }
         }
     }
 
@@ -70,8 +64,6 @@ public class SharedArea: MonoBehaviour
             Ingredient i = myItem.GetComponent<Ingredient>();
             i.ResetVars();
             i.area = this;
-
-            if (myAppliance !=null) myAppliance.ingredient = i;
         }
         else if (myType == AreaType.Base){
             myItem = player.DropItem("base");
