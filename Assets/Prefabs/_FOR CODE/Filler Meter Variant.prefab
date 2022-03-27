@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1904415270589648144, guid: deb1adb7f3524478fbf28bbb33f35cf9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: d3f4b63dc21824bfa8e77e3b82b4284b, type: 3}
     - target: {fileID: 1904415270589648146, guid: deb1adb7f3524478fbf28bbb33f35cf9, type: 3}
       propertyPath: m_Name
       value: indicator
