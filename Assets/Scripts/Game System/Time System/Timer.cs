@@ -17,8 +17,10 @@ public class Timer: MonoBehaviour
     //for meter
     UnityAction meterAction;
     RectTransform indicatorTransform;
-    Vector2 endPos;
-    float step;
+    Image indicatorImage;
+    RectTransform meterTransform;
+    float endPosY;
+    float totalTime;
     
     
     // ==============   methods   ==============
@@ -31,11 +33,17 @@ public class Timer: MonoBehaviour
         Init(newTime, newAction);
         myText = text;
     }
-    public void Init (float newTime, RectTransform newIndicator, float newStep, Vector2 newEndPos, UnityAction newMeterAction, UnityAction newAction){
-        Init(newTime, newAction);
+
+    public void AddMeter(Image newIndicator, float tTime, UnityAction newMeterAction){
+        indicatorImage = newIndicator;
+        totalTime = tTime;
+        meterAction = newMeterAction;
+    }
+
+    public void AddMeter(RectTransform newIndicator, float pos, float tTime, UnityAction newMeterAction){
         indicatorTransform = newIndicator;
-        step = newStep;
-        endPos = newEndPos;
+        endPosY = pos;
+        totalTime = tTime;
         meterAction = newMeterAction;
     }
 
@@ -51,18 +59,29 @@ public class Timer: MonoBehaviour
     public void StopTimer(){
         if (myCoroutine != null) StopCoroutine(myCoroutine);
     }
+
     public float GetTime(){
-        return initialTime - time;
+        return (initialTime - time);
     }
 
     private IEnumerator DecrementTimer(){ //coroutine for timer
         while (time > 0){
-            if (myText !=null) myText.text = "" + time.ToString("F0");
+            if (myText !=null) 
+                myText.text = "" + time.ToString("F0");
+
+            if (indicatorImage != null)
+                indicatorImage.fillAmount += 1.0f/totalTime * Time.deltaTime;
+
+            if (indicatorTransform !=null){
+                Vector2 endPos = new Vector2 (indicatorTransform.anchoredPosition.x, -endPosY);
+                float step = (endPosY/totalTime) * Time.deltaTime;
+                indicatorTransform.anchoredPosition = Vector2.MoveTowards(indicatorTransform.anchoredPosition, endPos, step);
+            }
+
             time -= Time.deltaTime;
             yield return null;
         }
         time = 0;
         callerAction();
-        //Destroy(this);
     }
 }

@@ -9,6 +9,8 @@ public class Meter : MonoBehaviour
     // ==============   variables   ==============
     private Timer timer;
     private float totalTime;
+    private float stageTime;
+    [SerializeField] private bool filler;
     [SerializeField] private float [] timePerStage;
     [SerializeField] private Color[] stageColours = new Color[3];
     private RectTransform[] stateImages = new RectTransform[3];
@@ -23,6 +25,7 @@ public class Meter : MonoBehaviour
     [SerializeField] GameObject indicator;
     RectTransform myTransform;
     RectTransform indicatorTransform;
+    Image indicatorIamge;
 
     GameManager gm;
     
@@ -33,38 +36,47 @@ public class Meter : MonoBehaviour
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         myTransform = this.GetComponent<RectTransform>();
         indicatorTransform = indicator.GetComponent<RectTransform>();
+        indicatorIamge = indicator.GetComponent<Image>();
     }
 
     public Timer Init(float t1, float t2, float t3, float tStart, UnityAction newAction){
         if (stateImages[0] == null) InitialSetUpVisuals();
-        
+
         myCallerTime = tStart;
         totalTime = t1 + t2 + t3;
         
         callerAction = newAction;
         timePerStage = new float[] {t1, t2, t3};
 
-        //get what stage meter should be in and the indicator position
-        float indicatorTime = tStart/totalTime;
-        float indicatorPos = myTransform.rect.height * indicatorTime;
+        SetupVisuals();
+
         
-        if ((tStart -= t1) < 0){ //in stage 1
-            currStage = 0;
+        float indicatorTime = tStart/totalTime;
+        float indicatorPos = 0 - (myTransform.rect.height * indicatorTime);
+        
+        if (filler) {
+            indicatorIamge.fillAmount = 1.0f/totalTime * tStart;
+            timer.AddMeter(indicatorIamge, totalTime, HandleAddedTime);
         }
-        else if((tStart -= t2) < 0){ //stage 2
-            currStage = 1;
+        else{
+            //move indicator to position
+            indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, indicatorPos);
+            timer.AddMeter(indicatorTransform, myTransform.rect.height, totalTime, HandleAddedTime);
         }
-        else{ //stage 3
-            currStage = 2;
-        }
-        SetupVisuals(indicatorPos);
+
+        //get what stage meter should be in
+        if ((tStart -= t1) < 0)     currStage = 0; //in stage 1
+        else if((tStart -= t2) < 0) currStage = 1; //stage 2
+        else if((tStart -= t3) < 0) currStage = 2;
+
+        stageTime = -(tStart);
+
         return timer;
     }
 
-    private void InitialSetUpVisuals(){
+    private void InitialSetUpVisuals(){ //called once
         Debug.Log("initial setup of meter");
         Vector2 upperRightAnchor = new Vector2 (0, 1);
-        step = (myTransform.rect.height/totalTime) * Time.deltaTime;
 
         for (int index = 0; index < 3; index++){
             //create each section of meter
@@ -87,11 +99,8 @@ public class Meter : MonoBehaviour
         }
     }
 
-    private void SetupVisuals(float indicatorPos){
+    private void SetupVisuals(){ //setup for changes
         Vector2 startPos = Vector2.zero;
-
-        //move indicator to position
-        indicatorTransform.anchoredPosition = new Vector2(indicatorTransform.anchoredPosition.x, -indicatorPos);
 
         for (int index = 0; index < stateImages.Length; index++){
             float n = timePerStage[index]/totalTime;
@@ -103,17 +112,13 @@ public class Meter : MonoBehaviour
     }
 
     public void StartMeter(){
-        myCoroutine = AdjustMeterVisual();
-        StartCoroutine(myCoroutine);
-
-        timer.Init(timePerStage[currStage], HandleEndStage);
+        timer.Init(stageTime, HandleEndStage);
         timer.StartTimer();
     }
 
-     public void StopMeter(){
-        if (myCoroutine != null) StopCoroutine(myCoroutine);
-        myCallerTime += timer.GetTime();
+    public void StopMeter(){
         timer.StopTimer();
+        myCallerTime += timer.GetTime();
     }
 
     private IEnumerator AdjustMeterVisual(){
@@ -122,30 +127,31 @@ public class Meter : MonoBehaviour
         float step = (myTransform.rect.height/totalTime) * Time.deltaTime;
         while(Time.time < endTime){
             // lerp meter indicator towards end goal
-            indicatorTransform.localPosition = Vector2.MoveTowards(indicatorTransform.localPosition, endPos, step);
+            indicatorTransform.anchoredPosition = Vector2.MoveTowards(indicatorTransform.anchoredPosition, endPos, step);
             yield return null;
         }
     }
 
-    /* 
-    indicatorTransform
-    step
-    endPos
-     */
     private void HandleAddedTime(){
 
     }
 
     private void HandleEndStage(){
-        myCallerTime += timePerStage[currStage];
+        myCallerTime += timer.GetTime();
+        /* myCallerTime = 0;
+        for(int n = 0; n < currStage; n++){
+            myCallerTime += timePerStage[currStage];
+        } */
         callerAction();
         
         if(currStage + 1 < timePerStage.Length){
             currStage++;
-            Vector2 endPos = new Vector2 (indicatorTransform.anchoredPosition.x, - stateImages[currStage].rect.height);
             timer.Init(timePerStage[currStage], HandleEndStage);
-            //timer.Init(timePerStage[currStage], indicatorTransform, step, endPos, HandleAddedTime, HandleEndStage);
             timer.StartTimer();
         }
+    }
+
+    public void ResetVars(){
+        indicatorIamge.fillAmount = 0;
     }
 }
