@@ -15,6 +15,7 @@ public class TimedAppliance : Appliance
     }
     
     protected override void StartTimer(){
+        if (myIngredient != null) return;
         Debug.Log("starting timer");
         if (timer == null) timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         //don't cook the wrong ingredient, or ingredients that are already cooked
@@ -41,5 +42,7 @@ public class TimedAppliance : Appliance
         if (myIngredient != null) myIngredient.ChangeCookedState();
         myIngredient.transform.position = this.transform.position + new Vector3(0,0,- 0.2f);
         myIngredient.gameObject.SetActive(true);
+        myIngredient = null;
+        
     }
 }

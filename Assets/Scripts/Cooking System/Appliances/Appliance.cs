@@ -13,6 +13,8 @@ public class Appliance : MonoBehaviour
     protected Timer timer;
     [SerializeField] protected Animator myAnimator;
 
+    protected Collider2D myCollider;
+
     //carb cooker
     protected Ingredient myIngredient;
     public Ingredient ingredient {set{myIngredient = value;}}
@@ -25,6 +27,7 @@ public class Appliance : MonoBehaviour
     protected virtual void Awake(){
         player = FindObjectOfType<Player>();
         gm = FindObjectOfType<GameManager>();
+        myCollider = GetComponent<Collider2D>();
     }
 
     //if the player presses this object, what should happen?
@@ -38,7 +41,7 @@ public class Appliance : MonoBehaviour
 
             case Type.Metered:
                 Debug.Log("clicked metered");
-                StartMeter();
+                StartMeter(false);
             break;
         }
     }
@@ -56,7 +59,7 @@ public class Appliance : MonoBehaviour
     // ==============   functions   ==============
     protected virtual void StartTimer(){}
 
-    protected virtual void StartMeter(){}
+    protected virtual void StartMeter(bool swapped){}
 
     //what to do when the timed carb tool is finished
     protected virtual void HandleEndTimer(){}
