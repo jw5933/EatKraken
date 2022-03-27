@@ -31,8 +31,9 @@ public class HealthManager : MonoBehaviour
 
     private void Start(){
         maxHearts = playerHearts;
+        //currentHeart = Mathf.FloorToInt(playerHearts);
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
-        myHearts = new Image[currentHeart+1];
+        myHearts = new Image[Mathf.FloorToInt(playerHearts)];
 
         for (int i = 0; i < myHearts.Length; i++){
             myHearts[i] = Instantiate(heartPrefab, this.transform).GetComponent<Image>();
@@ -51,8 +52,9 @@ public class HealthManager : MonoBehaviour
     }
 
     private void UpdateHealthUI(){
-        int pIndex = prevHeart;
         prevHeart = currentHeart;
+        int pIndex = prevHeart;
+        Debug.Log("previous heart " + pIndex);
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
 
         if (playerHearts%(currentHeart+1) > 0){ //half health
@@ -62,7 +64,7 @@ public class HealthManager : MonoBehaviour
         }
         else if (prevHeart > currentHeart){ //heart has decremented
             for (int h = pIndex; h > currentHeart; h--){
-                myHearts[h].sprite = fullHeart;
+                myHearts[h].sprite = nullHeart;
             }
             //myHearts[currentHeart+1].sprite = nullHeart;
         }
