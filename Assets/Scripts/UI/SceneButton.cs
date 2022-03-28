@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class SceneButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class SceneButton : MonoBehaviour
 {
     private Sprite initialImg;
     [SerializeField] private Sprite hoverImg;
@@ -18,14 +18,14 @@ public class SceneButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         initialImg = myImage.sprite;
     }
 
-    public void OnPointerClick(PointerEventData eventData){
+    public void OnMouseUp(){
         myCoroutine = LoadYourAsyncScene();
         StartCoroutine(myCoroutine);
     }
-    public void OnPointerEnter(PointerEventData eventData){
+    public void OnMouseEnter(){
         myImage.sprite = hoverImg;
     }
-    public void OnPointerExit(PointerEventData eventData){
+    public void OnMouseExit(){
         if (myCoroutine == null) myImage.sprite = initialImg;
     }
 
@@ -37,7 +37,7 @@ public class SceneButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Programming_Japan", LoadSceneMode.Single);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

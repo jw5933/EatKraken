@@ -31,8 +31,9 @@ public class HealthManager : MonoBehaviour
 
     private void Start(){
         maxHearts = playerHearts;
+        //currentHeart = Mathf.FloorToInt(playerHearts);
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
-        myHearts = new Image[currentHeart+1];
+        myHearts = new Image[Mathf.FloorToInt(playerHearts)];
 
         for (int i = 0; i < myHearts.Length; i++){
             myHearts[i] = Instantiate(heartPrefab, this.transform).GetComponent<Image>();
@@ -43,8 +44,6 @@ public class HealthManager : MonoBehaviour
         if (playerHearts >= maxHearts && hearts < 0) return;
         playerHearts = Mathf.Min(playerHearts-hearts, maxHearts);
         Debug.Log("player health: " + playerHearts);
-        prevHeart = currentHeart;
-        currentHeart = Mathf.CeilToInt(playerHearts - 1);
         
         if (playerHearts >= 0) 
             UpdateHealthUI();
@@ -53,16 +52,27 @@ public class HealthManager : MonoBehaviour
     }
 
     private void UpdateHealthUI(){
-        if (playerHearts%(currentHeart+1) > 0){
+        prevHeart = currentHeart;
+        int pIndex = prevHeart;
+        Debug.Log("previous heart " + pIndex);
+        currentHeart = Mathf.CeilToInt(playerHearts - 1);
+
+        if (playerHearts%(currentHeart+1) > 0){ //half health
             if (currentHeart-1 >= 0) myHearts[currentHeart-1].sprite = fullHeart;
             if (currentHeart+1 < myHearts.Length) myHearts[currentHeart+1].sprite = nullHeart;
             myHearts[currentHeart].sprite = halfHeart;
         }
         else if (prevHeart > currentHeart){ //heart has decremented
-            myHearts[currentHeart+1].sprite = nullHeart;
+            for (int h = pIndex; h > currentHeart; h--){
+                myHearts[h].sprite = nullHeart;
+            }
+            //myHearts[currentHeart+1].sprite = nullHeart;
         }
         else { //heart has incremented
-            myHearts[currentHeart].sprite = fullHeart;
+            for (int h = pIndex; h <= currentHeart; h++){
+                myHearts[h].sprite = fullHeart;
+            }
+            //myHearts[currentHeart].sprite = fullHeart;
         }
     }
 
@@ -70,13 +80,16 @@ public class HealthManager : MonoBehaviour
         int i = 0;
         bool hasProtein = false;
         while (order.Count > 0){
-            if (order[0].type == Ingredient.Type.Vegetable || order[0].type == Ingredient.Type.Protein) i++;
+            if (order[0].type != Ingredient.Type.Base) i++;
             if (order[0].type == Ingredient.Type.Protein) hasProtein = true;
             order.RemoveAt(0);
         }
 
         if (i >= gm.maxIngredients){// 1 heart
             MinusPlayerHearts(-2);
+        }
+        else if (i >= gm.maxIngredients -1){
+            MinusPlayerHearts(-1);
         }
         if (hasProtein){
             MinusPlayerHearts(-0.5f);

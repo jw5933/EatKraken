@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject theMeterPrefab;
     public GameObject meterPrefab{get{return theMeterPrefab;}}
 
+    [SerializeField] private GameObject theStationaryMeterPrefab;
+    public GameObject stationaryMeterPrefab{get{return theStationaryMeterPrefab;}}
+
     [SerializeField] private GameObject thePopUpMessagePrefab;
     public GameObject popUpMessagePrefab{get{return thePopUpMessagePrefab;}}
 
@@ -42,6 +45,8 @@ public class GameManager : MonoBehaviour
     [Header("Canvas")]
     [SerializeField] private GameObject theGameCanvas;
     public GameObject gameCanvas{get{return theGameCanvas;}}
+    [SerializeField] private GameObject theStationaryCanvas;
+    public GameObject stationaryCanvas{get{return theStationaryCanvas;}}
 
     //other vars
     [Header("Game Variables")]
@@ -70,8 +75,8 @@ public class GameManager : MonoBehaviour
 
     private void CheckRestart(){
         if (Input.GetKeyDown(KeyCode.R)){
-            string n = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene(n);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1;
         }
     }
 

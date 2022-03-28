@@ -14,10 +14,16 @@ public class Ingredient : MonoBehaviour
     public enum CookedState {Raw, Cooked, Burnt}
     private CookedState myCookedState = CookedState.Raw;
     public CookedState cookedState {get{return myCookedState;}}
+    [SerializeField] private float rawTime;
+    public float raw {get{return rawTime;}}
+    [SerializeField] private float cookTime;
+    public float cooked {get{return cookTime;}}
+    [SerializeField] private float burntTime;
+    public float burnt {get{return burntTime;}}
 
     [SerializeField] private CookedState myRequiredCookedState;
     public CookedState requiredCookedState {get{return myRequiredCookedState;}}
-    
+
     private float myCookedTime;
     public float cookedTime {get{return myCookedTime;} set{myCookedTime = value;}}
 
@@ -29,9 +35,11 @@ public class Ingredient : MonoBehaviour
 
     //image states
     [SerializeField] private Sprite[] imageStates;
+    public int maxImageState {get{return imageStates.Length-1;}}
     [HideInInspector][SerializeField] private int myImageState = 0; //initial state is 0
     public int imgState{get{return myImageState;}}
-    public Sprite initialSprite {get{return imageStates[0];}}
+    [SerializeField] int perfectImageState;
+    public Sprite initialSprite {get{return imageStates[perfectImageState];}}
     private SpriteRenderer mySpriteRenderer;
 
     //final image state
@@ -56,7 +64,7 @@ public class Ingredient : MonoBehaviour
 
     //references
     private Player player;
-    private SharedArea myArea;
+    [SerializeField]private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
 
     // ==============   methods   ==============
@@ -74,7 +82,7 @@ public class Ingredient : MonoBehaviour
     }
 
     //pick up item
-    private void OnMouseDown(){ //if the player isnt holding anything, pick up this ingredient
+    private void OnMouseUp(){ //if the player isnt holding anything, pick up this ingredient
         if (!player.handFree) return;
         //Debug.Log(this.gameObject.name);
 
@@ -168,6 +176,7 @@ public class Ingredient : MonoBehaviour
     }
 
     public virtual void ChangeCookedState(){
+        ChangeImageState();
         switch(myCookedState){
             case CookedState.Raw:
                 myCookedState = CookedState.Cooked;
@@ -182,7 +191,7 @@ public class Ingredient : MonoBehaviour
     }
 
     public bool AtEndState(){ //check if this ingredient has reached its end state
-        if (myImageState >= imageStates.Length-1) return true;
+        if (myImageState >= imageStates.Length-1 ||myType == Type.Protein) return true;
         return false;
     }
 

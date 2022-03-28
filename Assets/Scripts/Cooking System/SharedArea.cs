@@ -10,9 +10,9 @@ public class SharedArea: MonoBehaviour
     public AreaType type {get {return myType;}}
 
     [SerializeField] private GameObject myItem;
-    private Appliance myAppliance;
 
     private bool freeArea = true;
+    public bool free {get{return freeArea;}}
     private Player player;
     private GameManager gm;
 
@@ -31,8 +31,10 @@ public class SharedArea: MonoBehaviour
     private void InitialSnapToArea(){
         if (myItem !=null) {
             freeArea = false;
-            myCollider.enabled = false;
-            myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+            if (myCollider !=null){
+                myCollider.enabled = false;
+                myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+            }
             BaseObject o = myItem.GetComponent<BaseObject>();
             if (o !=null) o.area = this;
         }
@@ -42,10 +44,6 @@ public class SharedArea: MonoBehaviour
         if (!freeArea) return;
         if(player!=null && !player.handFree){
             PlaceObjectOnShared();
-
-            if(myAppliance !=null){
-                myAppliance.OnMouseDown();
-            }
         }
     }
 
@@ -81,14 +79,16 @@ public class SharedArea: MonoBehaviour
             t.area = this;
         }
         freeArea = false;
-        myCollider.enabled = false;
-        myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+        if (myCollider !=null) {
+            myCollider.enabled = false;
+            myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+        }
     }
 
     public void HandlePickUp(){
         freeArea = true;
         FreedAreaEvent.Invoke();
-        myCollider.enabled = true;
+        if (myCollider !=null) myCollider.enabled = true;
         myItem = null;
     }
 }

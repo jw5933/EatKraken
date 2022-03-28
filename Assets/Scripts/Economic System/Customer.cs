@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /*
 this is really customer profile; it is a *TYPE* of customer, but the sprites can vary
 */
-public class Customer : MonoBehaviour
+public class Customer : MonoBehaviour, IPointerClickHandler
 {
     // ==============   variables   ==============
     //customer appearance vars
@@ -31,6 +32,7 @@ public class Customer : MonoBehaviour
     private int myTimePhase;
     public int phase{set{myTimePhase = value;}}
     private GameObject order;
+    [SerializeField] private Image selectImage;
 
     //timer vars
     [Header("Wait Times")]
@@ -57,13 +59,25 @@ public class Customer : MonoBehaviour
     public void Awake(){
         gm = FindObjectOfType<GameManager>();
         em = FindObjectOfType<EventManager>();
+        cm = FindObjectOfType<CustomerManager>();
 
         CreateOrder();
         CreateMeter();
         CreateAppearance();
 
-
         this.gameObject.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData pointerEventData){
+        cm.SelectCustomer(this);
+    }
+
+    public void Select(){
+        selectImage.enabled = true;
+    }
+
+    public void Deselect(){
+        selectImage.enabled = false;
     }
 
     public void CalculateCoins(){
@@ -76,10 +90,18 @@ public class Customer : MonoBehaviour
         order = Instantiate(gm.orderPrefab, this.transform);
         foreach(Transform child in order.transform){
             Image i = child.gameObject.GetComponent<Image>();
-            if (i !=null) orderUi.Add(i);
+            if (i !=null) {
+                if (i.name != "check")
+                    orderUi.Add(i);
+                else{
+                    selectImage = i;
+                    selectImage.enabled = false;
+                }
+            }
+            
         }
         RectTransform r = order.GetComponent<RectTransform>();
-        //GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
+        GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
     }
     private void CreateMeter(){
         meter = Instantiate(gm.meterPrefab, order.transform).GetComponent<Meter>();

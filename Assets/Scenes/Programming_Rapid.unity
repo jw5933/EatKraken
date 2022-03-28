@@ -3823,11 +3823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92e8c781578343778861293ad423d88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myType: 0
   myAnimator: {fileID: 0}
-  maxState: 1
-  myCookingTime: 2
-  timedCarbText: {fileID: 262775460}
+  myIngredientType: 0
 --- !u!61 &1356756993
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4763,7 +4760,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6540605241056585938, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: maxLostCustomers
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6540605241409399970, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: m_RootOrder
@@ -5017,6 +5014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minPercentOfDist: 0.4
+  ingredientPositions: []
   orderObject: {fileID: 467402821}
 --- !u!1 &2124451591
 GameObject:

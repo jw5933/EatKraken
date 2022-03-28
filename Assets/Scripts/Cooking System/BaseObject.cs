@@ -14,7 +14,8 @@ public class BaseObject : Draggable
 
     bool finalizeOrder;
     bool addingObject;
-    Vector3 nextIngredientPosition;
+    [SerializeField] private List <Vector3> ingredientPositions = new List<Vector3>();
+    private int positionIndex;
 
     [SerializeField] private GameObject orderObject;
     public GameObject orderobj {get{return orderObject;}}
@@ -29,6 +30,8 @@ public class BaseObject : Draggable
         myCollider = GetComponent<Collider>();
         anim = GetComponent<Animator>();
 
+        orderObject.transform.position = myCollider.bounds.min;
+
         if (minPercentOfDist <= 0){
             finalizeOrder = false;
             return;
@@ -36,11 +39,15 @@ public class BaseObject : Draggable
         finalizeOrder = true;
         minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
         Debug.Log(minDistance);
+
+        UpdatePlane();
     }
 
     private void Start(){
-        nextIngredientPosition = new Vector3(this.transform.position.x, this.GetComponent<Renderer>().bounds.max.y, this.transform.position.z-0.01f);
-        UpdatePlane();
+        foreach(Transform child in transform){
+            Debug.Log(child.gameObject.name);
+            ingredientPositions.Add(child.position);
+        }
     }
 
     private void UpdatePlane(){
@@ -68,12 +75,22 @@ public class BaseObject : Draggable
 
     private void OnMouseDown(){
         if (!player.handFree){
-            nextIngredientPosition = player.AddToCurrentOrder(nextIngredientPosition, this.transform.eulerAngles, this.transform);
-            addingObject = true;
+            if (player.holdingBase){
+                player.DropItem("base");
+                orderObject.transform.position = myCollider.bounds.min;
+            }
+            else {
+                if (positionIndex >= ingredientPositions.Count) return;
+                if (player.AddToCurrentOrder(ingredientPositions[positionIndex], this.transform.eulerAngles, orderObject != null? orderObject.transform: this.transform)){
+                    if (orderObject !=null) orderObject.SetActive(true);
+                    positionIndex++;
+                }
+                addingObject = true;
+            }
         } 
         else{
             //pick up base
-            if (finalizeOrder) 
+            if (finalizeOrder)
                 initialPos = base.GetProjectionOnPlane();
             else
                 HandlePickUp(orderObject != null? orderObject: this.gameObject);
@@ -103,19 +120,26 @@ public class BaseObject : Draggable
 
     public void HandleAnimation(){
         if (player.order.Count <= 0) return;
-        orderObject.transform.position = this.transform.position;
+        orderObject.transform.position = myCollider.bounds.min;
         orderObject.SetActive(true);
 
         foreach(Ingredient o in player.order){
             o.HandleAddToOrder();
-            o.transform.SetParent(orderObject.transform);
+            o.transform.SetParent(orderObject.transform, true);
             o.transform.position = orderObject.transform.position;
         }
         HandlePickUp(orderObject);
     }
 
     private void HandlePickUp(GameObject o){
+        if (player.order.Count <= 0) return;
         if (orderObject == null && myArea != null) myArea.HandlePickUp();
         player.PickUpItem(o);
+    }
+
+    public void ResetVars(){
+        orderObject.SetActive(false);
+        orderObject.transform.position = myCollider.bounds.min;
+        positionIndex = 0;
     }
 }
