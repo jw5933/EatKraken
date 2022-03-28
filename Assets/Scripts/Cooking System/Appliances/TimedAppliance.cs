@@ -26,6 +26,7 @@ public class TimedAppliance : Appliance
         myIngredient = i.GetComponent<Ingredient>();
         if (myIngredient.type != myIngredientType || myIngredient.imgState >= myIngredient.maxImageState){
             player.PickUpItem(myIngredient.gameObject);
+            myIngredient = null;
             return;
         }
             
