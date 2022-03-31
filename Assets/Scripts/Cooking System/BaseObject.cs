@@ -30,7 +30,7 @@ public class BaseObject : Draggable
         myCollider = GetComponent<Collider>();
         anim = GetComponent<Animator>();
 
-        orderObject.transform.position = myCollider.bounds.min;
+        ResetVars();
 
         if (minPercentOfDist <= 0){
             finalizeOrder = false;
@@ -77,7 +77,7 @@ public class BaseObject : Draggable
         if (!player.handFree){
             if (player.holdingBase){
                 player.DropItem("base");
-                orderObject.transform.position = myCollider.bounds.min;
+                orderObject.transform.position = transform.position;
             }
             else {
                 if (positionIndex >= ingredientPositions.Count) return;
@@ -120,7 +120,7 @@ public class BaseObject : Draggable
 
     public void HandleAnimation(){
         if (player.order.Count <= 0) return;
-        orderObject.transform.position = myCollider.bounds.min;
+        orderObject.transform.position = transform.position;
         orderObject.SetActive(true);
 
         foreach(Ingredient o in player.order){
@@ -139,7 +139,7 @@ public class BaseObject : Draggable
 
     public void ResetVars(){
         orderObject.SetActive(false);
-        orderObject.transform.position = myCollider.bounds.min;
+        orderObject.transform.position = transform.position;
         positionIndex = 0;
     }
 }
