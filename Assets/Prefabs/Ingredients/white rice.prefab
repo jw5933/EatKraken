@@ -105,7 +105,7 @@ MonoBehaviour:
   myPrice: 1
   imageStates:
   - {fileID: 21300000, guid: 77fc1c5f10ee3477b9436a83f89ee9f4, type: 3}
-  - {fileID: 21300000, guid: 54446b325e5c4470ebc73f875456f8d5, type: 3}
+  - {fileID: 21300000, guid: 2d54616a1a2044182a593e40d8a0d65c, type: 3}
   myImageState: 0
   perfectImageState: 0
   finalImageStates:

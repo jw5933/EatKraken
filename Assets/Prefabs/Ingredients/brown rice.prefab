@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: imageStates.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: 52ae666e365bb42179d72b53f115f14a, type: 3}
+      objectReference: {fileID: 21300000, guid: c5a3ddcb79b334c86a04ab07f1661ea7, type: 3}
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: finalImageStates.Array.data[0]
       value: 
