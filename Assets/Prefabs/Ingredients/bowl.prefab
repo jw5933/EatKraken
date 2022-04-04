@@ -107,7 +107,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a2c484735398646c395e2377853e5c75, type: 3}
   myImageState: 0
   perfectImageState: 0
-  finalImageStates: []
+  finalImageState: {fileID: 21300000, guid: a2c484735398646c395e2377853e5c75, type: 3}
   motionsToStateChange: 0
   myMotionsLeft: 0
   myRequired: 0
