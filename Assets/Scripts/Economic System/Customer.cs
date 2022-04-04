@@ -92,9 +92,9 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         foreach(Transform child in order.transform){
             Image i = child.gameObject.GetComponent<Image>();
             if (i !=null) {
-                if (i.name != "initial")
+                if (i.name == "initial")
                     orderUi.Add(i);
-                else if (i.name != "final"){
+                else if (i.name == "final"){
                     finalOrderUi.Add(i);
                 }
                 else if (i.name == "check"){
