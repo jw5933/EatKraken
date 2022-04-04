@@ -23,7 +23,7 @@ public class MeteredAppliance : Appliance
             myIngredient = i.GetComponent<Ingredient>();
         }
 
-        if (myIngredient.type != myIngredientType || myIngredient.imgState >= myIngredient.maxImageState){
+        if (myIngredient.type != myIngredientType || !myIngredient.finishedCutStage || myIngredient.imgState >= myIngredient.maxImageState){
                 player.PickUpItem(myIngredient.gameObject);
                 myIngredient = null;
                 return;
