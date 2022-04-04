@@ -6,6 +6,7 @@ public class Generator : MonoBehaviour
 {
     // ==============   variables   ==============
     private List <Ingredient> baseIngredientPrefabs;
+    private List <Ingredient> carbIngredientPrefabs;
     private List <Ingredient> ingredientPrefabs;
     private List <Ingredient> proteinPrefabs;
     
@@ -52,6 +53,7 @@ public class Generator : MonoBehaviour
         Debug.Log("next: " + next.gameObject.name);
         //update the generator
         baseIngredientPrefabs = next.baseIngredients;
+        carbIngredientPrefabs = next.carbIngredients;
         ingredientPrefabs = next.ingredients;
         customerPrefabs = next.customers;
         customersPerStage = next.customersPerStage;
@@ -85,26 +87,36 @@ public class Generator : MonoBehaviour
         
         for (int index = 0; index < max; index++){
             //get a customer profile
-            int c = Random.Range(0, customerPrefabs.Count);
-            Customer newCustomer = Instantiate(customerPrefabs[c], gm.orderParent).GetComponent<Customer>();
-            customerPrefabs.RemoveAt(c);
+            int cs = Random.Range(0, customerPrefabs.Count);
+            Customer newCustomer = Instantiate(customerPrefabs[cs], gm.orderParent).GetComponent<Customer>();
+            customerPrefabs.RemoveAt(cs);
             newCustomer.phase = phase;
             
-            //adjust customer: base, protein, ingredient
+            //adjust customer: base, carb, protein, ingredient
             int num = gm.maxIngredients;
             int b = Random.Range(0, baseIngredientPrefabs.Count);
-            newCustomer.AddToOrder(baseIngredientPrefabs[b].initialSprite, baseIngredientPrefabs[b].name, baseIngredientPrefabs[b].price);
+            newCustomer.AddToOrder(baseIngredientPrefabs[b].orderSprite,
+            baseIngredientPrefabs[b].initialSprite, baseIngredientPrefabs[b].name, 
+            baseIngredientPrefabs[b].price);
+
+            int c = Random.Range(0, carbIngredientPrefabs.Count);
+            newCustomer.AddToOrder(carbIngredientPrefabs[c].orderSprite,
+            carbIngredientPrefabs[c].initialSprite, carbIngredientPrefabs[c].name, 
+            carbIngredientPrefabs[c].price);
             num--;
 
             int p = Random.Range(0, proteinPrefabs.Count);
-            newCustomer.AddToOrder(proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
+            newCustomer.AddToOrder(proteinPrefabs[p].orderSprite,
+            proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
             num--;
 
             while (num > 0){
                 num--;
                 Debug.Log(num);
                 int i = Random.Range(0, ingredientPrefabs.Count);
-                newCustomer.AddToOrder(ingredientPrefabs[i].initialSprite, ingredientPrefabs[i].name, ingredientPrefabs[i].price);
+                newCustomer.AddToOrder(ingredientPrefabs[i].orderSprite,
+                    ingredientPrefabs[i].initialSprite, 
+                ingredientPrefabs[i].name, ingredientPrefabs[i].price);
             }
             newCustomer.CalculateCoins();
             phaseList.Add(newCustomer);

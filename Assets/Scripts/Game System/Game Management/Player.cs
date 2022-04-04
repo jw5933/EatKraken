@@ -53,15 +53,15 @@ public class Player : MonoBehaviour
     }
 
     public void Update(){
-        if (heldItem !=null) UpdateMouseItem();
+        if (heldItem !=null) UpdateMouseItem(heldItem);
         
     }
 
-    private void UpdateMouseItem(){
+    public void UpdateMouseItem(GameObject o){
         if (!gm.in3d) {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            if (heldItem !=null) heldItem.transform.position = Vector3.MoveTowards(heldItem.transform.position, new Vector3(mousePos.x, mousePos.y, heldItem.transform.position.z), 40 * Time.deltaTime);
+            if (o !=null) o.transform.position = Vector3.MoveTowards(o.transform.position, new Vector3(mousePos.x, mousePos.y, o.transform.position.z), 40 * Time.deltaTime);
         }
         else{
             //Create a ray from the Mouse click position
@@ -73,7 +73,8 @@ public class Player : MonoBehaviour
             if (currentPlane.Raycast(ray, out enter)){
                 mousePos = ray.GetPoint(enter);
                 //Debug.DrawLine(Camera.main.ScreenToWorldPoint(Input.mousePosition), mousePos, Color.green);
-                heldItem.transform.position = new Vector3(mousePos.x, canMoveInSpace? heldItem.transform.position.y : mousePos.y, mousePos.z);
+                o.transform.position = mousePos;
+                //o.transform.position = new Vector3(mousePos.x, canMoveInSpace? o.transform.position.y : mousePos.y, mousePos.z);
             }
         }
     }

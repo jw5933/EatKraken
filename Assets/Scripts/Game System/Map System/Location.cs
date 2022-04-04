@@ -10,6 +10,8 @@ public class Location : Button
     [Header("Ingredient Prefab Lists")]
     [SerializeField] private List <Ingredient> baseIngredientPrefabs;
     public List <Ingredient> baseIngredients {get{return baseIngredientPrefabs;}}
+    [SerializeField] private List <Ingredient> carbIngredientPrefabs;
+    public List <Ingredient> carbIngredients {get{return carbIngredientPrefabs;}}
     [SerializeField] private List <Ingredient> ingredientPrefabs;
     public List<Ingredient> ingredients {get{return ingredientPrefabs;}}
     [SerializeField] private List <Ingredient> proteinPrefabs;
