@@ -5552,7 +5552,7 @@ PrefabInstance:
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: firstLocation
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1325443367}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: theGameCanvas
       value: 
