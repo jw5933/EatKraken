@@ -150,6 +150,10 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 3233899762589852700, guid: 502ad32d97f204e9da3612109fa67460, type: 3}
+      propertyPath: endPos
+      value: 
+      objectReference: {fileID: 24529121858972895}
+    - target: {fileID: 3233899762589852700, guid: 502ad32d97f204e9da3612109fa67460, type: 3}
       propertyPath: endPoses.Array.data[0]
       value: 
       objectReference: {fileID: 24529121858972895}
