@@ -22,6 +22,8 @@ public class HealthManager : MonoBehaviour
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite halfHeart;
 
+    bool decrement;
+
     GameManager gm;
     
     // ==============   methods   ==============
@@ -42,8 +44,10 @@ public class HealthManager : MonoBehaviour
 
     public void MinusPlayerHearts(float hearts){//adjust player health
         if (playerHearts >= maxHearts && hearts < 0) return;
+        if (hearts > 0) decrement = true;
+        else decrement = false;
         playerHearts = Mathf.Min(playerHearts-hearts, maxHearts);
-        Debug.Log("player health: " + playerHearts);
+        //Debug.Log("player health: " + playerHearts);
         
         if (playerHearts >= 0) 
             UpdateHealthUI();
@@ -57,42 +61,46 @@ public class HealthManager : MonoBehaviour
         Debug.Log("previous heart " + pIndex);
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
 
+        if (decrement){ //heart has decremented
+            nullHearts(pIndex, currentHeart);
+        }
+        else{ //heart has incremented
+            fullHearts(pIndex, currentHeart);
+        }
+
         if (playerHearts%(currentHeart+1) > 0){ //half health
-            if (currentHeart-1 >= 0) myHearts[currentHeart-1].sprite = fullHeart;
-            if (currentHeart+1 < myHearts.Length) myHearts[currentHeart+1].sprite = nullHeart;
             myHearts[currentHeart].sprite = halfHeart;
-        }
-        else if (prevHeart > currentHeart){ //heart has decremented
-            for (int h = pIndex; h > currentHeart; h--){
-                myHearts[h].sprite = nullHeart;
-            }
-            //myHearts[currentHeart+1].sprite = nullHeart;
-        }
-        else { //heart has incremented
-            for (int h = pIndex; h <= currentHeart; h++){
-                myHearts[h].sprite = fullHeart;
-            }
-            //myHearts[currentHeart].sprite = fullHeart;
         }
     }
 
+    private void nullHearts(int s, int e){
+        for (int h = s; h > e; h--){
+                myHearts[h].sprite = nullHeart;
+            }
+    }
+    private void fullHearts(int s, int e){
+        for (int h = s; h <= e; h++){
+                myHearts[h].sprite = fullHeart;
+            }
+    }
+
     public void CheckConsume(List<Ingredient> order){
+        //cut or cooked .5
         int i = 0;
-        bool hasProtein = false;
+        int p = 0;
         while (order.Count > 0){
-            if (order[0].type != Ingredient.Type.Base) i++;
-            if (order[0].type == Ingredient.Type.Protein) hasProtein = true;
+            Ingredient o = order[0];
+            if ((o.type == Ingredient.Type.Vegetable || o.type == Ingredient.Type.Carb) && (order[0].finishedCutStage ||o.finishedCookedStage)) i++;
+            if (o.type == Ingredient.Type.Protein) p++;
             order.RemoveAt(0);
         }
-
-        if (i >= gm.maxIngredients){// 1 heart
+        MinusPlayerHearts(-(i*0.5f));
+        /* if (i >= gm.maxIngredients){// 1 heart
             MinusPlayerHearts(-2);
         }
         else if (i >= gm.maxIngredients -1){
             MinusPlayerHearts(-1);
-        }
-        if (hasProtein){
-            MinusPlayerHearts(-0.5f);
-        }
+        } */
+        MinusPlayerHearts(-(p*1));
     }
 }
