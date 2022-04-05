@@ -5,6 +5,12 @@ using UnityEngine;
 public class Ingredient : MonoBehaviour
 {
     // ==============   variables   ==============
+    //personalized variables for each kind of non-protein (order checking)
+    [SerializeField] private string myName;
+    public new string name {get{return myName;}}
+    [SerializeField] private float myPrice;
+    public float price {get{return myPrice;}}
+    
     //type of ingredient
     public enum Type {Base, Carb, Vegetable, Protein}
     [SerializeField] private Type myType = Ingredient.Type.Vegetable;
@@ -27,29 +33,24 @@ public class Ingredient : MonoBehaviour
     private float myCookedTime;
     public float cookedTime {get{return myCookedTime;} set{myCookedTime = value;}}
 
-    //personalized variables for each kind of non-protein (order checking)
-    [SerializeField] private string myName;
-    public new string name {get{return myName;}}
-    [SerializeField] private float myPrice;
-    public float price {get{return myPrice;}}
-
     //image states
     [SerializeField] private Sprite[] imageStates;
     public int maxImageState {get{return imageStates.Length-1;}}
-    [HideInInspector][SerializeField] private int myImageState = 0; //initial state is 0
+    private int myImageState = 0; //initial state is 0
     public int imgState{get{return myImageState;}}
     [SerializeField] int perfectImageState;
     public Sprite initialSprite {get{return imageStates[perfectImageState];}}
-    private SpriteRenderer mySpriteRenderer;
 
     //final image state
-    [SerializeField] private Sprite[] finalImageStates;
-    private int myFinalImageState;
+    [SerializeField] private Sprite finalImageState;
+    public Sprite orderSprite {get{return finalImageState;}}
 
     //player interaction
     [SerializeField] private int motionsToStateChange = 1; //needed number of motions to change state
-    [HideInInspector][SerializeField] private int myMotionsLeft; //number of motions left until state change -> resets to neededMotions
+    private int myMotionsLeft; //number of motions left until state change -> resets to neededMotions
     public int motionsLeft {get{return myMotionsLeft;}}
+    private bool isSliced;
+    public bool finishedCutStage {get{return isSliced;}}
 
     //tool and visual lines
     [SerializeField] private Tool.Required myRequired = Tool.Required.None;
@@ -63,6 +64,7 @@ public class Ingredient : MonoBehaviour
     public Plane plane {get{return myPlane;}}
 
     //references
+    private SpriteRenderer mySpriteRenderer;
     private Player player;
     [SerializeField]private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
@@ -74,6 +76,7 @@ public class Ingredient : MonoBehaviour
         foreach (Transform child in transform){
             myToolLines.Add(child.GetComponent<ToolLine>());
         }
+        if (myToolLines.Count == 0) isSliced = true;
         InactivateToolLines();
     }
     private void Start(){
@@ -163,6 +166,7 @@ public class Ingredient : MonoBehaviour
 
     public void RemoveToolLine(ToolLine t){
         myToolLines.Remove(t);
+        if (myToolLines.Count == 0) isSliced = true;
     }
     
     public void ChangeImageState(){ //check if the image state of the object needs to be changed based on motions used
@@ -191,13 +195,12 @@ public class Ingredient : MonoBehaviour
     }
 
     public bool AtEndState(){ //check if this ingredient has reached its end state
-        if (myImageState >= imageStates.Length-1 ||myType == Type.Protein) return true;
-        return false;
+        return isSliced;
     }
 
     public void HandleAddToOrder(){
-        if (myFinalImageState >= finalImageStates.Length) return;
-        mySpriteRenderer.sprite = finalImageStates[myFinalImageState++];
+        if (finalImageState == null) return;
+        mySpriteRenderer.sprite = finalImageState;
     }
 
     public void ResetVars(){ //reset some variables: tool lines, 

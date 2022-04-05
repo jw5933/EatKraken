@@ -27,8 +27,9 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     private List<Image> orderUi = new List<Image>();
+    private List<Image> finalOrderUi = new List<Image>();
     private List<Sprite> orderUiSprites = new List<Sprite>();
-    private Text orderText;
+    private List<Sprite> finalOrderUiSprites = new List<Sprite>();
     private int myTimePhase;
     public int phase{set{myTimePhase = value;}}
     private GameObject order;
@@ -91,9 +92,12 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         foreach(Transform child in order.transform){
             Image i = child.gameObject.GetComponent<Image>();
             if (i !=null) {
-                if (i.name != "check")
+                if (i.name == "initial")
                     orderUi.Add(i);
-                else{
+                else if (i.name == "final"){
+                    finalOrderUi.Add(i);
+                }
+                else if (i.name == "check"){
                     selectImage = i;
                     selectImage.enabled = false;
                 }
@@ -141,24 +145,25 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     //check state & ingrdient
     public void CheckOrder(List<Ingredient> given){
         int wrongIngredient = myOrder.Count;
-        bool wrongState = false;
+        int wrongState = 0;
         List<string> order = new List<string>();
         //create a new list of strings to check against order, check if any ingredients are not in the right cooking state
         foreach(Ingredient i in given){
-            if (!wrongState && i.cookedState != i.requiredCookedState){
-                wrongState = true;
+            if (i.cookedState != i.requiredCookedState){
+                wrongState ++;
             }
             order.Add(i.name);
         }
 
         List<string> check = new List<string>(order);
-        check.RemoveAt(0); //remove the base
+        //check.RemoveAt(0); //remove the base
         foreach(string i in order){
             if (myOrder.Remove(i)){
                 wrongIngredient--;
                 check.Remove(i);
             }
         }
+        wrongIngredient += wrongState;
         wrongIngredient = Mathf.Max(wrongIngredient, check.Count);
         Debug.Log("The order has " + wrongIngredient + " wrong or missing ingredients.");
         HandleAfterOrder(wrongIngredient);
@@ -189,10 +194,11 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         Leave();
     }
 
-    public void AddToOrder(Sprite s, string i, float p){ //add an ingredient to this order and update the UI
+    public void AddToOrder(Sprite fs, Sprite s, string i, float p){ //add an ingredient to this order and update the UI
         Debug.Log(string.Format("called add to order on {0}, orderUI Length is {1}", this.gameObject.name, orderUi.Count));
         //if (orderUiIndex >= orderUi.Count) return;
         //UpdateOrderUI(s);
+        finalOrderUiSprites.Add(fs);
         orderUiSprites.Add(s);
         myOrder.Add(i);
         myOrderPrice += p;
