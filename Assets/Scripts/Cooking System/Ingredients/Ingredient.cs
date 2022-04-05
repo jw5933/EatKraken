@@ -10,7 +10,7 @@ public class Ingredient : MonoBehaviour
     public new string name {get{return myName;}}
     [SerializeField] private float myPrice;
     public float price {get{return myPrice;}}
-    
+
     //type of ingredient
     public enum Type {Base, Carb, Vegetable, Protein}
     [SerializeField] private Type myType = Ingredient.Type.Vegetable;
@@ -26,6 +26,7 @@ public class Ingredient : MonoBehaviour
     public float cooked {get{return cookTime;}}
     [SerializeField] private float burntTime;
     public float burnt {get{return burntTime;}}
+    public bool finishedCookedStage {get{return myCookedState != CookedState.Raw;}}
 
     [SerializeField] private CookedState myRequiredCookedState;
     public CookedState requiredCookedState {get{return myRequiredCookedState;}}

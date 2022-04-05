@@ -47,7 +47,15 @@ public class DropObject : MonoBehaviour
             break;
 
             case Type.Consume:
-                if (player.holdingBase && player.order.Count > 0){
+                if (player.holdingIngredient){
+                    Ingredient o = player.DropItem("ingredient").GetComponent<Ingredient>();
+                    orderCopy.Clear();
+                    orderCopy.Add(o);
+                    
+                    hm.CheckConsume(orderCopy);
+                    Destroy(o.gameObject);
+                }
+                else if (player.holdingBase && player.order.Count > 0){
                     hm.CheckConsume(orderCopy);
                     if (baseObj.orderobj !=null){
                         player.DropItem("any");
@@ -58,7 +66,7 @@ public class DropObject : MonoBehaviour
             break;
 
             case Type.Trash:
-                if (!player.handFree){
+                if (player.holdingIngredient){
                     GameObject o = player.DropItem("ingredient");
                     if (o==null) return;
                     Destroy(o);
