@@ -37,7 +37,7 @@ public class Tentacle : MonoBehaviour
 
         segmentPoses[length - 1] = endPos.position;
         segmentFraction = 1f/((float)(length-1));
-        Debug.Log("length: " + length + ", segment fraction: " + segmentFraction);
+        //Debug.Log("length: " + length + ", segment fraction: " + segmentFraction);
     }
 
     public void Update(){
@@ -45,7 +45,7 @@ public class Tentacle : MonoBehaviour
         segmentPoses[0] = targetDir.position; //first position is pointer pos
         Vector3 endToPoint = Vector3.Normalize(segmentPoses[0] - segmentPoses[length-1]);
         float dist = Vector3.Distance(segmentPoses[0], segmentPoses[length-1]);
-        Debug.Log("tentacle end to point: " + endToPoint.ToString());
+        //Debug.Log("tentacle end to point: " + endToPoint.ToString());
         for (int i = 1; i <length-1; i++){
             float targetDist = i*segmentFraction*dist;
             targetPoses[i] =  segmentPoses[0] - endToPoint*targetDist;
