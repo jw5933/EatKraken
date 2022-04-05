@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     
     private bool isHandFree = true;
     public bool handFree {get {return isHandFree;}}
+    public bool holdingIngredient {get {return heldIngredient != null;}}
 
     [SerializeField] private List <Ingredient> currentOrder = new List <Ingredient>();
     public List<Ingredient> order {get {return currentOrder;}}
