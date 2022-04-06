@@ -12,7 +12,8 @@ public class Tentacle : MonoBehaviour
     Vector3[] segmentV; //smooth damp velocities
 
     Transform targetDir; //pointer
-    [SerializeField] Transform endPos;
+    [SerializeField] Transform[] endPoses = new Transform[3];
+    int endPosIndex = 1;
     //[SerializeField] float distanceBetweenPoints; //the points keep a distance away from each other
     [SerializeField] float segmentSpeedDifference;
     [SerializeField] float startSpeed;
@@ -35,7 +36,7 @@ public class Tentacle : MonoBehaviour
             segmentSpeeds[i] = segmentSpeeds[i-1] + segmentSpeedDifference;
         }
 
-        segmentPoses[length - 1] = endPos.position;
+        segmentPoses[length - 1] = endPoses[endPosIndex].position;
         segmentFraction = 1f/((float)(length-1));
         //Debug.Log("length: " + length + ", segment fraction: " + segmentFraction);
     }
@@ -52,6 +53,16 @@ public class Tentacle : MonoBehaviour
             segmentPoses[i] = Vector3.SmoothDamp(segmentPoses[i], targetPoses[i], ref segmentV[i], segmentSpeeds[i]);
         }
         lineRend.SetPositions(segmentPoses);
+    }
+
+    public void UpdateEndPos(int a){
+        if (a < 0){
+            endPosIndex = Mathf.Max(endPosIndex + a, 0);
+        }
+        else{
+            endPosIndex = Mathf.Min(endPosIndex + a, 2);
+        }
+        segmentPoses[length - 1] = endPoses[endPosIndex].position;
     }
 
     /* void OnDrawGizmosSelected()
