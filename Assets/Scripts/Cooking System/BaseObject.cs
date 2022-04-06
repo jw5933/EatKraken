@@ -38,14 +38,12 @@ public class BaseObject : Draggable
         }
         finalizeOrder = true;
         minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
-        Debug.Log(minDistance);
 
         UpdatePlane();
     }
 
     private void Start(){
         foreach(Transform child in transform){
-            Debug.Log(child.gameObject.name);
             ingredientPositions.Add(child.position);
         }
     }
@@ -123,10 +121,10 @@ public class BaseObject : Draggable
         orderObject.transform.position = transform.position;
         orderObject.SetActive(true);
 
-        foreach(Ingredient o in player.order){
-            o.HandleAddToOrder();
-            o.transform.SetParent(orderObject.transform, true);
-            o.transform.position = orderObject.transform.position;
+        foreach(Ingredient i in player.order){
+            i.HandleAddToOrder();
+            i.transform.SetParent(orderObject.transform, true);
+            i.transform.position = orderObject.transform.position;
         }
         HandlePickUp(orderObject);
     }
