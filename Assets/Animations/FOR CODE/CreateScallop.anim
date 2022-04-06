@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CreateSurf
+  m_Name: CreateScallop
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -141,9 +141,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: ff09db366d09945f386648d254e8d628, type: 3}
+      value: {fileID: 21300000, guid: 3bd61771e7aab4de0a4434b9e162760d, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: 3f9f524c677d048eda9cd4ec0e225813, type: 3}
+      value: {fileID: 21300000, guid: de80c9c7112c444dda6da8d646b6fe48, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -191,8 +191,8 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: ff09db366d09945f386648d254e8d628, type: 3}
-    - {fileID: 21300000, guid: 3f9f524c677d048eda9cd4ec0e225813, type: 3}
+    - {fileID: 21300000, guid: 3bd61771e7aab4de0a4434b9e162760d, type: 3}
+    - {fileID: 21300000, guid: de80c9c7112c444dda6da8d646b6fe48, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
