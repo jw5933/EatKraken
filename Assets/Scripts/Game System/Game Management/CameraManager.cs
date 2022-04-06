@@ -24,10 +24,12 @@ public class CameraManager : MonoBehaviour
 
     private Player p;
     private GameObject health;
+    private Tentacle t;
 
     // ==============   methods   ==============
     void Start(){
         health = FindObjectOfType<HealthManager>().gameObject;
+        t = FindObjectOfType<Tentacle>();
         p = FindObjectOfType<Player>();
         cam = FindObjectOfType<Camera>().gameObject;
 
@@ -46,9 +48,11 @@ public class CameraManager : MonoBehaviour
     private void CheckMoveInput(){
         if (Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.LeftArrow)){
             SwapToCam(camIndex-1 >=0 ? camIndex-1: camIndex);
+            t.UpdateEndPos(-1);
         }
         else if (Input.GetKeyDown(KeyCode.D)||Input.GetKeyDown(KeyCode.RightArrow)){
             SwapToCam(camIndex+1 < maxCamIndex ? camIndex+1: camIndex);
+            t.UpdateEndPos(1);
         }
         else if (Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.UpArrow)){
             if (virtualUpCams.Count >0) SwapUpDownCam();
