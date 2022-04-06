@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CreateProtein
+  m_Name: CreateRoe
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -141,9 +141,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: c2bec9e87f48c4711aeccdb2f4b518b4, type: 3}
+      value: {fileID: 21300000, guid: 121671764bbdb41cd8fd5bd6b2f36fc7, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: 03521319bb7544a609b6aa57ef58dffc, type: 3}
+      value: {fileID: 21300000, guid: ab20fe8dbdd4d423c888f279cebf53de, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -191,8 +191,8 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: c2bec9e87f48c4711aeccdb2f4b518b4, type: 3}
-    - {fileID: 21300000, guid: 03521319bb7544a609b6aa57ef58dffc, type: 3}
+    - {fileID: 21300000, guid: 121671764bbdb41cd8fd5bd6b2f36fc7, type: 3}
+    - {fileID: 21300000, guid: ab20fe8dbdd4d423c888f279cebf53de, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
