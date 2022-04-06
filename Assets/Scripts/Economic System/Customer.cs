@@ -124,7 +124,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         mySprites = myPossibleSprites[a].sprites;
 
         myCustomer = Instantiate(gm.customerSkeleton, gm.customerView).GetComponent<SpriteRenderer>();
-        myCustomer.gameObject.GetComponent<UIActivate>().action = Activate;
+        myCustomer.gameObject.GetComponent<UIActivate>().AddAction(Activate);
         myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
     }

@@ -22,30 +22,37 @@ public class Map : MonoBehaviour, IPointerClickHandler
     [SerializeField]private GameObject locationAnim;
 
 
+
     // ==============   methods   ==============
     private void Awake(){
         gm = FindObjectOfType<GameManager>();
         econ = FindObjectOfType<Economy>();
         em = FindObjectOfType<EventManager>();
+        locationAnim.GetComponent<UIDeactivate>().AddAction(goNextLocation);
     }
 
     private void Start(){
-        if (nextLocation !=null) goNextLocation();
+        if (nextLocation !=null) playGoNextAnimation();
     }
 
-    //go to the location the player wants
-    public void goNextLocation(){
+    private void playGoNextAnimation(){ //end of animation will call go next location
+        Debug.Log("anim");
         //play animation
         if (locationAnim !=null){
             locationAnim.SetActive(true);
             locationAnim.GetComponent<Animator>().SetTrigger("MoveLocation");
         }
+    }
+
+    //go to the location the player wants
+    public void goNextLocation(){
+        Debug.Log("next");
         OpenOrCloseMap();
 
         //update location by unsetting current and setting next
         if (currLocation != null) currLocation.UnsetLocation();
         if (nextLocation != null){
-            Debug.Log("setting next location");
+            //Debug.Log("setting next location");
             nextLocation.SetLocation();
             //let subscribers know location has changed
             em.ChangeLocation(nextLocation); 
