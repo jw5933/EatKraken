@@ -104,9 +104,9 @@ MonoBehaviour:
   burntTime: 0
   myRequiredCookedState: 0
   imageStates:
-  - {fileID: 21300000, guid: 03521319bb7544a609b6aa57ef58dffc, type: 3}
+  - {fileID: 21300000, guid: ab20fe8dbdd4d423c888f279cebf53de, type: 3}
   perfectImageState: 0
-  finalImageState: {fileID: 21300000, guid: 03521319bb7544a609b6aa57ef58dffc, type: 3}
+  finalImageState: {fileID: 21300000, guid: ab20fe8dbdd4d423c888f279cebf53de, type: 3}
   motionsToStateChange: 0
   myRequired: 0
   myToolLines: []
