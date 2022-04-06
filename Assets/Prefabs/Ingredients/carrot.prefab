@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076294698129360165}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.109999925, y: -1.5898, z: 0}
+  m_LocalPosition: {x: -0.109999925, y: -1.953159, z: 0}
   m_LocalScale: {x: 0.4717731, y: 7.587894, z: 1.0395926}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3193862488332660660}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.11, y: 1.02, z: 0}
+  m_LocalPosition: {x: -0.11, y: 0.656641, z: 0}
   m_LocalScale: {x: 0.4717731, y: 7.587894, z: 1.0395926}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 3331925310647921217}
   - component: {fileID: 2250593037638905568}
   m_Layer: 0
-  m_Name: lotus
+  m_Name: carrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,7 +322,7 @@ SpriteRenderer:
   m_SortingLayerID: -1202010163
   m_SortingLayer: 7
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 95918c95aad7e46e8b42235586153e62, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f076d1f7d74b4a8583030c1d3f4b573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914ec03ce776a42dea95c864ca579a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myName: lotus
+  myName: carrot
   myPrice: 3
   myType: 2
   rawTime: 0
@@ -353,10 +353,10 @@ MonoBehaviour:
   burntTime: 0
   myRequiredCookedState: 0
   imageStates:
-  - {fileID: 21300000, guid: 95918c95aad7e46e8b42235586153e62, type: 3}
-  - {fileID: 21300000, guid: 16fcd3bc4862644fbb07ea72c99d0c40, type: 3}
+  - {fileID: 21300000, guid: 2f076d1f7d74b4a8583030c1d3f4b573, type: 3}
+  - {fileID: 21300000, guid: 7c7c82ae18bd84a1ab593d650f461902, type: 3}
   perfectImageState: 0
-  finalImageState: {fileID: 21300000, guid: 16fcd3bc4862644fbb07ea72c99d0c40, type: 3}
+  finalImageState: {fileID: 21300000, guid: 947d7177568a94ea4af5964de5ad3e21, type: 3}
   motionsToStateChange: 3
   myRequired: 1
   myToolLines: []
@@ -401,7 +401,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5388296736009821210}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.109999925, y: -0.27664104, z: 0}
+  m_LocalPosition: {x: -0.109999925, y: -0.64, z: 0}
   m_LocalScale: {x: 0.4717731, y: 7.587894, z: 1.0395926}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}

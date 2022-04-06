@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7785bd35f72bc47fa924eabbeac633c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myIngredientPrefab: {fileID: 3331925310647921218, guid: af757d4e952fa43168ed2aa21d63059e, type: 3}
+  myIngredientPrefab: {fileID: 3331925310647921218, guid: fa94e9c93f583411fb5527faa3dbbb7a, type: 3}
 --- !u!61 &7372663882186118148
 BoxCollider2D:
   m_ObjectHideFlags: 0

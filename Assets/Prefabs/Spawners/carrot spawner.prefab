@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7372663882186118149}
   - component: {fileID: 7372663882186118148}
   m_Layer: 0
-  m_Name: mushroom spawner
+  m_Name: carrot spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1202010163
   m_SortingLayer: 7
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 76d44d7b50ca24846bef287c0c443410, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f076d1f7d74b4a8583030c1d3f4b573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7785bd35f72bc47fa924eabbeac633c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myIngredientPrefab: {fileID: 3331925310647921218, guid: 0c0c06435577e49f2b9164c467a4c132, type: 3}
+  myIngredientPrefab: {fileID: 3331925310647921218, guid: fb480fd906752446187d9fff2bf36e06, type: 3}
 --- !u!61 &7372663882186118148
 BoxCollider2D:
   m_ObjectHideFlags: 0

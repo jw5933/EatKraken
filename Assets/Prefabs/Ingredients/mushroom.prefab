@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914ec03ce776a42dea95c864ca579a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myName: raddish
+  myName: mushroom
   myPrice: 3
   myType: 2
   rawTime: 0
