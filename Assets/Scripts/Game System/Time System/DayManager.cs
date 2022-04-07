@@ -44,6 +44,9 @@ public class DayManager : MonoBehaviour
     private void HandleDayChange(){
         if (phaseIndex+1 >= timePerStage.Length){
             if (!cm.lineUpIsEmpty) isOvertime = true;
+            else{
+                StartCoroutine(gm.HandleEndGame(string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", locationDay, cm.coins, cm.served, cm.lost, gm.currLocation)));
+            }
             //FIX: show working overtime
             return;
         }
