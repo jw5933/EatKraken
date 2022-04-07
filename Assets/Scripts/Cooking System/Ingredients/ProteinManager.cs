@@ -19,7 +19,8 @@ public class ProteinManager : MonoBehaviour
 
     private KeyCode[] keyCodes = {
          KeyCode.Alpha1,
-         KeyCode.Alpha2
+         KeyCode.Alpha2,
+         KeyCode.Alpha3
          //FIX: add keycodes as needed
      };
 

@@ -44,7 +44,7 @@ public class LevelDesignScript : MonoBehaviour
     }
     //economy
     //update the amount of money earned and customers served in current phase
-    private void UpdateOnCoinChange(float made, float max, int phase){
+    private void UpdateOnCoinChange(Customer c, float made, float max, int phase){
         //Debug.Log(phases.Length);
         if (made <= 0) phases[phase].customersLeft += 1;
         else phases[phase].customersServed += 1;

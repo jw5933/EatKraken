@@ -27,9 +27,9 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     [SerializeField] private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     private List<Image> orderUi = new List<Image>();
-    private List<Image> finalOrderUi = new List<Image>();
+    [SerializeField] private List<Image> finalOrderUi = new List<Image>();
     private List<Sprite> orderUiSprites = new List<Sprite>();
-    private List<Sprite> finalOrderUiSprites = new List<Sprite>();
+    [SerializeField] private List<Sprite> finalOrderUiSprites = new List<Sprite>();
     private int myTimePhase;
     public int phase{set{myTimePhase = value;}}
     private GameObject order;
@@ -173,6 +173,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         if (wrongIngredient > myLeniency){
             myMood = Mood.Angry;
             Debug.Log("Customer will leave without paying anything.");
+            em.ChangeCoins(this, 0, coinHappy, myTimePhase);
             Leave();
         }
         else PayForOrder(); 
@@ -182,24 +183,24 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         Debug.Log("Customer will pay for something.");
         switch(myMood){
             case Mood.Angry:
-                em.ChangeCoins(coinAngry, coinHappy, myTimePhase);
+                em.ChangeCoins(this, coinAngry, coinHappy, myTimePhase);
             break;
             case Mood.Neutral:
-                em.ChangeCoins(coinNeutral, coinHappy, myTimePhase);
+                em.ChangeCoins(this, coinNeutral, coinHappy, myTimePhase);
             break;
             case Mood.Happy:
-                em.ChangeCoins(coinHappy, coinHappy, myTimePhase);
+                em.ChangeCoins(this, coinHappy, coinHappy, myTimePhase);
             break;
         }
         Leave();
     }
 
     public void AddToOrder(Sprite fs, Sprite s, string i, float p){ //add an ingredient to this order and update the UI
-        Debug.Log(string.Format("called add to order on {0}, orderUI Length is {1}", this.gameObject.name, orderUi.Count));
+        //Debug.Log(string.Format("called add to order on {0}, orderUI Length is {1}", this.gameObject.name, orderUi.Count));
         //if (orderUiIndex >= orderUi.Count) return;
         //UpdateOrderUI(s);
         finalOrderUiSprites.Add(fs);
-        orderUiSprites.Add(s);
+        if (s != null) orderUiSprites.Add(s);
         myOrder.Add(i);
         myOrderPrice += p;
     }
@@ -211,8 +212,13 @@ public class Customer : MonoBehaviour, IPointerClickHandler
             orderUi[index].sprite = orderUiSprites[index];
             index++;
         }
-        while (index < myOrder.Count){
+        /* while (index < myOrder.Count){
             myOrder.RemoveAt(index);
+        } */
+        index = 0;
+        while (index < myOrder.Count){
+            finalOrderUi[index].sprite = finalOrderUiSprites[index];
+            index++;
         }
     }
 
@@ -221,20 +227,18 @@ public class Customer : MonoBehaviour, IPointerClickHandler
             case Mood.Happy:
                 myCustomer.sprite = mySprites[currSpriteState++];
                 myMood = Mood.Neutral;
-            break;
+                break;
             case Mood.Neutral:
                 myCustomer.sprite = mySprites[currSpriteState];
                 myMood = Mood.Angry;
-            break;
+                break;
             case Mood.Angry:
-                em.ChangeCoins(0, coinHappy, myTimePhase);
-                Leave();
-            return;
+                em.ChangeCoins(this, 0, coinHappy, myTimePhase);
+                break;
         }
     }
 
     private void Leave(){
-        FindObjectOfType<CustomerManager>().RemoveCustomer(this);
         Destroy(myCustomerAnim.gameObject);
     }
 }

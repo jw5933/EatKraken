@@ -168,6 +168,7 @@ public class Player : MonoBehaviour
                 currentOrder.Add(heldIngredient);
                 heldIngredient.GetComponent<Collider>().enabled = false;
                 heldIngredient.transform.SetParent(t, true);
+                heldIngredient.transform.localScale = Vector3.one;
                 //Update the visuals to reflect addition of ingredient
                 UpdateOrderVisual(pos, angle);
                 return true;

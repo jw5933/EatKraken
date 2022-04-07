@@ -18,7 +18,7 @@ public class SharedArea: MonoBehaviour
 
     Collider myCollider;
 
-    [HideInInspector] public UnityEvent FreedAreaEvent = new UnityEvent();
+    //[HideInInspector] public UnityEvent FreedAreaEvent = new UnityEvent();
 
     // ==============   functions   ==============
     private void Awake(){
@@ -58,12 +58,19 @@ public class SharedArea: MonoBehaviour
     //shared board
     private void PlaceObjectOnShared(){
         if (myType == AreaType.IngredientOnly|| myType == AreaType.CuttingBoard){
+            if (!player.holdingIngredient) return;
             myItem = player.DropItem("ingredient");
-            if (myItem == null) return;
-            
             Ingredient i = myItem.GetComponent<Ingredient>();
+
+            if (i.type == Ingredient.Type.Base){
+                player.PickUpItem(myItem);
+                myItem = null;
+                return;
+            }
+
             i.ResetVars();
             i.area = this;
+            i.SetParent(this.transform.parent);
         }
         else if (myType == AreaType.Base){
             myItem = player.DropItem("base");
@@ -86,9 +93,26 @@ public class SharedArea: MonoBehaviour
     }
 
     public void HandlePickUp(){
-        freeArea = true;
-        FreedAreaEvent.Invoke();
-        if (myCollider !=null) myCollider.enabled = true;
         myItem = null;
+        freeArea = true;
+        //FreedAreaEvent.Invoke();
+        if (myCollider !=null) myCollider.enabled = true;
+    }
+
+    public bool CheckSwapIngredient(){
+        Debug.Log("check swap");
+        if (!player.holdingIngredient || (myType != AreaType.IngredientOnly && myType != AreaType.CuttingBoard)) return false;
+        //see if the player is holding an ingredient
+        Ingredient i = player.DropItem("ingredient").GetComponent<Ingredient>();
+        Debug.Log(i.name);
+        player.PickUpItem(myItem);
+        myItem = i.gameObject;
+
+        i.ResetVars();
+        i.area = this;
+        i.SetParent(this.transform.parent);
+        myItem.transform.position = myCollider.bounds.center;
+
+        return true;
     }
 }

@@ -20,6 +20,9 @@ public class Ingredient : MonoBehaviour
     public enum CookedState {Raw, Cooked, Burnt}
     private CookedState myCookedState = CookedState.Raw;
     public CookedState cookedState {get{return myCookedState;}}
+    [SerializeField] private CookedState myRequiredCookedState;
+    public CookedState requiredCookedState {get{return myRequiredCookedState;}}
+
     [SerializeField] private float rawTime;
     public float raw {get{return rawTime;}}
     [SerializeField] private float cookTime;
@@ -27,9 +30,6 @@ public class Ingredient : MonoBehaviour
     [SerializeField] private float burntTime;
     public float burnt {get{return burntTime;}}
     public bool finishedCookedStage {get{return myCookedState != CookedState.Raw;}}
-
-    [SerializeField] private CookedState myRequiredCookedState;
-    public CookedState requiredCookedState {get{return myRequiredCookedState;}}
 
     private float myCookedTime;
     public float cookedTime {get{return myCookedTime;} set{myCookedTime = value;}}
@@ -39,15 +39,18 @@ public class Ingredient : MonoBehaviour
     public int maxImageState {get{return imageStates.Length-1;}}
     private int myImageState = 0; //initial state is 0
     public int imgState{get{return myImageState;}}
-    [SerializeField] int perfectImageState;
-    public Sprite initialSprite {get{return imageStates[perfectImageState];}}
+    [SerializeField] int perfectSpriteState;
+    public Sprite initialSprite {get{return imageStates[perfectSpriteState];}}
 
     //final image state
     [SerializeField] private Sprite finalImageState;
     public Sprite orderSprite {get{return finalImageState;}}
+    private bool hasCookStage;
+    [SerializeField] private Sprite[] finalCookedImageStates = new Sprite[3];
+    private int cookedImageState;
 
     //player interaction
-    [SerializeField] private int motionsToStateChange = 1; //needed number of motions to change state
+    private int motionsToStateChange; //needed number of motions to change state
     private int myMotionsLeft; //number of motions left until state change -> resets to neededMotions
     public int motionsLeft {get{return myMotionsLeft;}}
     private bool isSliced;
@@ -56,7 +59,7 @@ public class Ingredient : MonoBehaviour
     //tool and visual lines
     [SerializeField] private Tool.Required myRequired = Tool.Required.None;
     public Tool.Required required {get{return myRequired;}}
-    [SerializeField] private List<ToolLine> myToolLines = new List<ToolLine>(); //debugging
+    private List<ToolLine> myToolLines = new List<ToolLine>(); //debugging
     private bool hovered;
 
     //vectors
@@ -67,16 +70,22 @@ public class Ingredient : MonoBehaviour
     //references
     private SpriteRenderer mySpriteRenderer;
     private Player player;
-    [SerializeField]private SharedArea myArea;
+    private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
+    private Transform spawner;
+    public Transform parent {set{spawner = value;}}
 
     // ==============   methods   ==============
     public void Awake(){
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<Collider>();
+
+        hasCookStage = (myRequiredCookedState != CookedState.Raw);
+
         foreach (Transform child in transform){
             myToolLines.Add(child.GetComponent<ToolLine>());
         }
+        motionsToStateChange = myToolLines.Count;
         if (myToolLines.Count == 0) isSliced = true;
         InactivateToolLines();
     }
@@ -87,15 +96,20 @@ public class Ingredient : MonoBehaviour
 
     //pick up item
     private void OnMouseUp(){ //if the player isnt holding anything, pick up this ingredient
-        if (!player.handFree) return;
-        //Debug.Log(this.gameObject.name);
-
-        player.PickUpItem(this.gameObject);
-        
-        if (myArea != null){
-            myArea.HandlePickUp();
-            myArea = null;
+        if (player.holdingIngredient){
+            if (myArea != null && myArea.CheckSwapIngredient())
+                myArea = null;
         }
+        else if (!player.handFree) return;
+        else{
+            player.PickUpItem(this.gameObject);
+            SetParent(spawner);
+            if (myArea != null){
+                myArea.HandlePickUp();
+                myArea = null;
+            }
+        }
+        //Debug.Log(this.gameObject.name);
         InactivateToolLines();
     }
     
@@ -118,6 +132,10 @@ public class Ingredient : MonoBehaviour
 
     private void OnMouseExit(){
         player.ResetPlane();
+    }
+
+    public void SetParent(Transform t){
+        transform.SetParent(t);
     }
 
     private void UpdatePlane(){
@@ -182,6 +200,7 @@ public class Ingredient : MonoBehaviour
 
     public virtual void ChangeCookedState(){
         ChangeImageState();
+        if (cookedImageState < 2) cookedImageState++;
         switch(myCookedState){
             case CookedState.Raw:
                 myCookedState = CookedState.Cooked;
@@ -200,12 +219,18 @@ public class Ingredient : MonoBehaviour
     }
 
     public void HandleAddToOrder(){
-        if (finalImageState == null) return;
-        mySpriteRenderer.sprite = finalImageState;
+        if (hasCookStage){
+            mySpriteRenderer.sprite = finalCookedImageStates[cookedImageState];
+        }
+        else{
+            if (finalImageState == null) return;
+            mySpriteRenderer.sprite = finalImageState;
+        }
     }
 
     public void ResetVars(){ //reset some variables: tool lines, 
         InactivateToolLines();
         InvalidateToolLines();
+        myCollider.enabled = true;
     }
 }

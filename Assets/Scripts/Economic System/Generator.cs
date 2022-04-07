@@ -96,7 +96,7 @@ public class Generator : MonoBehaviour
             int num = gm.maxIngredients;
             int b = Random.Range(0, baseIngredientPrefabs.Count);
             newCustomer.AddToOrder(baseIngredientPrefabs[b].orderSprite,
-            baseIngredientPrefabs[b].initialSprite, baseIngredientPrefabs[b].name, 
+            null, baseIngredientPrefabs[b].name, 
             baseIngredientPrefabs[b].price);
 
             int c = Random.Range(0, carbIngredientPrefabs.Count);
@@ -105,12 +105,7 @@ public class Generator : MonoBehaviour
             carbIngredientPrefabs[c].price);
             num--;
 
-            int p = Random.Range(0, proteinPrefabs.Count);
-            newCustomer.AddToOrder(proteinPrefabs[p].orderSprite,
-            proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
-            num--;
-
-            while (num > 0){
+            while (num > 1){
                 num--;
                 Debug.Log(num);
                 int i = Random.Range(0, ingredientPrefabs.Count);
@@ -118,6 +113,11 @@ public class Generator : MonoBehaviour
                     ingredientPrefabs[i].initialSprite, 
                 ingredientPrefabs[i].name, ingredientPrefabs[i].price);
             }
+            
+            int p = Random.Range(0, proteinPrefabs.Count);
+            newCustomer.AddToOrder(proteinPrefabs[p].orderSprite,
+            proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
+
             newCustomer.CalculateCoins();
             phaseList.Add(newCustomer);
         }

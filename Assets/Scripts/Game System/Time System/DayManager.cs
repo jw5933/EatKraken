@@ -13,6 +13,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] Sprite[] timeStageImages;
     bool isOvertime;
     public bool overtime {get{return isOvertime;}}
+    public bool endOfDay {get{return (phaseIndex+1 >= timePerStage.Length);}}
 
     private int phaseIndex = -1;
     public int phase {get{return phaseIndex;}}
