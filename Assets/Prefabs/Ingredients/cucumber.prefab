@@ -348,19 +348,20 @@ MonoBehaviour:
   myName: cucumber
   myPrice: 3
   myType: 2
+  myRequiredCookedState: 0
   rawTime: 0
   cookTime: 0
   burntTime: 0
-  myRequiredCookedState: 0
   imageStates:
   - {fileID: 21300000, guid: 51e55c75be92e41b3b469d76af89d758, type: 3}
   - {fileID: 21300000, guid: 7e7feac5ff4fa44fb8a7dbdf171aa063, type: 3}
-  perfectImageState: 0
+  perfectSpriteState: 0
   finalImageState: {fileID: 21300000, guid: 9edb6e46a9c4449d2b28b0696c50dce7, type: 3}
-  motionsToStateChange: 3
+  finalCookedImageStates:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   myRequired: 1
-  myToolLines: []
-  myArea: {fileID: 0}
 --- !u!65 &2250593037638905568
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,7 +370,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3331925310647921218}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.7960663, y: 3.4788802, z: 0}

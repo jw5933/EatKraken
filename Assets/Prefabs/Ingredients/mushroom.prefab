@@ -348,19 +348,20 @@ MonoBehaviour:
   myName: mushroom
   myPrice: 3
   myType: 2
+  myRequiredCookedState: 0
   rawTime: 0
   cookTime: 0
   burntTime: 0
-  myRequiredCookedState: 0
   imageStates:
   - {fileID: 21300000, guid: 76d44d7b50ca24846bef287c0c443410, type: 3}
   - {fileID: 21300000, guid: d618717118cf744ab981f9ba0530d1c4, type: 3}
-  perfectImageState: 0
-  finalImageState: {fileID: 21300000, guid: d618717118cf744ab981f9ba0530d1c4, type: 3}
-  motionsToStateChange: 3
+  perfectSpriteState: 0
+  finalImageState: {fileID: 21300000, guid: afb1ab810aeb64bef99488cbb14628ba, type: 3}
+  finalCookedImageStates:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   myRequired: 1
-  myToolLines: []
-  myArea: {fileID: 0}
 --- !u!65 &2250593037638905568
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,11 +370,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3331925310647921218}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.7960663, y: 3.4788802, z: 0}
-  m_Center: {x: -0.3449421, y: -0.33019006, z: 0}
+  m_Size: {x: 9.603029, y: 6.942525, z: 0}
+  m_Center: {x: 0.26123714, y: 0.025633693, z: 0}
 --- !u!1 &5388296736009821210
 GameObject:
   m_ObjectHideFlags: 0

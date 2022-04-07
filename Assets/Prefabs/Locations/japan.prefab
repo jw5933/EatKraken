@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5721045096075295725}
   - component: {fileID: 5721045096075295715}
   m_Layer: 5
-  m_Name: Japan
+  m_Name: japan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,9 +96,12 @@ MonoBehaviour:
   - {fileID: 8170074989391904341, guid: da75a4c09ac724729a53654a33ca957b, type: 3}
   ingredientPrefabs:
   - {fileID: 3331925310647921217, guid: af757d4e952fa43168ed2aa21d63059e, type: 3}
+  - {fileID: 3331925310647921217, guid: 0c0c06435577e49f2b9164c467a4c132, type: 3}
+  - {fileID: 3331925310647921217, guid: fa94e9c93f583411fb5527faa3dbbb7a, type: 3}
   proteinPrefabs:
   - {fileID: 6946837463386383394, guid: 6030acc09eaba4d87b7ca52727213f74, type: 3}
   - {fileID: 660590799061307339, guid: 2a800476067e8452cb11d6d91f21d170, type: 3}
+  - {fileID: 660590799061307339, guid: 24027e5c20822495b81cf03c32de43f8, type: 3}
   customerPrefabs:
   - {fileID: 2149216373356943745, guid: 1aa0659a2e0684d109365b467cfdec68, type: 3}
   - {fileID: 2149216373356943745, guid: 1aa0659a2e0684d109365b467cfdec68, type: 3}

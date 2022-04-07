@@ -99,20 +99,21 @@ MonoBehaviour:
   myName: scallop
   myPrice: 5
   myType: 3
+  myRequiredCookedState: 1
   rawTime: 5
   cookTime: 3
   burntTime: 3
-  myRequiredCookedState: 1
   imageStates:
   - {fileID: 21300000, guid: de80c9c7112c444dda6da8d646b6fe48, type: 3}
   - {fileID: 21300000, guid: c392cf9a8d167476c971b854abfc14b0, type: 3}
   - {fileID: 21300000, guid: 028aebd2fce8e423e92a758a05990251, type: 3}
-  perfectImageState: 1
-  finalImageState: {fileID: 21300000, guid: 49d39df485e5c4e1e8e15623079c176b, type: 3}
-  motionsToStateChange: 0
+  perfectSpriteState: 1
+  finalImageState: {fileID: 21300000, guid: c887e3c3c3bcf468685e695882ab5ef3, type: 3}
+  finalCookedImageStates:
+  - {fileID: 21300000, guid: a489ed09c173a4f20a758a9e9d9d931e, type: 3}
+  - {fileID: 21300000, guid: 1766cbf7cf9584c75ae17fc6e6fb01ff, type: 3}
+  - {fileID: 21300000, guid: 45f8577d247a24f4cb01d2e22ec5f38e, type: 3}
   myRequired: 0
-  myToolLines: []
-  myArea: {fileID: 0}
 --- !u!65 &660590799061307382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -121,7 +122,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660590799061307338}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4.0786767, y: 3.231471, z: 0}

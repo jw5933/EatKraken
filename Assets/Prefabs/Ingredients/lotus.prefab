@@ -348,19 +348,20 @@ MonoBehaviour:
   myName: lotus
   myPrice: 3
   myType: 2
+  myRequiredCookedState: 0
   rawTime: 0
   cookTime: 0
   burntTime: 0
-  myRequiredCookedState: 0
   imageStates:
   - {fileID: 21300000, guid: 95918c95aad7e46e8b42235586153e62, type: 3}
   - {fileID: 21300000, guid: 16fcd3bc4862644fbb07ea72c99d0c40, type: 3}
-  perfectImageState: 0
-  finalImageState: {fileID: 21300000, guid: 16fcd3bc4862644fbb07ea72c99d0c40, type: 3}
-  motionsToStateChange: 3
+  perfectSpriteState: 0
+  finalImageState: {fileID: 21300000, guid: d9caa59e864604496afd2a79eda1f35b, type: 3}
+  finalCookedImageStates:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   myRequired: 1
-  myToolLines: []
-  myArea: {fileID: 0}
 --- !u!65 &2250593037638905568
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,11 +370,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3331925310647921218}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.7960663, y: 3.4788802, z: 0}
-  m_Center: {x: -0.3449421, y: -0.33019006, z: 0}
+  m_Size: {x: 8.926456, y: 3.4989183, z: 0}
+  m_Center: {x: 0.09170723, y: -0.320171, z: 0}
 --- !u!1 &5388296736009821210
 GameObject:
   m_ObjectHideFlags: 0

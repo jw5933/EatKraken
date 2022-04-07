@@ -96,24 +96,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914ec03ce776a42dea95c864ca579a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myName: white rice
+  myPrice: 1
   myType: 1
+  myRequiredCookedState: 1
   rawTime: 0
   cookTime: 0
   burntTime: 0
-  myRequiredCookedState: 1
-  myName: white rice
-  myPrice: 1
   imageStates:
   - {fileID: 21300000, guid: 77fc1c5f10ee3477b9436a83f89ee9f4, type: 3}
   - {fileID: 21300000, guid: 2d54616a1a2044182a593e40d8a0d65c, type: 3}
-  myImageState: 0
-  perfectImageState: 0
-  finalImageState: {fileID: 21300000, guid: 8ccd173c3a2354707bfd8e7eb637f9fe, type: 3}
-  motionsToStateChange: 1
-  myMotionsLeft: 0
+  perfectSpriteState: 0
+  finalImageState: {fileID: 21300000, guid: 7a738ad8f46a943e184b793b92e61fb1, type: 3}
+  finalCookedImageStates:
+  - {fileID: 21300000, guid: bd8a908796d394af5b62b8e3163d3d1f, type: 3}
+  - {fileID: 21300000, guid: 7a738ad8f46a943e184b793b92e61fb1, type: 3}
+  - {fileID: 0}
   myRequired: 0
-  myToolLines: []
-  myArea: {fileID: 0}
 --- !u!65 &-7040991176229040161
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -122,7 +121,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5670647635598139606}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 5, y: 5, z: 0}
