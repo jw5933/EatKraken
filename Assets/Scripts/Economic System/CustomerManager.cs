@@ -15,6 +15,9 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] private int maxLostCustomers;
     private int servedCustomers;
     private float coinsMade;
+    public float coins {get{return coinsMade;}}
+    public int served {get{return servedCustomers;}}
+    public int lost {get{return lostCustomers;}}
 
     private GameManager gm;
     private DayManager dm;
