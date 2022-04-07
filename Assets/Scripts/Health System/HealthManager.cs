@@ -90,7 +90,7 @@ public class HealthManager : MonoBehaviour
         int p = 0;
         while (order.Count > 0){
             Ingredient o = order[0];
-            if ((o.type == Ingredient.Type.Vegetable || o.type == Ingredient.Type.Carb) && (order[0].finishedCutStage ||o.finishedCookedStage)) i++;
+            if ((o.type == Ingredient.Type.Vegetable || o.type == Ingredient.Type.Carb) && ((o.hasCutStage && o.finishedCutStage) || (o.hasCookStage && o.finishedCookedStage))) i++;
             if (o.type == Ingredient.Type.Protein) p++;
             order.RemoveAt(0);
         }
