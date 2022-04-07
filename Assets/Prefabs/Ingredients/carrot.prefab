@@ -356,7 +356,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2f076d1f7d74b4a8583030c1d3f4b573, type: 3}
   - {fileID: 21300000, guid: 7c7c82ae18bd84a1ab593d650f461902, type: 3}
   perfectSpriteState: 0
-  finalImageState: {fileID: 21300000, guid: 6666838a6c3084a3389d2543957c4222, type: 3}
+  finalImageState: {fileID: 21300000, guid: a206e07bcf59f4f379f62ea7cb148d85, type: 3}
   finalCookedImageStates:
   - {fileID: 0}
   - {fileID: 0}
