@@ -99,20 +99,21 @@ MonoBehaviour:
   myName: squid
   myPrice: 5
   myType: 3
+  myRequiredCookedState: 1
   rawTime: 5
   cookTime: 3
   burntTime: 3
-  myRequiredCookedState: 1
   imageStates:
   - {fileID: 21300000, guid: b5bd49dfc3df94635bacf1dec2b76020, type: 3}
   - {fileID: 21300000, guid: daad2a1fab036472d8ca7113832d1631, type: 3}
   - {fileID: 21300000, guid: 19611649635b84f1697cf1302f1f68a1, type: 3}
-  perfectImageState: 1
-  finalImageState: {fileID: 21300000, guid: df118106ce8c04c319634e576459d7e1, type: 3}
-  motionsToStateChange: 0
+  perfectSpriteState: 1
+  finalImageState: {fileID: 21300000, guid: 3286651edb06648c983b833954681250, type: 3}
+  finalCookedImageStates:
+  - {fileID: 21300000, guid: bc3e9be0b371941a08979e951e9a0c69, type: 3}
+  - {fileID: 21300000, guid: 9c53f7ce23e2846e4b4d4935818a33f9, type: 3}
+  - {fileID: 21300000, guid: 8ed41cf0170e34e1e990fe11073c13c0, type: 3}
   myRequired: 0
-  myToolLines: []
-  myArea: {fileID: 0}
 --- !u!65 &660590799061307382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -121,7 +122,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660590799061307338}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4.0786767, y: 3.231471, z: 0}

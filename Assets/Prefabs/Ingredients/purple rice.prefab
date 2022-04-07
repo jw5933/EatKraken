@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 2908570191324138334, guid: 6a897db7e35494999b41158fe903a871, type: 3}
       propertyPath: finalImageState
       value: 
-      objectReference: {fileID: 21300000, guid: a2aad15e411884792ba317fb54d13ce6, type: 3}
+      objectReference: {fileID: 21300000, guid: b9a308abd9e1845a0aced93457154954, type: 3}
     - target: {fileID: 2908570191324138334, guid: 6a897db7e35494999b41158fe903a871, type: 3}
       propertyPath: imageStates.Array.data[0]
       value: 
@@ -79,5 +79,13 @@ PrefabInstance:
       propertyPath: finalImageStates.Array.data[0]
       value: 
       objectReference: {fileID: 21300000, guid: a2aad15e411884792ba317fb54d13ce6, type: 3}
+    - target: {fileID: 2908570191324138334, guid: 6a897db7e35494999b41158fe903a871, type: 3}
+      propertyPath: finalCookedImageStates.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: b2a4933bd00674379992728914041133, type: 3}
+    - target: {fileID: 2908570191324138334, guid: 6a897db7e35494999b41158fe903a871, type: 3}
+      propertyPath: finalCookedImageStates.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: b9a308abd9e1845a0aced93457154954, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a897db7e35494999b41158fe903a871, type: 3}

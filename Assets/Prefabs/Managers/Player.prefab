@@ -63,7 +63,7 @@ MonoBehaviour:
   proteinPrefabs:
   - {fileID: 6946837463386383393, guid: 6030acc09eaba4d87b7ca52727213f74, type: 3}
   - {fileID: 660590799061307338, guid: 2a800476067e8452cb11d6d91f21d170, type: 3}
-  - {fileID: 0}
+  - {fileID: 660590799061307338, guid: 24027e5c20822495b81cf03c32de43f8, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -83,7 +83,7 @@ MonoBehaviour:
   animClips:
   - {fileID: 7400000, guid: b051485b538fa4ccdadf8cc6bce10996, type: 2}
   - {fileID: 7400000, guid: 8f45a78d4da824f5aba8da2511392c8c, type: 2}
-  - {fileID: 0}
+  - {fileID: 7400000, guid: 8f45a78d4da824f5aba8da2511392c8c, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

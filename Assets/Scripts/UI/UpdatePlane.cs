@@ -20,7 +20,6 @@ public class UpdatePlane : MonoBehaviour
     }
 
     private void OnMouseEnter(){
-        Debug.Log("on my plane: " + gameObject.name);
         p.currPlane = myPlane;
     }
 
@@ -38,8 +37,8 @@ public class UpdatePlane : MonoBehaviour
         myPlane = new Plane(norm, center);
 
         //debugging
-        Debug.DrawLine(transform.right + center, center, Color.red, 100f);
+        /* Debug.DrawLine(transform.right + center, center, Color.red, 100f);
         Debug.DrawLine(transform.up + center, center, Color.green, 100f);
-        Debug.DrawLine(norm + center, center, Color.blue, 100f);
+        Debug.DrawLine(norm + center, center, Color.blue, 100f); */
     }
 }

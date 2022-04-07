@@ -23,5 +23,6 @@ public class IngredientSpawner : MonoBehaviour
     public void SpawnIngredient(){
         newIngredient = Instantiate(myIngredientPrefab, this.transform);
         newIngredient.transform.position = transform.position;
+        newIngredient.GetComponent<Ingredient>().parent = this.transform;
     }
 }
