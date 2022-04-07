@@ -4768,11 +4768,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -27.52
+      value: -27.45
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.97
+      value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4780,7 +4780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9821171
+      value: 0.9592718
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4792,7 +4792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.18827128
+      value: 0.28248468
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4804,7 +4804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: d991b586ce8084ef887137777363f016, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 21.704
+      value: 32.817
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d991b586ce8084ef887137777363f016, type: 3}
@@ -5123,11 +5123,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -27.14
+      value: -27.25
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14
+      value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5135,19 +5135,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9819674
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.18905029
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5159,7 +5159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118151, guid: 53445244470e94b34956983c9810e48e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 21.795
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53445244470e94b34956983c9810e48e, type: 3}
@@ -6292,7 +6292,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: d3f4b63dc21824bfa8e77e3b82b4284b, type: 3}
-  m_Color: {r: 1, g: 0.81400937, b: 0.5990566, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.3254902}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
