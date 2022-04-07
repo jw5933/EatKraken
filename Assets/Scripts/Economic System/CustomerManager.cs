@@ -32,6 +32,7 @@ public class CustomerManager : MonoBehaviour
     //update the amount of money earned and customers served in current phase
     private void UpdateOnCoinChange(Customer customer, float made, float max, int phase){
         RemoveCustomer(customer);
+        coinsMade += made;
         if (made <= 0) lostCustomers++;
         else servedCustomers++;
         if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame("Your customers were unhappy with your service, and complained to your boss. You got fired. Try again... \n Press <R> to retry"));
