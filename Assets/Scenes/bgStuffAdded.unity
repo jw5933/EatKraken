@@ -6786,6 +6786,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: raddish spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 7372663882186118144, guid: 5709cb24910f3436d9da1c81a18f0025, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7372663882186118149, guid: 5709cb24910f3436d9da1c81a18f0025, type: 3}
       propertyPath: myIngredientPrefab
       value: 

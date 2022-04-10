@@ -234,6 +234,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
                 break;
             case Mood.Angry:
                 em.ChangeCoins(this, 0, coinHappy, myTimePhase);
+                Leave();
                 break;
         }
     }

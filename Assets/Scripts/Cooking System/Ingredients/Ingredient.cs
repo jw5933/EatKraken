@@ -45,13 +45,14 @@ public class Ingredient : MonoBehaviour
     //final image state
     [SerializeField] private Sprite finalImageState;
     public Sprite orderSprite {get{return finalImageState;}}
-    private bool hasCookStage;
+    public bool hasCookStage{get{return (myRequiredCookedState != CookedState.Raw);}}
     [SerializeField] private Sprite[] finalCookedImageStates = new Sprite[3];
     private int cookedImageState;
 
     //player interaction
     private int motionsToStateChange; //needed number of motions to change state
     private int myMotionsLeft; //number of motions left until state change -> resets to neededMotions
+    public bool hasCutStage {get{return (motionsToStateChange > 0);}}
     public int motionsLeft {get{return myMotionsLeft;}}
     private bool isSliced;
     public bool finishedCutStage {get{return isSliced;}}
@@ -79,8 +80,6 @@ public class Ingredient : MonoBehaviour
     public void Awake(){
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<Collider>();
-
-        hasCookStage = (myRequiredCookedState != CookedState.Raw);
 
         foreach (Transform child in transform){
             myToolLines.Add(child.GetComponent<ToolLine>());
