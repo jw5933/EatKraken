@@ -80,7 +80,7 @@ public class Ingredient : MonoBehaviour
         myCollider = GetComponent<Collider>();
 
         foreach (Transform child in transform){
-            myToolLines.Add(child.GetComponent<ToolLine>());
+            if (child.GetComponent<ToolLine>()) myToolLines.Add(child.GetComponent<ToolLine>());
         }
         motionsToStateChange = myToolLines.Count;
         if (myToolLines.Count == 0) isSliced = true;
@@ -120,9 +120,6 @@ public class Ingredient : MonoBehaviour
             if (player.ValidateToolLines(this) && myArea.type == SharedArea.AreaType.CuttingBoard){
                 //UpdatePlane();
                 ActivateToolLines();
-                //set the plane for whatever player is holding
-                player.currPlane = myPlane;
-                player.inSpace = false;
             }
         }
     }
