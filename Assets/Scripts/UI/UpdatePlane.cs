@@ -12,6 +12,7 @@ public class UpdatePlane : MonoBehaviour
     private void Awake(){
         p = FindObjectOfType<Player>();
         myCollider = GetComponent<Collider>();
+        if (myCollider == null) myCollider = transform.parent.GetComponent<Collider>();
         myCollider2D = GetComponent<Collider2D>();
     }
 
@@ -20,6 +21,7 @@ public class UpdatePlane : MonoBehaviour
     }
 
     private void OnMouseEnter(){
+        //Debug.Log("updating plane of " + this.name);
         p.currPlane = myPlane;
     }
 
