@@ -8,10 +8,6 @@ public class Draggable: MonoBehaviour
     protected Player player;
     protected float minDistance;
 
-    private void Awake(){
-        player = FindObjectOfType<Player>();
-    }
-
     protected Vector3 GetProjectionOnPlane(){
         //Initialize variables
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -24,8 +20,8 @@ public class Draggable: MonoBehaviour
     }
     
     protected void VerifyDistance(Vector3 end, Vector3 start){
-        Debug.Log(end.ToString());
-        Debug.Log(start.ToString());
+        //Debug.Log(end.ToString());
+        //Debug.Log(start.ToString());
         Vector3 offset = end - start;
         float distance = offset.sqrMagnitude;
 
@@ -36,10 +32,10 @@ public class Draggable: MonoBehaviour
     }
     
     protected virtual void HandleDragged(){
-        Debug.Log("called handle dragged");
+        //Debug.Log("called handle dragged");
     }
 
     protected virtual void HandleNotDragged(){
-        Debug.Log("called handle not dragged");
+        //Debug.Log("called handle not dragged");
     }
 }

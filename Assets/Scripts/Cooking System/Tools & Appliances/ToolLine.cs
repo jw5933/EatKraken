@@ -18,6 +18,8 @@ public class ToolLine: Draggable
 
     // ==============   functions   ==============
     private void Awake(){
+        player = FindObjectOfType<Player>();
+
         mySpriteRend = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<Collider2D>();
         ingredient = transform.parent.GetComponent<Ingredient>();
