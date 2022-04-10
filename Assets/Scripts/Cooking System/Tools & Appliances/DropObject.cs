@@ -15,7 +15,7 @@ public class DropObject : MonoBehaviour
     private Player player;
     private CustomerManager cm;
     private HealthManager hm;
-    private BaseObject baseObj;
+    private BaseHolder baseHolder;
 
     private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
@@ -25,7 +25,7 @@ public class DropObject : MonoBehaviour
         player = FindObjectOfType<Player>();
         cm = FindObjectOfType<CustomerManager>();
         hm = FindObjectOfType<HealthManager>();
-        baseObj = FindObjectOfType<BaseObject>();
+        baseHolder = FindObjectOfType<BaseHolder>();
     }
 
     public void OnMouseUp(){
@@ -37,9 +37,9 @@ public class DropObject : MonoBehaviour
                     //Debug.Log("serving");
                     
                     if (cm.ServeCustomer(orderCopy)){
-                        if (baseObj.orderobj !=null){
+                        if (baseHolder.orderobj !=null){
                             player.DropItem("any");
-                            baseObj.ResetVars();
+                            baseHolder.ResetVars();
                         }
                         player.ClearOrder(); 
                     }
@@ -57,9 +57,9 @@ public class DropObject : MonoBehaviour
                 }
                 else if (player.holdingBase && player.order.Count > 0){
                     hm.CheckConsume(orderCopy);
-                    if (baseObj.orderobj !=null){
+                    if (baseHolder.orderobj !=null){
                         player.DropItem("any");
-                        baseObj.ResetVars();
+                        baseHolder.ResetVars();
                     }
                     player.ClearOrder();
                 }

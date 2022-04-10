@@ -35,7 +35,7 @@ public class SharedArea: MonoBehaviour
                 myCollider.enabled = false;
                 myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
             }
-            BaseObject o = myItem.GetComponent<BaseObject>();
+            BaseHolder o = myItem.GetComponent<BaseHolder>();
             if (o !=null) o.area = this;
         }
     }
@@ -75,7 +75,7 @@ public class SharedArea: MonoBehaviour
         else if (myType == AreaType.Base){
             myItem = player.DropItem("base");
             if (myItem == null) return;
-            myItem.GetComponent<BaseObject>().area = this;
+            myItem.GetComponent<BaseHolder>().area = this;
         }
         else{
             myItem = player.DropItem("tool");

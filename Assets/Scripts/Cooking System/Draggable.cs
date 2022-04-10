@@ -5,15 +5,19 @@ using UnityEngine;
 public class Draggable: MonoBehaviour
 {
 
-protected Plane myPlane;
-protected float minDistance;
+    protected Player player;
+    protected float minDistance;
+
+    private void Awake(){
+        player = FindObjectOfType<Player>();
+    }
 
     protected Vector3 GetProjectionOnPlane(){
         //Initialize variables
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float enter = 0.0f;
         //find point on plane
-        if(myPlane.Raycast(ray, out enter)){
+        if(player.currPlane.Raycast(ray, out enter)){
             return ray.GetPoint(enter);
         }
         return Vector3.zero;
