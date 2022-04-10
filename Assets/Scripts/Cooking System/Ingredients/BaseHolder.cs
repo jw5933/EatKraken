@@ -19,8 +19,7 @@ public class BaseHolder : Draggable
 
     [SerializeField] private GameObject orderObject;
     public GameObject orderobj {get{return orderObject;}}
-
-    private Player player;
+    
     private Animator anim;
 
     
@@ -38,33 +37,12 @@ public class BaseHolder : Draggable
         }
         finalizeOrder = true;
         minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
-
-        UpdatePlane();
     }
 
     private void Start(){
         foreach(Transform child in transform){
             ingredientPositions.Add(child.position);
         }
-    }
-
-    private void UpdatePlane(){
-        Vector3 center = myCollider.bounds.center;
-        //get the vector sides
-        Vector3 side1 = transform.right + center;
-        Vector3 side2 = transform.up + center;
-        
-        //get the perpendicular vector
-        Vector3 perp = Vector3.Cross(side1, side2);
-        
-        //normalize perp vector
-        Vector3 norm = perp.normalized;
-        this.myPlane = new Plane(norm, center);
-
-        //debugging
-        // Debug.DrawLine(transform.right + center, center, Color.red, 100f);
-        // Debug.DrawLine(transform.up + center, center, Color.green, 100f);
-        //Debug.DrawLine(norm + center, center, Color.blue, 100f);
     }
 
     private void OnMouseExit(){
