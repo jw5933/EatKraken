@@ -7,23 +7,27 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     // ==============   variables   ==============
-    private bool isHoldingBase;
-    public bool holdingBase{get{return isHoldingBase;}}
+    private GameObject heldItem;
+    public bool handFree {get {return heldItem == null;}}
+
+    private BaseObject heldBase;
+    public BaseObject baseObject {get{return heldBase;}}
+    public bool holdingBase{get{return heldBase != null;}}
     
-    [SerializeField] private Tool heldTool;
-    [SerializeField] private Ingredient heldIngredient;
-    [SerializeField] private GameObject heldItem;
+    private Tool heldTool;
+    public bool holdingTool{get{return heldTool!=null;}}
+
+    private Ingredient heldIngredient;
+    public Ingredient ingredient {get {return heldIngredient;}}
+    public bool holdingIngredient {get {return heldIngredient != null;}}
+    [HideInInspector] public bool hasBaseIngredient;
+    
 
     private ToolLine myToolLine;
     public ToolLine toolLine {set{myToolLine = value;}}
-    public bool isHoldingTool{get{return heldTool!=null;}}
-    
-    private bool isHandFree = true;
-    public bool handFree {get {return isHandFree;}}
-    public bool holdingIngredient {get {return heldIngredient != null;}}
 
     [SerializeField] private List <Ingredient> currentOrder = new List <Ingredient>();
-    public List<Ingredient> order {get {return currentOrder;}}
+    //public List<Ingredient> order {get {return currentOrder;}}
 
     //vectors & planes
     Vector3 mousePos;
@@ -34,8 +38,6 @@ public class Player : MonoBehaviour
     public Plane currPlane {set{currentPlane = value;} get{return currentPlane;}}
     
     float mouseDistanceZ = 15f;
-    bool canMoveInSpace = true;
-    public bool inSpace {set{canMoveInSpace = value;}}
 
     //references
     CameraManager cam;
@@ -86,7 +88,6 @@ public class Player : MonoBehaviour
 
     public void PickUpItem(GameObject item){ //pick up an item, and sort it into the correct script type
         if (item == null) return;
-        HandleHasItem();
         heldItem = item;
         //disable collider
         //Debug.Log(heldItem.name);
@@ -97,10 +98,8 @@ public class Player : MonoBehaviour
         
         //get the type of item player picked up
         heldIngredient = item.GetComponent<Ingredient>();
-        heldTool = item.GetComponent<Tool>();
-        if (heldIngredient == null && heldTool == null) {
-            isHoldingBase = true;
-        }
+        if (!holdingIngredient) heldTool = item.GetComponent<Tool>();
+        if (!holdingTool) heldBase = item.GetComponent<BaseObject>();
     }
 
     //drop the held item, if its type matches what is wanted by caller 
@@ -109,22 +108,23 @@ public class Player : MonoBehaviour
         GameObject held = null;
         switch(type){
             case "ingredient":
-                if(heldIngredient!= null){
+                if(holdingIngredient){
                     held = heldItem;
                     heldIngredient = null;
                     heldItem = null;
                 }
             break;
             case "tool":
-                if (heldTool!= null){
+                if (holdingTool){
                     held = heldItem;
                     heldTool = null;
                     heldItem = null;
                 }
             break;
             case "base":
-                if (heldIngredient== null && heldTool== null){
+                if (holdingBase){
                     held = heldItem;
+                    heldBase = null;
                     heldItem = null;
                 }
             break;
@@ -147,57 +147,10 @@ public class Player : MonoBehaviour
     }
 
     private void HandleNoItems(){
-        isHandFree = true;
         heldTool = null;
         heldIngredient = null;
         heldItem = null;
-        isHoldingBase = false;
         //cam.ShowButtons();
-    }
-
-    private void HandleHasItem(){
-        isHandFree = false;
-        //cam.HideButtons();
-    }
-
-    //add held ingredient to the order
-    public bool AddToCurrentOrder(Vector3 pos, Vector3 angle, Transform t){
-        if (heldIngredient!= null && heldIngredient.AtEndState()){
-            //check if the type is accepted, if it is then add the ingredient
-            if (CheckCanAddIngredient(heldIngredient.type, currentOrder.Count)){
-                currentOrder.Add(heldIngredient);
-                heldIngredient.GetComponent<Collider>().enabled = false;
-                heldIngredient.transform.SetParent(t, true);
-                heldIngredient.transform.localScale = Vector3.one;
-                //Update the visuals to reflect addition of ingredient
-                UpdateOrderVisual(pos, angle);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private bool CheckCanAddIngredient(Ingredient.Type t, int ingredientsAdded){
-        if((ingredientsAdded == 0 && t == Ingredient.Type.Base) 
-        || (ingredientsAdded == 1 && t == Ingredient.Type.Carb) 
-        || (ingredientsAdded >=2 && (t != Ingredient.Type.Base && t != Ingredient.Type.Carb)))
-            return true;
-        return false;
-    }
-
-    private void UpdateOrderVisual(Vector3 pos, Vector3 angle){
-        heldIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
-        heldIngredient.transform.position = pos;
-        heldIngredient.transform.Rotate(angle - heldIngredient.transform.eulerAngles, Space.World);
-        HandleNoItems();
-    }
-
-    public void ClearOrder(){
-        // Debug.Log(currentOrder.Count);
-        foreach (Ingredient i in currentOrder){
-            Destroy(i.gameObject);
-        }
-        currentOrder.Clear();
     }
     
     public bool ValidateToolLines(Ingredient i){ //validate by checking if player is holding the required tool
