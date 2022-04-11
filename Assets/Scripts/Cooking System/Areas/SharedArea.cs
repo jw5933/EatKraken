@@ -5,20 +5,18 @@ using UnityEngine.Events;
 
 public class SharedArea: MonoBehaviour
 {
-    public enum AreaType {None, CuttingBoard, Base, IngredientOnly}
+    public enum AreaType {None, CuttingBoard, BaseHolder, IngredientOnly, BaseObject}
     [SerializeField] AreaType myType = AreaType.None;
     public AreaType type {get {return myType;}}
 
     [SerializeField] private GameObject myItem;
 
-    private bool freeArea = true;
+    [SerializeField] private bool freeArea = true;
     public bool free {get{return freeArea;}}
     private Player player;
     private GameManager gm;
 
     Collider myCollider;
-
-    //[HideInInspector] public UnityEvent FreedAreaEvent = new UnityEvent();
 
     // ==============   functions   ==============
     private void Awake(){
@@ -57,8 +55,7 @@ public class SharedArea: MonoBehaviour
 
     //shared board
     private void PlaceObjectOnShared(){
-        if (myType == AreaType.IngredientOnly|| myType == AreaType.CuttingBoard){
-            if (!player.holdingIngredient) return;
+        if (player.holdingIngredient && (myType == AreaType.IngredientOnly|| myType == AreaType.CuttingBoard)){
             myItem = player.DropItem("ingredient");
             Ingredient i = myItem.GetComponent<Ingredient>();
 
@@ -72,12 +69,11 @@ public class SharedArea: MonoBehaviour
             i.area = this;
             i.SetParent(this.transform.parent);
         }
-        else if (myType == AreaType.Base){
+        else if (player.holdingBase && (myType == AreaType.BaseHolder || myType == AreaType.BaseObject)){
             myItem = player.DropItem("base");
-            if (myItem == null) return;
-            myItem.GetComponent<BaseHolder>().area = this;
+            myItem.GetComponent<BaseObject>().area = this;
         }
-        else{
+        else if (player.holdingTool){
             myItem = player.DropItem("tool");
             if (myItem == null) return;
             
@@ -85,7 +81,9 @@ public class SharedArea: MonoBehaviour
             t.ResetVars();
             t.area = this;
         }
+        else return;
         freeArea = false;
+
         if (myCollider !=null) {
             myCollider.enabled = false;
             myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
@@ -114,5 +112,15 @@ public class SharedArea: MonoBehaviour
         myItem.transform.position = myCollider.bounds.center;
 
         return true;
+    }
+
+    public void CheckSwapBaseObject(){
+        GameObject o = player.DropItem("base");
+        player.PickUpItem(myItem.gameObject);
+        myItem.GetComponent<BaseObject>().area = null;
+
+        myItem = o;
+        myItem.GetComponent<BaseObject>().area = this;
+        myItem.transform.position = myCollider.bounds.center;
     }
 }
