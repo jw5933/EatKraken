@@ -5,6 +5,9 @@ using UnityEngine;
 public class BaseHolder : Draggable
 {
     // ==============   variables   ==============
+    [SerializeField] BaseObject baseObject;
+    public bool hasBase{get{return baseObject != null;}}
+
     [SerializeField] private float minPercentOfDist;
     private Collider myCollider;
     private Vector3 initialPos;
@@ -14,12 +17,7 @@ public class BaseHolder : Draggable
 
     bool finalizeOrder;
     bool addingObject;
-    [SerializeField] private List <Vector3> ingredientPositions = new List<Vector3>();
-    private int positionIndex;
 
-    [SerializeField] private GameObject orderObject;
-    public GameObject orderobj {get{return orderObject;}}
-    
     private Animator anim;
 
     
@@ -29,8 +27,6 @@ public class BaseHolder : Draggable
         myCollider = GetComponent<Collider>();
         anim = GetComponent<Animator>();
 
-        ResetVars();
-
         if (minPercentOfDist <= 0){
             finalizeOrder = false;
             return;
@@ -39,29 +35,22 @@ public class BaseHolder : Draggable
         minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
     }
 
-    private void Start(){
-        foreach(Transform child in transform){
-            ingredientPositions.Add(child.position);
-        }
-    }
-
     private void OnMouseExit(){
         if (player.handFree) return;
     }
 
-    private void OnMouseDown(){
+    private void OnMouseUp(){
         if (!player.handFree){
             if (player.holdingBase){
-                player.DropItem("base");
-                orderObject.transform.position = transform.position;
+                if (hasBase) CheckSwap();
+                else
+                    baseObject = player.DropItem("base").GetComponent<BaseObject>();
+                baseObject.UnsetCollider();
+                baseObject.transform.position = transform.position;
             }
-            else {
-                if (positionIndex >= ingredientPositions.Count) return;
-                if (player.AddToCurrentOrder(ingredientPositions[positionIndex], this.transform.eulerAngles, orderObject != null? orderObject.transform: this.transform)){
-                    if (orderObject !=null) orderObject.SetActive(true);
-                    positionIndex++;
-                }
-                addingObject = true;
+            else if (player.holdingIngredient){
+                if (baseObject.AddToOrder(this.transform.eulerAngles))
+                    addingObject = true;
             }
         } 
         else{
@@ -69,7 +58,7 @@ public class BaseHolder : Draggable
             if (finalizeOrder)
                 initialPos = base.GetProjectionOnPlane();
             else
-                HandlePickUp(orderObject != null? orderObject: this.gameObject);
+                HandlePickUp();
         }
     }   
 
@@ -95,27 +84,26 @@ public class BaseHolder : Draggable
     }
 
     public void HandleAnimation(){
-        if (player.order.Count <= 0) return;
-        orderObject.transform.position = transform.position;
-        orderObject.SetActive(true);
+        if (player.baseObject.order.Count <= 0) return;
+        baseObject.transform.position = transform.position;
 
-        foreach(Ingredient i in player.order){
+        foreach(Ingredient i in player.baseObject.order){
             i.HandleAddToOrder();
-            i.transform.SetParent(orderObject.transform, true);
-            i.transform.position = orderObject.transform.position;
+            i.transform.SetParent(baseObject.transform, true);
+            i.transform.position = baseObject.transform.position;
         }
-        HandlePickUp(orderObject);
+        HandlePickUp();
     }
 
-    private void HandlePickUp(GameObject o){
-        if (player.order.Count <= 0) return;
-        if (orderObject == null && myArea != null) myArea.HandlePickUp();
-        player.PickUpItem(o);
+    private void HandlePickUp(){
+        //if (!hasBase && myArea != null) myArea.HandlePickUp();
+        player.PickUpItem(baseObject.gameObject);
+        baseObject = null;
     }
 
-    public void ResetVars(){
-        orderObject.SetActive(false);
-        orderObject.transform.position = transform.position;
-        positionIndex = 0;
+    private void CheckSwap(){
+        GameObject o = player.DropItem("base");
+        player.PickUpItem(baseObject.gameObject);
+        baseObject = o.GetComponent<BaseObject>();
     }
 }
