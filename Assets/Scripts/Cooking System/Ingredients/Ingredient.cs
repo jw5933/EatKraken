@@ -124,10 +124,6 @@ public class Ingredient : MonoBehaviour
         }
     }
 
-    private void OnMouseExit(){
-        player.ResetPlane();
-    }
-
     public void SetParent(Transform t){
         transform.SetParent(t);
     }
