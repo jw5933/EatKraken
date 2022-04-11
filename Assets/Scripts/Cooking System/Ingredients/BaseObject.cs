@@ -10,38 +10,61 @@ public class BaseObject : MonoBehaviour
     Ingredient currIngredient;
 
     Player player;
+    private SharedArea myArea;
+    public SharedArea area{set{myArea = value;}}
+    private Collider myCollider;
 
     // ==============   methods   ==============
     private void Awake(){
         player = FindObjectOfType<Player>();
+        myCollider = GetComponent<Collider>();
     }
 
     //add held ingredient to the order
-    public bool AddToCurrentOrder(Vector3 pos, Vector3 angle, Transform t){
+    public bool AddToOrder(Vector3 angle){
         if (player.holdingIngredient && player.ingredient.AtEndState()){
             //check if the type is accepted, if it is then add the ingredient
             if (CheckCanAddIngredient(player.ingredient.type, myOrder.Count)){
                 currIngredient = player.DropItem("ingredient").GetComponent<Ingredient>();
                 myOrder.Add(currIngredient);
                 currIngredient.GetComponent<Collider>().enabled = false;
-                currIngredient.transform.SetParent(t, true);
-                currIngredient.transform.localScale = Vector3.one;
                 //Update the visuals to reflect addition of ingredient
-                UpdateOrderVisual(pos, angle);
+                UpdateOrderVisual(this.transform.position, angle);
                 return true;
             }
         }
         return false;
     }
 
+    private void OnMouseUp(){ //if the player isnt holding anything, pick up this ingredient
+        /* if (player.holdingBase){
+            if (myArea != null && myArea.CheckSwapIngredient())
+                myArea = null;
+        } */
+        if (!player.handFree){
+            if (player.holdingBase && myArea != null) myArea.CheckSwapBaseObject();
+            else return;
+        }
+        else{
+            player.PickUpItem(this.gameObject);
+            if (myArea != null){
+                myArea.HandlePickUp();
+                myArea = null;
+            }
+        }
+    }
+
     private void UpdateOrderVisual(Vector3 pos, Vector3 angle){
         currIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
         currIngredient.transform.position = pos;
         currIngredient.transform.Rotate(angle - currIngredient.transform.eulerAngles, Space.World);
+        currIngredient.transform.parent = this.transform;
+        currIngredient.transform.localScale = Vector3.one;
         currIngredient = null;
     }
 
     private bool CheckCanAddIngredient(Ingredient.Type t, int ingredientsAdded){
+        if (!player.hasBaseIngredient) ingredientsAdded ++;
         if((ingredientsAdded == 0 && t == Ingredient.Type.Base) 
         || (ingredientsAdded == 1 && t == Ingredient.Type.Carb) 
         || (ingredientsAdded >=2 && (t != Ingredient.Type.Base && t != Ingredient.Type.Carb)))
@@ -57,5 +80,13 @@ public class BaseObject : MonoBehaviour
 
         //FIX: reset vars -> destroy object
         myOrder.Clear();
+    }
+
+    public void UnsetCollider(){
+        myCollider.enabled = false;
+    }
+
+    public void SetCollider(){
+        myCollider.enabled = true;
     }
 }
