@@ -102,7 +102,6 @@ public class Customer : MonoBehaviour, IPointerClickHandler
                     selectImage.enabled = false;
                 }
             }
-            
         }
         RectTransform r = order.GetComponent<RectTransform>();
         GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
@@ -156,7 +155,6 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         }
 
         List<string> check = new List<string>(order);
-        //check.RemoveAt(0); //remove the base
         foreach(string i in order){
             if (myOrder.Remove(i)){
                 wrongIngredient--;
@@ -176,8 +174,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
             em.ChangeCoins(this, 0, coinHappy, myTimePhase);
             Leave();
         }
-        else PayForOrder(); 
-        //UpdateGenerator();
+        else PayForOrder();
     }
     private void PayForOrder(){ //only pay for order if the number of wrong/missing ingredients is acceptable to customer
         Debug.Log("Customer will pay for something.");
@@ -196,27 +193,21 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     }
 
     public void AddToOrder(Sprite fs, Sprite s, string i, float p){ //add an ingredient to this order and update the UI
-        //Debug.Log(string.Format("called add to order on {0}, orderUI Length is {1}", this.gameObject.name, orderUi.Count));
-        //if (orderUiIndex >= orderUi.Count) return;
-        //UpdateOrderUI(s);
-        finalOrderUiSprites.Add(fs);
+        if (fs != null) finalOrderUiSprites.Add(fs);
         if (s != null) orderUiSprites.Add(s);
-        myOrder.Add(i);
-        myOrderPrice += p;
+        if (i != null) myOrder.Add(i);
+        if (p != 0) myOrderPrice += p;
     }
 
     private void UpdateOrderUI(){
-        //if (orderUiIndex < orderUi.Count) orderUi[orderUiIndex++].sprite = s;
         int index = 0;
         while (index < orderUi.Count){
             orderUi[index].sprite = orderUiSprites[index];
             index++;
         }
-        /* while (index < myOrder.Count){
-            myOrder.RemoveAt(index);
-        } */
+
         index = 0;
-        while (index < myOrder.Count){
+        while (index < finalOrderUiSprites.Count){
             finalOrderUi[index].sprite = finalOrderUiSprites[index];
             index++;
         }
