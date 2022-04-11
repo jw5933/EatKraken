@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3416204597822588751}
   - component: {fileID: 3416204597822588850}
-  - component: {fileID: 3416204597822588849}
   - component: {fileID: 3416204597822588848}
+  - component: {fileID: 2418961581309395318}
   m_Layer: 0
   m_Name: bowl spawner
   m_TagString: Untagged
@@ -84,19 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3416204597822588849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3416204597822588750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7785bd35f72bc47fa924eabbeac633c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myIngredientPrefab: {fileID: 2072393569411671097, guid: e05b759251a0b4b0e8b8af1cdffb5c01, type: 3}
 --- !u!65 &3416204597822588848
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -110,3 +97,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.9648342, y: 3.7802746, z: 0}
   m_Center: {x: -0.030903468, y: -0.05540192, z: -0.0000007762812}
+--- !u!114 &2418961581309395318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3416204597822588750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f4017ad854d4969a78bdb6112fa73d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basePrefab: {fileID: 2072393569411671097, guid: e05b759251a0b4b0e8b8af1cdffb5c01, type: 3}

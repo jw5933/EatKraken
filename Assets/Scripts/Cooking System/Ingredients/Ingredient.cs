@@ -65,8 +65,6 @@ public class Ingredient : MonoBehaviour
 
     //vectors
     Collider myCollider;
-    Plane myPlane;
-    public Plane plane {get{return myPlane;}}
 
     //references
     private SpriteRenderer mySpriteRenderer;
@@ -82,7 +80,7 @@ public class Ingredient : MonoBehaviour
         myCollider = GetComponent<Collider>();
 
         foreach (Transform child in transform){
-            myToolLines.Add(child.GetComponent<ToolLine>());
+            if (child.GetComponent<ToolLine>()) myToolLines.Add(child.GetComponent<ToolLine>());
         }
         motionsToStateChange = myToolLines.Count;
         if (myToolLines.Count == 0) isSliced = true;
@@ -120,40 +118,14 @@ public class Ingredient : MonoBehaviour
             hovered = true;
             //if the player is holding a tool, activate the toollines and the plane for calculation
             if (player.ValidateToolLines(this) && myArea.type == SharedArea.AreaType.CuttingBoard){
-                UpdatePlane();
+                //UpdatePlane();
                 ActivateToolLines();
-                //set the plane for whatever player is holding
-                player.currPlane = myPlane;
-                player.inSpace = false;
             }
         }
     }
 
-    private void OnMouseExit(){
-        player.ResetPlane();
-    }
-
     public void SetParent(Transform t){
         transform.SetParent(t);
-    }
-
-    private void UpdatePlane(){
-        Vector3 center = myCollider.bounds.center;
-        //get the vector sides
-        Vector3 side1 = transform.right + center;
-        Vector3 side2 = transform.up + center;
-        
-        //get the perpendicular vector
-        Vector3 perp = Vector3.Cross(side1, side2);
-        
-        //normalize perp vector
-        Vector3 norm = perp.normalized;
-        myPlane = new Plane(norm, center);
-
-        //debugging
-        // Debug.DrawLine(transform.right + center, center, Color.red, 100f);
-        // Debug.DrawLine(transform.up + center, center, Color.green, 100f);
-        //Debug.DrawLine(norm + center, center, Color.blue, 100f);
     }
 
     public void ValidateToolLines(){ //allows tool lines to be used (green)

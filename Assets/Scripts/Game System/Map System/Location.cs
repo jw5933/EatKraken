@@ -8,6 +8,8 @@ public class Location : Button
     // ==============   variables   ==============
     //location variations
     [Header("Ingredient Prefab Lists")]
+    [SerializeField] private Sprite baseObjectSprite;
+    public Sprite baseSprite{get{return baseObjectSprite;}}
     [SerializeField] private List <Ingredient> baseIngredientPrefabs;
     public List <Ingredient> baseIngredients {get{return baseIngredientPrefabs;}}
     [SerializeField] private List <Ingredient> carbIngredientPrefabs;

@@ -5,23 +5,23 @@ using UnityEngine;
 public class Draggable: MonoBehaviour
 {
 
-protected Plane myPlane;
-protected float minDistance;
+    protected Player player;
+    protected float minDistance;
 
     protected Vector3 GetProjectionOnPlane(){
         //Initialize variables
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float enter = 0.0f;
         //find point on plane
-        if(myPlane.Raycast(ray, out enter)){
+        if(player.currPlane.Raycast(ray, out enter)){
             return ray.GetPoint(enter);
         }
         return Vector3.zero;
     }
     
     protected void VerifyDistance(Vector3 end, Vector3 start){
-        Debug.Log(end.ToString());
-        Debug.Log(start.ToString());
+        //Debug.Log(end.ToString());
+        //Debug.Log(start.ToString());
         Vector3 offset = end - start;
         float distance = offset.sqrMagnitude;
 
@@ -32,10 +32,10 @@ protected float minDistance;
     }
     
     protected virtual void HandleDragged(){
-        Debug.Log("called handle dragged");
+        //Debug.Log("called handle dragged");
     }
 
     protected virtual void HandleNotDragged(){
-        Debug.Log("called handle not dragged");
+        //Debug.Log("called handle not dragged");
     }
 }

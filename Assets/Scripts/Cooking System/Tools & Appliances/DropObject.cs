@@ -15,7 +15,7 @@ public class DropObject : MonoBehaviour
     private Player player;
     private CustomerManager cm;
     private HealthManager hm;
-    private BaseObject baseObj;
+    private BaseHolder baseHolder;
 
     private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
@@ -25,23 +25,22 @@ public class DropObject : MonoBehaviour
         player = FindObjectOfType<Player>();
         cm = FindObjectOfType<CustomerManager>();
         hm = FindObjectOfType<HealthManager>();
-        baseObj = FindObjectOfType<BaseObject>();
+        baseHolder = FindObjectOfType<BaseHolder>();
     }
 
     public void OnMouseUp(){
-        List<Ingredient> orderCopy = new List<Ingredient>(player.order);
+        List<Ingredient> order = new List<Ingredient>();
+        if (player.holdingBase){
+            order = new List<Ingredient>(player.baseObject.order);
+        }
         //Debug.Log(this.name);
         switch (myType){
             case Type.Serve:
-                if (player.holdingBase && player.order.Count > 0){
+                if (player.holdingBase && player.baseObject.order.Count > 0){
                     //Debug.Log("serving");
                     
-                    if (cm.ServeCustomer(orderCopy)){
-                        if (baseObj.orderobj !=null){
-                            player.DropItem("any");
-                            baseObj.ResetVars();
-                        }
-                        player.ClearOrder(); 
+                    if (cm.ServeCustomer(order)){
+                        Destroy(player.DropItem("base"));
                     }
                 }
             break;
@@ -49,27 +48,18 @@ public class DropObject : MonoBehaviour
             case Type.Consume:
                 if (player.holdingIngredient){
                     Ingredient o = player.DropItem("ingredient").GetComponent<Ingredient>();
-                    orderCopy.Clear();
-                    orderCopy.Add(o);
-                    
-                    hm.CheckConsume(orderCopy);
+                    hm.CheckConsume(new List<Ingredient>{o});
                     Destroy(o.gameObject);
                 }
-                else if (player.holdingBase && player.order.Count > 0){
-                    hm.CheckConsume(orderCopy);
-                    if (baseObj.orderobj !=null){
-                        player.DropItem("any");
-                        baseObj.ResetVars();
-                    }
-                    player.ClearOrder();
+                else if (player.holdingBase && player.baseObject.order.Count > 0){
+                    hm.CheckConsume(order);
+                    Destroy(player.DropItem("base"));
                 }
             break;
 
             case Type.Trash:
                 if (player.holdingIngredient){
-                    GameObject o = player.DropItem("ingredient");
-                    if (o==null) return;
-                    Destroy(o);
+                    Destroy(player.DropItem("ingredient"));
                 }
             break;
         }

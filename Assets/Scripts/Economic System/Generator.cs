@@ -5,6 +5,7 @@ using UnityEngine;
 public class Generator : MonoBehaviour
 {
     // ==============   variables   ==============
+    private Sprite baseObjectSprite;
     private List <Ingredient> baseIngredientPrefabs;
     private List <Ingredient> carbIngredientPrefabs;
     private List <Ingredient> ingredientPrefabs;
@@ -33,6 +34,7 @@ public class Generator : MonoBehaviour
     CustomerManager cm;
     EventManager em;
     LevelDesignScript ld;
+    Player player;
 
     // ==============   methods   ==============
     void Awake(){
@@ -44,6 +46,7 @@ public class Generator : MonoBehaviour
         dm = FindObjectOfType<DayManager>();
         cm = FindObjectOfType<CustomerManager>();
         ld = FindObjectOfType<LevelDesignScript>();
+        player = FindObjectOfType<Player>();
 
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         em.OnLocationChange += UpdateOnLocationChange;
@@ -52,12 +55,15 @@ public class Generator : MonoBehaviour
     private void UpdateOnLocationChange(Location next){
         Debug.Log("next: " + next.gameObject.name);
         //update the generator
+        baseObjectSprite = next.baseSprite;
         baseIngredientPrefabs = next.baseIngredients;
         carbIngredientPrefabs = next.carbIngredients;
         ingredientPrefabs = next.ingredients;
         customerPrefabs = next.customers;
         customersPerStage = next.customersPerStage;
         proteinPrefabs = next.proteins;
+
+        player.hasBaseIngredient = (baseIngredientPrefabs.Count > 0);
 
         dm.timeStage = next.timeStages;
         CreatePCList();
@@ -91,13 +97,17 @@ public class Generator : MonoBehaviour
             Customer newCustomer = Instantiate(customerPrefabs[cs], gm.orderParent).GetComponent<Customer>();
             customerPrefabs.RemoveAt(cs);
             newCustomer.phase = phase;
+
+            if (baseObjectSprite != null) newCustomer.AddToOrder(baseObjectSprite, null, null, 0);
             
             //adjust customer: base, carb, protein, ingredient
             int num = gm.maxIngredients;
-            int b = Random.Range(0, baseIngredientPrefabs.Count);
-            newCustomer.AddToOrder(baseIngredientPrefabs[b].orderSprite,
-            null, baseIngredientPrefabs[b].name, 
-            baseIngredientPrefabs[b].price);
+            if (baseIngredientPrefabs.Count > 0){
+                int b = Random.Range(0, baseIngredientPrefabs.Count);
+                newCustomer.AddToOrder(baseIngredientPrefabs[b].orderSprite,
+                null, baseIngredientPrefabs[b].name, 
+                baseIngredientPrefabs[b].price);
+            }
 
             int c = Random.Range(0, carbIngredientPrefabs.Count);
             newCustomer.AddToOrder(carbIngredientPrefabs[c].orderSprite,

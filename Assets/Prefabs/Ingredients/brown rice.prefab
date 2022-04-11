@@ -87,5 +87,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: brown rice
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}

@@ -5,7 +5,6 @@ using UnityEngine;
 public class ToolLine: Draggable
 {
     // ==============   variables   ==============
-    private Player player;
     private SpriteRenderer mySpriteRend;
 
     private bool iCanClick;
@@ -20,10 +19,10 @@ public class ToolLine: Draggable
     // ==============   functions   ==============
     private void Awake(){
         player = FindObjectOfType<Player>();
+
         mySpriteRend = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<Collider2D>();
         ingredient = transform.parent.GetComponent<Ingredient>();
-        this.myPlane = ingredient.plane;
 
         this.minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
     }
@@ -31,8 +30,6 @@ public class ToolLine: Draggable
     private void OnMouseEnter(){
         if (player.handFree) return;
         //make sure player is moving on this items (parent) plane
-        player.currPlane = ingredient.plane;
-        player.inSpace = false;
         if (iCanClick){
             mySpriteRend.color = Color.green;
         }
