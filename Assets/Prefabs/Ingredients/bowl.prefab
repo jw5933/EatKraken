@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2072393569411671092}
   - component: {fileID: 2072393569411671099}
-  - component: {fileID: 2072393569411671098}
   - component: {fileID: 2072393569411671093}
-  - component: {fileID: 6659745477857081700}
+  - component: {fileID: 4182040792452280411}
   m_Layer: 0
   m_Name: bowl
   m_TagString: Untagged
@@ -86,34 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2072393569411671098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072393569411671097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 914ec03ce776a42dea95c864ca579a5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myName: bowl
-  myPrice: 0
-  myType: 0
-  myRequiredCookedState: 0
-  rawTime: 0
-  cookTime: 0
-  burntTime: 0
-  imageStates:
-  - {fileID: 21300000, guid: 345606a309b124e9ea1365a41c87a527, type: 3}
-  perfectSpriteState: 0
-  finalImageState: {fileID: 21300000, guid: 345606a309b124e9ea1365a41c87a527, type: 3}
-  finalCookedImageStates:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  myRequired: 0
 --- !u!65 &2072393569411671093
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -125,9 +96,9 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.94, y: 3.77, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6659745477857081700
+  m_Size: {x: 4.782533, y: 4.6302757, z: 0}
+  m_Center: {x: 0.010446161, y: -0.0060094893, z: 0}
+--- !u!114 &4182040792452280411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2072393569411671097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae65d0c9838f240f5bd16b24f0e8b213, type: 3}
+  m_Script: {fileID: 11500000, guid: 0756816101cf34148930866c6be3afba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6242748541725615929
