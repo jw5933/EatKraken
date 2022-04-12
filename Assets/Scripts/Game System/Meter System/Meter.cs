@@ -25,23 +25,25 @@ public class Meter : MonoBehaviour
     [SerializeField] GameObject indicator;
     RectTransform myTransform;
     RectTransform indicatorTransform;
-    Image indicatorIamge;
+    Image indicatorImage;
 
     GameManager gm;
     
 
     // ==============   methods   ==============
-    private void Awake(){
+    private void WakeUp(){
+        Debug.Log("called meter start");
         gm = FindObjectOfType<GameManager>();
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         myTransform = this.GetComponent<RectTransform>();
         indicatorTransform = indicator.GetComponent<RectTransform>();
-        indicatorIamge = indicator.GetComponent<Image>();
+        indicatorImage = indicator.GetComponent<Image>();
     }
 
     public Timer Init(float t1, float t2, float t3, float tStart, UnityAction newAction){
+        if (gm == null) WakeUp();
         if (stateImages[0] == null) InitialSetUpVisuals();
-
+        
         myCallerTime = tStart;
         totalTime = t1 + t2 + t3;
         
@@ -49,14 +51,13 @@ public class Meter : MonoBehaviour
         timePerStage = new float[] {t1, t2, t3};
 
         SetupVisuals();
-
         
         float indicatorTime = tStart/totalTime;
         float indicatorPos = 0 - (myTransform.rect.height * indicatorTime);
         
         if (filler) {
-            indicatorIamge.fillAmount = 1.0f/totalTime * tStart;
-            timer.AddMeter(indicatorIamge, totalTime, HandleAddedTime);
+            indicatorImage.fillAmount = 1.0f/totalTime * tStart;
+            timer.AddMeter(indicatorImage, totalTime, HandleAddedTime);
         }
         else{
             //move indicator to position
@@ -152,6 +153,6 @@ public class Meter : MonoBehaviour
     }
 
     public void ResetVars(){
-        indicatorIamge.fillAmount = 0;
+        indicatorImage.fillAmount = 0;
     }
 }

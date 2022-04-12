@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /*
 this is really customer profile; it is a *TYPE* of customer, but the sprites can vary
 */
-public class Customer : MonoBehaviour, IPointerClickHandler
+public class Customer : MonoBehaviour
 {
     // ==============   variables   ==============
     //customer appearance vars
@@ -16,7 +16,8 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     private Sprite[] mySprites;
     private int currSpriteState;
     private Animator myCustomerAnim; 
-    private SpriteRenderer myCustomer;
+    private Image myCustomer;
+    private int positionInLine;
 
     //mood vars
     public enum Mood {Angry, Neutral, Happy}
@@ -26,15 +27,19 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     //order vars
     [SerializeField] private List<string> myOrder = new List<string>();
     private float myOrderPrice;
+
     private List<Image> orderUi = new List<Image>();
     [SerializeField] private List<Image> finalOrderUi = new List<Image>();
     private List<Sprite> orderUiSprites = new List<Sprite>();
     [SerializeField] private List<Sprite> finalOrderUiSprites = new List<Sprite>();
+    private GameObject detailedOrderUi;
+    private Transform meterParent;
+
     private int myTimePhase;
     public int phase{set{myTimePhase = value;}}
-    private GameObject order;
-    [SerializeField] private Image selectImage;
 
+    private GameObject order;
+    
     //timer vars
     [Header("Wait Times")]
     [SerializeField] private float myHappyWaitTime;
@@ -55,30 +60,48 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     private GameManager gm;
     private EventManager em;
     private CustomerManager cm;
+    private Player player;
 
     // ==============   methods   ==============
     public void Awake(){
         gm = FindObjectOfType<GameManager>();
         em = FindObjectOfType<EventManager>();
         cm = FindObjectOfType<CustomerManager>();
+        player = FindObjectOfType<Player>();
+
+        this.gameObject.SetActive(false);
+    }
+
+    public void OnMouseUp(){ //serve
+        //cm.SelectCustomer(this);
+        if (player.holdingBase && player.baseObject.order.Count > 0){
+            List<Ingredient> order = new List<Ingredient>(player.baseObject.order);
+            Destroy(player.DropItem("base"));
+            CheckOrder(order);
+        }
+    }
+
+    public void OnMouseEnter(){
+        detailedOrderUi.SetActive(!detailedOrderUi.activeSelf);
+    }
+
+    private void Activate(){
+        this.gameObject.SetActive(true);
+        order.gameObject.SetActive(true);
+        meter.StartMeter();
+    }
+
+    public void Init(int posInLine){
+        positionInLine = posInLine;
+        transform.SetParent(gm.orderParent.GetChild(positionInLine));
+        transform.localPosition = Vector3.zero;
 
         CreateOrder();
         CreateMeter();
         CreateAppearance();
 
-        this.gameObject.SetActive(false);
-    }
-
-    public void OnPointerClick(PointerEventData pointerEventData){
-        cm.SelectCustomer(this);
-    }
-
-    public void Select(){
-        selectImage.enabled = true;
-    }
-
-    public void Deselect(){
-        selectImage.enabled = false;
+        UpdateOrderUI();
+        myCustomerAnim.SetTrigger("MoveToFront");
     }
 
     public void CalculateCoins(){
@@ -92,14 +115,24 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         foreach(Transform child in order.transform){
             Image i = child.gameObject.GetComponent<Image>();
             if (i !=null) {
-                if (i.name == "initial")
-                    orderUi.Add(i);
-                else if (i.name == "final"){
-                    finalOrderUi.Add(i);
-                }
-                else if (i.name == "check"){
-                    selectImage = i;
-                    selectImage.enabled = false;
+                switch (i.name){
+                    case "initial group":
+                        detailedOrderUi = i.gameObject;
+                        foreach(Transform c in i.transform){
+                            Image j = c.gameObject.GetComponent<Image>();
+                            orderUi.Add(j);
+                        }
+                        detailedOrderUi.SetActive(false);
+                    break;
+                    case "final group":
+                        foreach(Transform c in i.transform){
+                            Image j = c.gameObject.GetComponent<Image>();
+                            finalOrderUi.Add(j);
+                        }
+                    break;
+                    case "meter":
+                        meterParent = i.transform;
+                    break;
                 }
             }
         }
@@ -110,10 +143,12 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         meter = Instantiate(gm.meterPrefab, order.transform).GetComponent<Meter>();
         RectTransform meterTransform = meter.gameObject.GetComponent<RectTransform>();
         RectTransform orderTransform = order.gameObject.GetComponent<RectTransform>();
-        float offset = 0f;
+        //float offset = 0f;
 
         meterTransform.sizeDelta = new Vector2 (meterTransform.sizeDelta.x, orderTransform.sizeDelta.x);
-        meterTransform.anchoredPosition = new Vector2(0, -(orderTransform.rect.height + meterTransform.rect.width + offset));
+        meter.transform.SetParent(meterParent);
+        meterTransform.anchoredPosition = Vector2.zero;
+        //meterTransform.anchoredPosition = new Vector2(0, -(orderTransform.rect.height + meterTransform.rect.width + offset));
         
         timer = meter.Init(myHappyWaitTime, myNeutralWaitTime, myAngryWaitTime, 0, EndTimerHandler);
     }
@@ -122,25 +157,13 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         int a = Random.Range(0, myPossibleSprites.Count);
         mySprites = myPossibleSprites[a].sprites;
 
-        myCustomer = Instantiate(gm.customerSkeleton, gm.customerView).GetComponent<SpriteRenderer>();
+        myCustomer = Instantiate(gm.customerSkeleton, gm.customerParent.GetChild(positionInLine)).GetComponent<Image>();
         myCustomer.gameObject.GetComponent<UIActivate>().AddAction(Activate);
         myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
+        myCustomer.GetComponent<CustomerCharacter>().customer = this;
     }
-
-    private void Activate(){
-        this.gameObject.SetActive(true);
-        meter.StartMeter();
-    }
-
-    public void Init(){
-        UpdateOrderUI();
-        //FIX: "spawn" character -> need a way to sort them smaller when they spawn
-        //and move them up as customers leave (like theyre in a line)
-
-        //IDEA: spawn along a line in 3D space & move forward until colliding with object in fromt; each step increase size
-        myCustomerAnim.SetTrigger("MoveToFront");
-    }
+    
     //check state & ingrdient
     public void CheckOrder(List<Ingredient> given){
         int wrongIngredient = myOrder.Count;
@@ -149,7 +172,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
         //create a new list of strings to check against order, check if any ingredients are not in the right cooking state
         foreach(Ingredient i in given){
             if (i.cookedState != i.requiredCookedState){
-                wrongState ++;
+                wrongState++;
             }
             order.Add(i.name);
         }
@@ -231,6 +254,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     }
 
     private void Leave(){
+        em.FreeCustomer(positionInLine);
         Destroy(myCustomerAnim.gameObject);
     }
 }
