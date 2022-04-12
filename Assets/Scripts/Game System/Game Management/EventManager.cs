@@ -13,6 +13,8 @@ public class EventManager : MonoBehaviour
     public Action<float, int> OnTimeChange;
     //player coins change
     public Action<Customer, float, float, int> OnCoinChange;
+    //customer leaves (what position is it in?)
+    public Action<int> OnCustomerLeave;
 
     // ==============   methods   ==============
     public void ChangeLocation(Location next){
@@ -29,5 +31,9 @@ public class EventManager : MonoBehaviour
 
     public void ChangeCoins(Customer customer, float coinMade, float coinMax, int timePhase){
         if (OnCoinChange != null) OnCoinChange(customer, coinMade, coinMax, timePhase);
+    }
+
+    public void FreeCustomer(int position){
+        if (OnCustomerLeave != null) OnCustomerLeave(position);
     }
 }

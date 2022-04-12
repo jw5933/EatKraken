@@ -117,7 +117,6 @@ public class Generator : MonoBehaviour
 
             while (num > 1){
                 num--;
-                Debug.Log(num);
                 int i = Random.Range(0, ingredientPrefabs.Count);
                 newCustomer.AddToOrder(ingredientPrefabs[i].orderSprite,
                     ingredientPrefabs[i].initialSprite, 
@@ -138,9 +137,6 @@ public class Generator : MonoBehaviour
         //initiate customer
         Customer newCustomer = phaseCustomerL[dm.phase][customersSpawned++];
         cm.LineupCustomer(newCustomer);
-        //FIX: delete below; only the cm needs to lineup customer
-        //newCustomer.gameObject.SetActive(true);
-        newCustomer.Init(); 
     }
 
     private void BeginCustomerTimer(){
