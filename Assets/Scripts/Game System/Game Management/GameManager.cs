@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private GameObject theCustomerView;
     public Transform customerView {get{return theCustomerView.transform;}}
+
+    [SerializeField] private GameObject theCustomerParent;
+    public Transform customerParent {get{return theCustomerParent.transform;}}
     
     //prefabs
     [Header("Prefabs")]
