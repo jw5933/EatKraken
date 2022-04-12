@@ -15,7 +15,7 @@ public class UIActivate : MonoBehaviour
     }
     
     public void Activate(){
-        this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        //this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         action();
     }
 }
