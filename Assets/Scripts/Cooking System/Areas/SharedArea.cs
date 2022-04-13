@@ -73,14 +73,14 @@ public class SharedArea: MonoBehaviour
             myItem = player.DropItem("base");
             myItem.GetComponent<BaseObject>().area = this;
         }
-        else if (player.holdingTool){
+        /* else if (player.holdingTool){
             myItem = player.DropItem("tool");
             if (myItem == null) return;
             
             Tool t = myItem.GetComponent<Tool>();
             t.ResetVars();
             t.area = this;
-        }
+        } */
         else return;
         freeArea = false;
 
