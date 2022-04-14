@@ -18,6 +18,7 @@ public class DayManager : MonoBehaviour
     private int phaseIndex = -1;
     public int phase {get{return phaseIndex;}}
     public int numOfPhases {get{return timePerStage.Length;}}
+    private GameObject phaseButton;
 
     [SerializeField] SpriteRenderer customerBackground;
     [SerializeField] Text timeText;
@@ -40,6 +41,7 @@ public class DayManager : MonoBehaviour
         gm = FindObjectOfType<GameManager>();
         cm = FindObjectOfType<CustomerManager>();
         ld = FindObjectOfType<LevelDesignScript>();
+        phaseButton = FindObjectOfType<PhaseSkipButton>(true).gameObject;
 
         dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
     }
@@ -75,7 +77,9 @@ public class DayManager : MonoBehaviour
             Debug.Log("timer is a break");
             dayTimer.Init(time, HandleDayChange);
             dayTimer.StartTimer();
+            phaseButton.SetActive(true);
         }
+        else phaseButton.SetActive(false);
         em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
     }
 
