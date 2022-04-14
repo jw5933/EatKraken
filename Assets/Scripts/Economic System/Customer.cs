@@ -241,6 +241,7 @@ public class Customer : MonoBehaviour
             case Mood.Happy:
                 myCustomer.sprite = mySprites[currSpriteState++];
                 myMood = Mood.Neutral;
+                em.ChangeCustomerMood();
                 break;
             case Mood.Neutral:
                 myCustomer.sprite = mySprites[currSpriteState];
@@ -254,7 +255,7 @@ public class Customer : MonoBehaviour
     }
 
     private void Leave(){
-        em.FreeCustomer(positionInLine);
+        em.FreeCustomer(positionInLine, myMood);
         Destroy(myCustomerAnim.gameObject);
     }
 }

@@ -24,10 +24,14 @@ public class Generator : MonoBehaviour
     private int customersSpawned;
     private int maxCustomers;
     private float timeUntilCustomer;
+    private int currPhase;
+    private int customersLeft;
 
-    //constant
+    //times
     private float timeBeforeFirst = 2;
     private float timeAfterLast = 2;
+    [SerializeField] private float rangeStart = 0.5f;
+    [SerializeField] private float rangeEnd = 5f;
     
     GameManager gm;
     DayManager dm;
@@ -41,6 +45,9 @@ public class Generator : MonoBehaviour
         em = FindObjectOfType<EventManager>(true);
         //subscribe to events
         em.OnTimeChange += UpdateOnTimeChange;
+        em.OnCustomerNeutral += UpdateOnCustomerNeutral;
+        em.OnLocationChange += UpdateOnLocationChange;
+        em.OnCustomerLeave += UpdateOnCustomerLeave;
 
         gm = FindObjectOfType<GameManager>();
         dm = FindObjectOfType<DayManager>();
@@ -49,7 +56,6 @@ public class Generator : MonoBehaviour
         player = FindObjectOfType<Player>();
 
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-        em.OnLocationChange += UpdateOnLocationChange;
     }
 
     private void UpdateOnLocationChange(Location next){
@@ -69,16 +75,50 @@ public class Generator : MonoBehaviour
         CreatePCList();
     }
 
+    private void UpdateOnCustomerNeutral(){
+        BeginCustomerTimer();
+    }
+
+    private void UpdateOnCustomerLeave(int x, Customer.Mood mood){
+        customersLeft++;
+        if (customersLeft >= maxCustomers){
+            timer.Init(timeAfterLast, dm.SkipToNextPhase);
+            timer.StartTimer();
+            return;
+        }
+        if (mood == Customer.Mood.Happy) BeginCustomerTimer();
+    }
+
     private void UpdateOnTimeChange(float time, int phase){
+        currPhase = phase;
         maxCustomers = customersPerStage[phase];
         customersSpawned = 0;
+        customersLeft = 0;
 
         //start timer
-        timeUntilCustomer = (time - timeBeforeFirst - timeAfterLast)/maxCustomers;
-        timer.Init(timeBeforeFirst, BeginCustomerTimer);
+        //timeUntilCustomer = (time - timeBeforeFirst - timeAfterLast)/maxCustomers;
+        timer.Init(timeBeforeFirst, SpawnCustomer);
         timer.StartTimer();
     }
 
+    //spawning customers
+    private void SpawnCustomer(){
+        //Debug.Log("currphase: " + currPhase + " custspawned: " + customersSpawned);
+        if (customersSpawned >= maxCustomers) return;
+        //initiate customer
+        Customer newCustomer = phaseCustomerL[currPhase][customersSpawned++];
+        cm.LineupCustomer(newCustomer);
+    }
+
+    private void BeginCustomerTimer(){
+        //start the timer until next player spawn
+        if (customersSpawned >= maxCustomers) return;
+        timeUntilCustomer = Random.Range(rangeStart, rangeEnd);
+        timer.Init(timeUntilCustomer, SpawnCustomer);
+        timer.StartTimer();
+    }
+
+    //creating the customer list (random gen)
     private void CreatePCList(){
         //Debug.Log("creating list");
         for (int phase = 0; phase < customersPerStage.Length; phase++){
@@ -131,19 +171,5 @@ public class Generator : MonoBehaviour
             phaseList.Add(newCustomer);
         }
         return phaseList;
-    }
-
-    private void SpawnCustomer(){
-        //initiate customer
-        Customer newCustomer = phaseCustomerL[dm.phase][customersSpawned++];
-        cm.LineupCustomer(newCustomer);
-    }
-
-    private void BeginCustomerTimer(){
-        if (customersSpawned >= maxCustomers) return;
-        SpawnCustomer();
-        //start the timer until next player spawn
-        timer.Init(timeUntilCustomer, BeginCustomerTimer);
-        timer.StartTimer();
     }
 }

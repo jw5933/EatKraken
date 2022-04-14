@@ -51,7 +51,7 @@ public class CustomerManager : MonoBehaviour
         
     }
 
-    private void UpdateOnCustomerLeave(int position){
+    private void UpdateOnCustomerLeave(int position, Customer.Mood x){
         freePositions.Enqueue(position);
     }
 

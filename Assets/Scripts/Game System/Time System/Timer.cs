@@ -82,6 +82,6 @@ public class Timer: MonoBehaviour
             yield return null;
         }
         time = 0;
-        callerAction();
+        if (callerAction != null) callerAction();
     }
 }

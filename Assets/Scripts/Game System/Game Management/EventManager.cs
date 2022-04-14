@@ -14,7 +14,9 @@ public class EventManager : MonoBehaviour
     //player coins change
     public Action<Customer, float, float, int> OnCoinChange;
     //customer leaves (what position is it in?)
-    public Action<int> OnCustomerLeave;
+    public Action<int, Customer.Mood> OnCustomerLeave;
+    //action to tell generator to spawn a new custoemr (if there are any left soon)
+    public Action OnCustomerNeutral;
 
     // ==============   methods   ==============
     public void ChangeLocation(Location next){
@@ -33,7 +35,11 @@ public class EventManager : MonoBehaviour
         if (OnCoinChange != null) OnCoinChange(customer, coinMade, coinMax, timePhase);
     }
 
-    public void FreeCustomer(int position){
-        if (OnCustomerLeave != null) OnCustomerLeave(position);
+    public void FreeCustomer(int position, Customer.Mood mood){
+        if (OnCustomerLeave != null) OnCustomerLeave(position, mood);
+    }
+
+    public void ChangeCustomerMood(){
+        if (OnCustomerNeutral != null) OnCustomerNeutral();
     }
 }

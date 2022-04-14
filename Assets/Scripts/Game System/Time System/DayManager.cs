@@ -30,15 +30,28 @@ public class DayManager : MonoBehaviour
     EventManager em;
     CustomerManager cm;
     LevelDesignScript ld;
+    Location location;
 
     // ==============   methods   ==============
     public void Awake(){
         em = FindObjectOfType<EventManager>();
+        em.OnLocationChange += UpdateOnLocationChange;
+
         gm = FindObjectOfType<GameManager>();
         cm = FindObjectOfType<CustomerManager>();
         ld = FindObjectOfType<LevelDesignScript>();
 
         dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
+    }
+
+    private void UpdateOnLocationChange(Location next){
+        location = next;
+    }
+
+    public void SkipToNextPhase(){
+        Debug.Log("skip to next phase");
+        dayTimer.StopTimer();
+        HandleDayChange();
     }
 
     private void HandleDayChange(){
@@ -50,6 +63,7 @@ public class DayManager : MonoBehaviour
             //FIX: show working overtime
             return;
         }
+        Debug.Log("handle day change");
         phaseIndex++;
         //FIX: change the visuals
         if (phaseIndex < timeStageImages.Length) customerBackground.sprite = timeStageImages[phaseIndex];
@@ -57,9 +71,11 @@ public class DayManager : MonoBehaviour
     }
 
     private void Init(float time){
-        //dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-        dayTimer.Init(time, HandleDayChange, timeText);
-        dayTimer.StartTimer();
+        if (location.customersPerStage[phaseIndex] <= 0){
+            Debug.Log("timer is a break");
+            dayTimer.Init(time, HandleDayChange);
+            dayTimer.StartTimer();
+        }
         em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
     }
 
