@@ -5,10 +5,22 @@ using UnityEngine;
 public class MeteredAppliance : Appliance
 {
     private Meter meter;
+    private Vector3 meterPosition;
+    private Vector3 ingredientPosition;
 
     protected override void Awake(){
         base.Awake();
         base.myType = Appliance.Type.Metered;
+        foreach (Transform child in transform){
+            switch(child.gameObject.name){
+                case "meter pos":
+                    meterPosition = child.position;
+                break;
+                case "ingredient pos":
+                    ingredientPosition = child.position;
+                break;
+            }
+        }
     }
 
     protected override void StartMeter(bool swapped){
@@ -34,12 +46,13 @@ public class MeteredAppliance : Appliance
         Collider2D c2 = myIngredient.GetComponent<Collider2D>();
         if (c2 !=null) c2.enabled = false;
 
-        myIngredient.transform.position = myCollider.bounds.center;
+        myIngredient.transform.position = ingredientPosition;
 
         //start meter
         if (meter == null){
             meter = Instantiate(gm.stationaryMeterPrefab, gm.stationaryCanvas.transform).GetComponent<Meter>();
-            meter.gameObject.transform.position = this.transform.position - new Vector3(0, myCollider.bounds.size.y, 0);
+            meter.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+            meter.transform.position = meterPosition;
         }
 
         timer = meter.Init(myIngredient.raw, myIngredient.cooked, myIngredient.burnt, myIngredient.cookedTime, HandleEndTimer);
