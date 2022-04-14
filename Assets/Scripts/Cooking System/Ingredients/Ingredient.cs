@@ -80,7 +80,7 @@ public class Ingredient : MonoBehaviour
         myCollider = GetComponent<Collider>();
 
         foreach (Transform child in transform){
-            if (child.GetComponent<ToolLine>()) myToolLines.Add(child.GetComponent<ToolLine>());
+            if (child.gameObject.activeSelf && child.GetComponent<ToolLine>()) myToolLines.Add(child.GetComponent<ToolLine>());
         }
         motionsToStateChange = myToolLines.Count;
         if (myToolLines.Count == 0) isSliced = true;
@@ -114,7 +114,7 @@ public class Ingredient : MonoBehaviour
     private void OnMouseEnter(){
         //Debug.Log("entered ingredient: " + this.name);
         if (AtEndState()) return;
-        if (!hovered && myArea !=null && myArea.type == SharedArea.AreaType.CuttingBoard && !player.handFree){
+        if (!hovered && myArea !=null && myArea.type == SharedArea.AreaType.CuttingBoard && player.holdingTool){
             hovered = true;
             //if the player is holding a tool, activate the toollines and the plane for calculation
             if (player.ValidateToolLines(this) && myArea.type == SharedArea.AreaType.CuttingBoard){
