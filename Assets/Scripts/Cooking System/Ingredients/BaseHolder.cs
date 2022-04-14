@@ -49,7 +49,7 @@ public class BaseHolder : Draggable
                 baseObject.transform.position = transform.position;
             }
             else if (player.holdingIngredient){
-                if (baseObject.AddToOrder(this.transform.eulerAngles))
+                if (hasBase && baseObject.AddToOrder(this.transform.eulerAngles))
                     addingObject = true;
             }
         } 
