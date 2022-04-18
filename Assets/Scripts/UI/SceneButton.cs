@@ -18,26 +18,27 @@ public class SceneButton : MonoBehaviour
         initialImg = myImage.sprite;
     }
 
-    public void OnMouseUp(){
+    private void Click(){
         myCoroutine = LoadYourAsyncScene();
         StartCoroutine(myCoroutine);
     }
-    public void OnMouseEnter(){
+
+    private void OnMouseUpAsButton(){
+        this.enabled = false;
+        transform.parent.GetComponent<Animator>().SetTrigger("ClickedButton");
+        transform.parent.GetComponent<UIActivate>().AddListener(Click);
+    }
+    /* public void OnMouseEnter(){
         myImage.sprite = hoverImg;
     }
     public void OnMouseExit(){
         if (myCoroutine == null) myImage.sprite = initialImg;
-    }
+    } */
 
     //via Unity Documentation
     IEnumerator LoadYourAsyncScene()
     {
-        // The Application loads the Scene in the background as the current Scene runs.
-        // This is particularly good for creating loading screens.
-        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
-        // a sceneBuildIndex of 1 as shown in Build Settings.
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("bgStuffAdded", LoadSceneMode.Single);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("New Main", LoadSceneMode.Single);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

@@ -6,16 +6,21 @@ using UnityEngine.Events;
 public class UIActivate : MonoBehaviour
 {
     private UnityAction action;
-    //FIX: should add this script and set object upon my object spawn
-    [SerializeField] GameObject myObject;
-    public GameObject obj {set{myObject = value;}}
+    [SerializeField] UnityEvent myEvent;
 
     public void AddAction(UnityAction a){
         action = a;
     }
     
+    public void AddListener(UnityAction a){
+        myEvent.AddListener(a);
+    }
     public void Activate(){
         //this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-        action();
+        if (action != null) action();
+        if (myEvent != null){
+            myEvent.Invoke();
+            myEvent.RemoveAllListeners();
+        }
     }
 }
