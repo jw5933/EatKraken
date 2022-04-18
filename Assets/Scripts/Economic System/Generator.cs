@@ -72,6 +72,7 @@ public class Generator : MonoBehaviour
         player.hasBaseIngredient = (baseIngredientPrefabs.Count > 0);
 
         dm.timeStage = next.timeStages;
+        dm.loc = next;
         CreatePCList();
     }
 

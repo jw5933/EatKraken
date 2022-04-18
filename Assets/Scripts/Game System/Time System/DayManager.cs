@@ -32,11 +32,12 @@ public class DayManager : MonoBehaviour
     CustomerManager cm;
     LevelDesignScript ld;
     Location location;
+    public Location loc {set{location = value;}}
 
     // ==============   methods   ==============
     public void Awake(){
         em = FindObjectOfType<EventManager>();
-        em.OnLocationChange += UpdateOnLocationChange;
+        //em.OnLocationChange += UpdateOnLocationChange;
 
         gm = FindObjectOfType<GameManager>();
         cm = FindObjectOfType<CustomerManager>();
@@ -44,10 +45,6 @@ public class DayManager : MonoBehaviour
         phaseButton = FindObjectOfType<PhaseSkipButton>(true).gameObject;
 
         dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-    }
-
-    private void UpdateOnLocationChange(Location next){
-        location = next;
     }
 
     public void SkipToNextPhase(){
@@ -73,8 +70,9 @@ public class DayManager : MonoBehaviour
     }
 
     private void Init(float time){
+        //Debug.Log("location: " + (location != null) + ", daytimer: " +  (dayTimer != null) + ", phaseButton: " +(phaseButton != null) + ", em: " + (em != null));
         if (location.customersPerStage[phaseIndex] <= 0){
-            Debug.Log("timer is a break");
+            //Debug.Log("timer is a break");
             dayTimer.Init(time, HandleDayChange);
             dayTimer.StartTimer();
             phaseButton.SetActive(true);
