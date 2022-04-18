@@ -65,6 +65,7 @@ MonoBehaviour:
   myTipPercent: 0.1
   myGenerousTipPercent: 0.2
   myLeniency: 0
+  serveSfx: {fileID: 8300000, guid: 4003cd0165f134a70b3ca7b5f3165d3f, type: 3}
 --- !u!222 &6173644001591924805
 CanvasRenderer:
   m_ObjectHideFlags: 0
