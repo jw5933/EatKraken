@@ -72,7 +72,7 @@ public class Customer : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void OnMouseUp(){ //serve
+    public void OnMouseUpAsButton(){ //serve
         //cm.SelectCustomer(this);
         if (player.holdingBase && player.baseObject.order.Count > 0){
             List<Ingredient> order = new List<Ingredient>(player.baseObject.order);
