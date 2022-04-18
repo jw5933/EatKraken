@@ -35,7 +35,7 @@ public class BaseObject : MonoBehaviour
         }
         return false;
     }
-
+    
     private void OnMouseUp(){ //if the player isnt holding anything, pick up this ingredient
         /* if (player.holdingBase){
             if (myArea != null && myArea.CheckSwapIngredient())
@@ -63,7 +63,7 @@ public class BaseObject : MonoBehaviour
         currIngredient = null;
     }
 
-    private bool CheckCanAddIngredient(Ingredient.Type t, int ingredientsAdded){
+    public bool CheckCanAddIngredient(Ingredient.Type t, int ingredientsAdded){
         if (!player.hasBaseIngredient) ingredientsAdded ++;
         if((ingredientsAdded == 0 && t == Ingredient.Type.Base) 
         || (ingredientsAdded == 1 && t == Ingredient.Type.Carb) 
