@@ -63,10 +63,11 @@ public class Ingredient : MonoBehaviour
     private List<ToolLine> myToolLines = new List<ToolLine>(); //debugging
     private bool hovered;
 
-    //vectors
-    Collider myCollider;
+    //sounds
+    [SerializeField] AudioClip sliceToolSound;
 
     //references
+    Collider myCollider;
     private SpriteRenderer mySpriteRenderer;
     private Player player;
     private SharedArea myArea;
@@ -80,7 +81,11 @@ public class Ingredient : MonoBehaviour
         myCollider = GetComponent<Collider>();
 
         foreach (Transform child in transform){
-            if (child.gameObject.activeSelf && child.GetComponent<ToolLine>()) myToolLines.Add(child.GetComponent<ToolLine>());
+            if (child.gameObject.activeSelf && child.GetComponent<ToolLine>()){
+                ToolLine t = child.GetComponent<ToolLine>();
+                myToolLines.Add(t);
+                t.sound = sliceToolSound;
+            }
         }
         motionsToStateChange = myToolLines.Count;
         if (myToolLines.Count == 0) isSliced = true;

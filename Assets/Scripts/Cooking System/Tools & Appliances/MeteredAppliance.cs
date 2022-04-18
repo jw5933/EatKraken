@@ -58,6 +58,7 @@ public class MeteredAppliance : Appliance
         timer = meter.Init(myIngredient.raw, myIngredient.cooked, myIngredient.burnt, myIngredient.cookedTime, HandleEndTimer);
         meter.gameObject.SetActive(true);
         meter.StartMeter();
+        audioSourceIndex = am.PlayConstantSFX(cookingSound);
     }
 
     protected override void HandleEndTimer(){
@@ -65,6 +66,7 @@ public class MeteredAppliance : Appliance
     }
 
     protected override void HandlePickUp(){
+        am.StopConstantSFX(audioSourceIndex);
         meter.StopMeter();
         myIngredient.cookedTime = meter.callerTime;
         meter.ResetVars();

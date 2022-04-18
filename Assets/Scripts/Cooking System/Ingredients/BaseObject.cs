@@ -14,9 +14,13 @@ public class BaseObject : MonoBehaviour
     public SharedArea area{set{myArea = value;}}
     private Collider myCollider;
 
+    [SerializeField] AudioClip sound;
+    AudioManager am;
+
     // ==============   methods   ==============
     private void Awake(){
         player = FindObjectOfType<Player>();
+        am = FindObjectOfType<AudioManager>();
         myCollider = GetComponent<Collider>();
     }
 
@@ -35,13 +39,17 @@ public class BaseObject : MonoBehaviour
         }
         return false;
     }
+
+    public void PlaySound(){
+        am.PlaySFX(sound);
+    }
     
     private void OnMouseUp(){ //if the player isnt holding anything, pick up this ingredient
         /* if (player.holdingBase){
             if (myArea != null && myArea.CheckSwapIngredient())
                 myArea = null;
         } */
-        if (!player.handFree){
+        if (!player.handFree){ //not used with baseholder, just shared areas (player cannot create order on these areas)
             if (player.holdingBase && myArea != null) myArea.CheckSwapBaseObject();
             else return;
         }

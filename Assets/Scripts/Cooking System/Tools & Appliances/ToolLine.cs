@@ -15,6 +15,8 @@ public class ToolLine: Draggable
     private Vector3 initialPos;
 
     Ingredient ingredient;
+    AudioClip sliceToolSound;
+    public AudioClip sound {set{sliceToolSound = value;}}
 
     // ==============   functions   ==============
     private void Awake(){
@@ -57,6 +59,7 @@ public class ToolLine: Draggable
     protected override void HandleDragged(){
         ingredient.ChangeImageState();
         ingredient.RemoveToolLine(this);
+        FindObjectOfType<AudioManager>().PlaySFX(sliceToolSound);
         Destroy(this.gameObject);
     }
     protected override void HandleNotDragged(){

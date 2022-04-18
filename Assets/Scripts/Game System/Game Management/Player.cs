@@ -21,22 +21,13 @@ public class Player : MonoBehaviour
     public Ingredient ingredient {get {return heldIngredient;}}
     public bool holdingIngredient {get {return heldIngredient != null;}}
     [HideInInspector] public bool hasBaseIngredient;
-    
-
-    private ToolLine myToolLine;
-    public ToolLine toolLine {set{myToolLine = value;}}
-
-    [SerializeField] private List <Ingredient> currentOrder = new List <Ingredient>();
-    //public List<Ingredient> order {get {return currentOrder;}}
 
     //vectors & planes
     Vector3 mousePos;
     Vector3 mouseDistanceFromCamera;
-
     Plane mousePlane;
     Plane currentPlane;
     public Plane currPlane {set{currentPlane = value;} get{return currentPlane;}}
-    
     float mouseDistanceZ = 15f;
 
     //references
@@ -56,8 +47,7 @@ public class Player : MonoBehaviour
     }
 
     public void Update(){
-        if (heldItem !=null) UpdateMouseItem(heldItem);
-        
+        if (heldItem !=null) UpdateMouseItem(heldItem);     
     }
 
     public void UpdateMouseItem(GameObject o){

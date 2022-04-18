@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         FindObjectOfType<Map>().selectedLocation = firstLocation;
+        FindObjectOfType<AudioManager>().Activate();
     }
 
     void Update(){

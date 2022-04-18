@@ -35,10 +35,6 @@ public class BaseHolder : Draggable
         minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
     }
 
-    private void OnMouseExit(){
-        if (player.handFree) return;
-    }
-
     private void OnMouseUp(){
         if (!player.handFree){
             if (player.holdingBase){
@@ -47,6 +43,7 @@ public class BaseHolder : Draggable
                     baseObject = player.DropItem("base").GetComponent<BaseObject>();
                 baseObject.UnsetCollider();
                 baseObject.transform.position = transform.position;
+                baseObject.PlaySound();
             }
             else if (player.holdingIngredient){
                 if (hasBase && baseObject.AddToOrder(this.transform.eulerAngles))
@@ -97,6 +94,7 @@ public class BaseHolder : Draggable
 
     private void HandlePickUp(){
         //if (!hasBase && myArea != null) myArea.HandlePickUp();
+        baseObject.PlaySound();
         player.PickUpItem(baseObject.gameObject);
         baseObject = null;
     }

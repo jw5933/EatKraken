@@ -9,6 +9,8 @@ public class TimedAppliance : Appliance
     [SerializeField] private Text timedCarbText;
     [SerializeField] private int maxState;
 
+    [SerializeField] private AudioClip finishedSound;
+
     protected override void Awake(){
         base.Awake();
         myType = Appliance.Type.Timed;
@@ -16,7 +18,6 @@ public class TimedAppliance : Appliance
     
     protected override void StartTimer(){
         if (myIngredient != null) return;
-        Debug.Log("starting timer");
         if (timer == null) timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         //don't cook the wrong ingredient, or ingredients that are already cooked
         
@@ -29,21 +30,21 @@ public class TimedAppliance : Appliance
             myIngredient = null;
             return;
         }
-            
 
         //start timer
-        Debug.Log("starting timer");
         myIngredient.gameObject.SetActive(false);
         timer.Init(myCookingTime, HandleEndTimer, timedCarbText);
         timer.StartTimer();
+        audioSourceIndex = am.PlayConstantSFX(cookingSound);
         //TODO: move ingredient into place
     }
 
     protected override void HandleEndTimer(){
+        am.StopConstantSFX(audioSourceIndex);
+        am.PlaySFX(finishedSound);
         if (myIngredient != null) myIngredient.ChangeCookedState();
         myIngredient.transform.position = this.transform.position + new Vector3(0,0,- 0.2f);
         myIngredient.gameObject.SetActive(true);
         myIngredient = null;
-        
     }
 }

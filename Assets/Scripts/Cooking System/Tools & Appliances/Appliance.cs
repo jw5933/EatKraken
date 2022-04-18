@@ -20,11 +20,16 @@ public class Appliance : MonoBehaviour
     public Ingredient ingredient {set{myIngredient = value;}}
     [SerializeField] protected Ingredient.Type myIngredientType;
 
+    [SerializeField] protected AudioClip cookingSound;
+    protected int audioSourceIndex;
+
     protected Player player;
     protected GameManager gm;
+    protected AudioManager am;
     
     // ==============   Unity functions   ==============
     protected virtual void Awake(){
+        am = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         gm = FindObjectOfType<GameManager>();
         myCollider = GetComponent<Collider2D>();

@@ -56,6 +56,9 @@ public class Customer : MonoBehaviour
     private float coinHappy, coinNeutral, coinAngry;
     public float maxCoins {get{return coinHappy;}}
 
+    //sounds
+    [SerializeField] private AudioClip serveSfx;
+
     //references
     private GameManager gm;
     private EventManager em;
@@ -76,6 +79,7 @@ public class Customer : MonoBehaviour
         //cm.SelectCustomer(this);
         if (player.holdingBase && player.baseObject.order.Count > 0){
             List<Ingredient> order = new List<Ingredient>(player.baseObject.order);
+            FindObjectOfType<AudioManager>().PlaySFX(serveSfx);
             Destroy(player.DropItem("base"));
             CheckOrder(order);
         }
