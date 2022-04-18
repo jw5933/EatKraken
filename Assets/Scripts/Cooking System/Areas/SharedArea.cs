@@ -10,6 +10,7 @@ public class SharedArea: MonoBehaviour
     public AreaType type {get {return myType;}}
 
     [SerializeField] private GameObject myItem;
+    [SerializeField] private Transform overridePosition;
 
     [SerializeField] private bool freeArea = true;
     public bool free {get{return freeArea;}}
@@ -31,7 +32,7 @@ public class SharedArea: MonoBehaviour
             freeArea = false;
             if (myCollider !=null){
                 myCollider.enabled = false;
-                myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+                myItem.transform.position = (overridePosition != null? overridePosition.position: myCollider.bounds.center); // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
             }
             BaseHolder o = myItem.GetComponent<BaseHolder>();
             if (o !=null) o.area = this;
@@ -44,14 +45,6 @@ public class SharedArea: MonoBehaviour
             PlaceObjectOnShared();
         }
     }
-
-    // public void OnMouseOver(){
-    //     //turn green if free area; else red
-    // }
-
-    // public void OnMouseExit(){
-    //     //turn off alpha
-    // }
 
     //shared board
     private void PlaceObjectOnShared(){
@@ -86,7 +79,7 @@ public class SharedArea: MonoBehaviour
 
         if (myCollider !=null) {
             myCollider.enabled = false;
-            myItem.transform.position = myCollider.bounds.center; // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
+            myItem.transform.position = (overridePosition != null? overridePosition.position: myCollider.bounds.center); // + (gm.in3d? new Vector3(0,0,-0.01f): new Vector3(0,0,-1));
         }
     }
 
@@ -109,7 +102,7 @@ public class SharedArea: MonoBehaviour
         i.ResetVars();
         i.area = this;
         i.SetParent(this.transform.parent);
-        myItem.transform.position = myCollider.bounds.center;
+        myItem.transform.position = (overridePosition != null? overridePosition.position: myCollider.bounds.center);
 
         return true;
     }
@@ -121,6 +114,6 @@ public class SharedArea: MonoBehaviour
 
         myItem = o;
         myItem.GetComponent<BaseObject>().area = this;
-        myItem.transform.position = myCollider.bounds.center;
+        myItem.transform.position = (overridePosition != null? overridePosition.position: myCollider.bounds.center);
     }
 }
