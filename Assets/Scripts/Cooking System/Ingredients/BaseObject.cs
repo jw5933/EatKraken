@@ -41,7 +41,7 @@ public class BaseObject : MonoBehaviour
     }
 
     public void PlaySound(){
-        am.PlaySFX(sound);
+        if (am != null) am.PlaySFX(sound);
     }
     
     private void OnMouseUp(){ //if the player isnt holding anything, pick up this ingredient

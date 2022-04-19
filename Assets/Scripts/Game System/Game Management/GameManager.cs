@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject theCustomerParent;
     public Transform customerParent {get{return theCustomerParent.transform;}}
+
+    [SerializeField] private GameObject theMeterParent;
+    public Transform meterParent {get{return theMeterParent.transform;}}
     
     //prefabs
     [Header("Prefabs")]
@@ -70,7 +73,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         FindObjectOfType<Map>().selectedLocation = firstLocation;
-        FindObjectOfType<AudioManager>().Activate();
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null) am.Activate();
     }
 
     void Update(){

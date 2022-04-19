@@ -35,13 +35,13 @@ public class TimedAppliance : Appliance
         myIngredient.gameObject.SetActive(false);
         timer.Init(myCookingTime, HandleEndTimer, timedCarbText);
         timer.StartTimer();
-        audioSourceIndex = am.PlayConstantSFX(cookingSound);
+        if (am != null) audioSourceIndex = am.PlayConstantSFX(cookingSound);
         //TODO: move ingredient into place
     }
 
     protected override void HandleEndTimer(){
-        am.StopConstantSFX(audioSourceIndex);
-        am.PlaySFX(finishedSound);
+        if (am != null) am.StopConstantSFX(audioSourceIndex);
+        //am.PlaySFX(finishedSound); // too loud & mosquito-y
         if (myIngredient != null) myIngredient.ChangeCookedState();
         myIngredient.transform.position = this.transform.position + new Vector3(0,0,- 0.2f);
         myIngredient.gameObject.SetActive(true);

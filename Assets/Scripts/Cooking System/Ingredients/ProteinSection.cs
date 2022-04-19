@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ProteinSection : MonoBehaviour
 {
     [SerializeField] GameObject proteinPrefab;
-    Color initialColour = Color.white;
+    [SerializeField] Color initialColour = Color.white;
     [SerializeField] Color highlightColour = Color.green;
     Image img;
     ProteinSelector ps;

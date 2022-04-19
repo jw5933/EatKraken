@@ -59,7 +59,8 @@ public class ToolLine: Draggable
     protected override void HandleDragged(){
         ingredient.ChangeImageState();
         ingredient.RemoveToolLine(this);
-        FindObjectOfType<AudioManager>().PlaySFX(sliceToolSound);
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null) am.PlaySFX(sliceToolSound);
         Destroy(this.gameObject);
     }
     protected override void HandleNotDragged(){

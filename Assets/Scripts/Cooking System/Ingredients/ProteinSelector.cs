@@ -5,7 +5,8 @@ using UnityEngine;
 public class ProteinSelector : MonoBehaviour
 {
     private Player player;
-    private Animator tentacleAnim; //anims: ShowProtein - brings the tentacle up
+    GameObject tentacle;
+    private Animator tentacleAnim; //anims: ShowProtein - brings the tentacle up -> should be first child under this object
     [SerializeField] private GameObject proteinKnife; //will be a tool type
     private Animator knifeAnim; ///anims: CutProtein - show protein being cut
     private GameObject newProtein;
@@ -19,14 +20,18 @@ public class ProteinSelector : MonoBehaviour
         hm = FindObjectOfType<HealthManager>();
         gameManager = FindObjectOfType<GameManager>();
         
-        tentacleAnim = transform.GetChild(0).GetComponent<Animator>();
+        tentacle = transform.GetChild(0).gameObject;
+        tentacleAnim = tentacle.GetComponent<Animator>();
         tentacleAnim.GetComponent<UIActivate>().AddAction(ActivateKnife);
         knifeAnim = proteinKnife.GetComponent<Animator>();
         knifeAnim.GetComponent<UIActivate>().AddAction(ActivateProtein);
+        proteinKnife.SetActive(false);
+        tentacle.SetActive(false);
     }
 
     private void OnMouseUpAsButton(){
         if (!player.handFree) return;
+        tentacle.SetActive(true);
         tentacleAnim.SetTrigger("ShowProtein");
         //when player clicks on UI, show tentacle for cutting
         //tentacle has 3 parts -> iamges need to be manually sliced
@@ -37,6 +42,7 @@ public class ProteinSelector : MonoBehaviour
 
     //called by tentacle anim uiactivate at end of animation
     public void ActivateKnife(){
+        proteinKnife.SetActive(true);
         player.PickUpItem(proteinKnife);
     }
 
@@ -49,12 +55,16 @@ public class ProteinSelector : MonoBehaviour
     //called by knife anim uiactivate at end of animation
     private void ActivateProtein(){
         hm.MinusPlayerHearts(1);
+        player.DropItem("any");
+        proteinKnife.gameObject.SetActive(false);
         player.PickUpItem(newProtein);
         newProtein.SetActive(true);
         newProtein = null;
     }
 
     public void CloseSelector(){
+        tentacle.SetActive(false);
         tentacleAnim.Rebind();
+        knifeAnim.Rebind();
     }
 }

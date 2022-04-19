@@ -79,7 +79,8 @@ public class Customer : MonoBehaviour
         //cm.SelectCustomer(this);
         if (player.holdingBase && player.baseObject.order.Count > 0){
             List<Ingredient> order = new List<Ingredient>(player.baseObject.order);
-            FindObjectOfType<AudioManager>().PlaySFX(serveSfx);
+            AudioManager am = FindObjectOfType<AudioManager>();
+            if (am != null) am.PlaySFX(serveSfx);
             Destroy(player.DropItem("base"));
             CheckOrder(order);
         }

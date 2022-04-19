@@ -50,7 +50,7 @@ public class MeteredAppliance : Appliance
 
         //start meter
         if (meter == null){
-            meter = Instantiate(gm.stationaryMeterPrefab, gm.stationaryCanvas.transform).GetComponent<Meter>();
+            meter = Instantiate(gm.stationaryMeterPrefab, gm.meterParent).GetComponent<Meter>();
             meter.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
             meter.transform.position = meterPosition;
         }
@@ -58,7 +58,7 @@ public class MeteredAppliance : Appliance
         timer = meter.Init(myIngredient.raw, myIngredient.cooked, myIngredient.burnt, myIngredient.cookedTime, HandleEndTimer);
         meter.gameObject.SetActive(true);
         meter.StartMeter();
-        audioSourceIndex = am.PlayConstantSFX(cookingSound);
+        if (am != null) audioSourceIndex = am.PlayConstantSFX(cookingSound);
     }
 
     protected override void HandleEndTimer(){
@@ -66,7 +66,7 @@ public class MeteredAppliance : Appliance
     }
 
     protected override void HandlePickUp(){
-        am.StopConstantSFX(audioSourceIndex);
+        if (am != null) am.StopConstantSFX(audioSourceIndex);
         meter.StopMeter();
         myIngredient.cookedTime = meter.callerTime;
         meter.ResetVars();
