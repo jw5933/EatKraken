@@ -29,6 +29,7 @@ public class ProteinSelector : MonoBehaviour
         knifeAnim.GetComponent<UIActivate>().AddAction(ActivateProtein);
         proteinKnife.SetActive(false);
         tentacle.SetActive(false);
+        planeUpdate.SetActive(false);
     }
 
     private void OnMouseUpAsButton(){
