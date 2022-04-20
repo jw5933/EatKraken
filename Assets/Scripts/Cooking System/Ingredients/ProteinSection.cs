@@ -16,6 +16,10 @@ public class ProteinSection : MonoBehaviour
         img = GetComponent<Image>();
     }
 
+    private void OnEnable(){
+        img.color = initialColour;
+    }
+
     private void OnMouseEnter(){
         //highlight section
         img.color = highlightColour;
@@ -34,7 +38,6 @@ public class ProteinSection : MonoBehaviour
 
     private GameObject CreateProtein(){
         if (proteinPrefab != null){
-            img.color = initialColour;
             return Instantiate(proteinPrefab, ps.gm.ingredientParent);
         }
         return null;

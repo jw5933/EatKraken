@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProteinSelector : MonoBehaviour
 {
+    private Vector3 initialPos;
     private Player player;
     GameObject tentacle;
     private Animator tentacleAnim; //anims: ShowProtein - brings the tentacle up -> should be first child under this object
@@ -27,6 +28,8 @@ public class ProteinSelector : MonoBehaviour
         tentacleAnim.GetComponent<UIActivate>().AddAction(ActivateKnife);
         knifeAnim = proteinKnife.GetComponent<Animator>();
         knifeAnim.GetComponent<UIActivate>().AddAction(ActivateProtein);
+
+        initialPos = tentacle.transform.localPosition;
         proteinKnife.SetActive(false);
         tentacle.SetActive(false);
         planeUpdate.SetActive(false);
@@ -70,7 +73,8 @@ public class ProteinSelector : MonoBehaviour
     private void CloseSelector(){
         planeUpdate.SetActive(false);
         tentacle.SetActive(false);
-        tentacleAnim.Rebind();
-        knifeAnim.Rebind();
+        //tentacleAnim.Rebind();
+        //knifeAnim.Rebind();
+        tentacle.transform.localPosition = initialPos;
     }
 }
