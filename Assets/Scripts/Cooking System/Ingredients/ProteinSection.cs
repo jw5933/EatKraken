@@ -34,13 +34,9 @@ public class ProteinSection : MonoBehaviour
 
     private GameObject CreateProtein(){
         if (proteinPrefab != null){
+            img.color = initialColour;
             return Instantiate(proteinPrefab, ps.gm.ingredientParent);
         }
         return null;
-    }
-
-    private void ResetVars(){
-        img.color = initialColour;
-        ps.CloseSelector();
     }
 }

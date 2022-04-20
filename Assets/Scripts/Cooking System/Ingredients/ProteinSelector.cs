@@ -10,6 +10,7 @@ public class ProteinSelector : MonoBehaviour
     [SerializeField] private GameObject proteinKnife; //will be a tool type
     private Animator knifeAnim; ///anims: CutProtein - show protein being cut
     private GameObject newProtein;
+    private GameObject planeUpdate;
 
     private GameManager gameManager;
     public GameManager gm {get{return gameManager;}}
@@ -20,6 +21,7 @@ public class ProteinSelector : MonoBehaviour
         hm = FindObjectOfType<HealthManager>();
         gameManager = FindObjectOfType<GameManager>();
         
+        planeUpdate = transform.GetChild(1).gameObject;
         tentacle = transform.GetChild(0).gameObject;
         tentacleAnim = tentacle.GetComponent<Animator>();
         tentacleAnim.GetComponent<UIActivate>().AddAction(ActivateKnife);
@@ -31,6 +33,7 @@ public class ProteinSelector : MonoBehaviour
 
     private void OnMouseUpAsButton(){
         if (!player.handFree) return;
+        planeUpdate.SetActive(true);
         tentacle.SetActive(true);
         tentacleAnim.SetTrigger("ShowProtein");
         //when player clicks on UI, show tentacle for cutting
@@ -57,12 +60,14 @@ public class ProteinSelector : MonoBehaviour
         hm.MinusPlayerHearts(1);
         player.DropItem("any");
         proteinKnife.gameObject.SetActive(false);
+        CloseSelector();
         player.PickUpItem(newProtein);
         newProtein.SetActive(true);
         newProtein = null;
     }
 
-    public void CloseSelector(){
+    private void CloseSelector(){
+        planeUpdate.SetActive(false);
         tentacle.SetActive(false);
         tentacleAnim.Rebind();
         knifeAnim.Rebind();
