@@ -15,6 +15,7 @@ public class UIActivate : MonoBehaviour
     public void AddListener(UnityAction a){
         myEvent.AddListener(a);
     }
+    
     public void Activate(){
         //this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         if (action != null) action();

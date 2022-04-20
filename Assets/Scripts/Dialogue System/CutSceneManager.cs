@@ -14,21 +14,23 @@ public class CutSceneManager : MonoBehaviour
     [SerializeField] Animator cutSceneAnim;
     //text
     [SerializeField] Text text;
-    int letterPerSec = 30; //how fast the typing is
+    int letterPerSec = 60; //how fast the typing is
 
     bool openText;
-    bool canPressEnter;
 
     [TextArea]
     [SerializeField] List <string> dialogue = new List<string>(); //the dialogue that will be typed
     int index = 0; //which line is being typed
     bool isTyping; //condition for whether text is curerntly being typed
 
-    int maxLen; //760?
+    [SerializeField] int maxLen; //760?
 
-    private void Start(){
-        maxLen = (int)Mathf.Ceil(text.preferredWidth);
+    private void Awake(){
+        //maxLen = (int)Mathf.Ceil(text.preferredWidth);
         cutSceneAnim.GetComponent<UIDeactivate>().AddAction(BeginDialogue);
+        for (int i = 0; i < dialogue.Count; i++){
+            dialogue[i] = dialogue[i].ToUpper();
+        }
     }
 
     //change dialogue if the player presses enter key
@@ -46,7 +48,7 @@ public class CutSceneManager : MonoBehaviour
     }
 
     private void CheckInput(){
-        if(Input.GetKeyDown(KeyCode.Return) && openText && canPressEnter){
+        if(Input.GetKeyDown(KeyCode.Return)){
             //Debug.Log(dialogue.Count);
             if(isTyping){ // if the dialogue is still being typed, finish typing
                 text.text = dialogue[index];
@@ -62,7 +64,7 @@ public class CutSceneManager : MonoBehaviour
                 ChangeDialogue();
             }
             else{
-                //SceneManager.LoadScene("Programming_Japan", LoadSceneMode.Single);
+                SceneManager.LoadScene("New Main", LoadSceneMode.Single);
             }
         }
     }
@@ -72,13 +74,8 @@ public class CutSceneManager : MonoBehaviour
 		// displays dialogue
 	IEnumerator DisplayDialogue(){
         yield return new WaitForEndOfFrame();
-
-        if (!isTyping) StartCoroutine(TypeDialogue(dialogue[index])); //begin typing the text
         openText = true; //condition: dialogue is now open
-    }
-
-    private void CheckWordLen(){
-
+        if (!isTyping) StartCoroutine(TypeDialogue(dialogue[index])); //begin typing the text
     }
 
 	// method to type dialogue

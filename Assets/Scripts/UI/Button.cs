@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
-public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     // ==============   variables   ==============
     //indication settings
@@ -12,6 +13,20 @@ public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     // ==============   methods   ==============
     //indicate hovered location to player
+    private UnityAction action;
+
+    public virtual void OnPointerClick(PointerEventData eventData){
+        Invoke();
+    }
+
+    public void AddAction(UnityAction a){
+        action = a;
+    }
+    
+    private void Invoke(){
+        if (action != null) action();
+    }
+
     public virtual void OnPointerEnter(PointerEventData eventData){
         ChangeScale(hoverScale);
     }

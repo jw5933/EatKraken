@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CSDialogue : MonoBehaviour
+public class CSProfile : MonoBehaviour
 {
     [SerializeField] private List<int> frames = new List<int>();
     [SerializeField] private List<Sprite> sprites = new List<Sprite>();
