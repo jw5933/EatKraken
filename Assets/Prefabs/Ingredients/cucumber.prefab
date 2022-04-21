@@ -398,13 +398,16 @@ MonoBehaviour:
   burntTime: 0
   imageStates:
   - {fileID: 21300000, guid: 51e55c75be92e41b3b469d76af89d758, type: 3}
-  - {fileID: 21300000, guid: 7e7feac5ff4fa44fb8a7dbdf171aa063, type: 3}
+  - {fileID: 21300000, guid: a4cdc401b191747cf9c78ad3ac31cdae, type: 3}
+  - {fileID: 21300000, guid: 6080310f833e14987915b49802c855c4, type: 3}
+  - {fileID: 21300000, guid: 21b657b7b853048f8abcc4a15bd411ab, type: 3}
   perfectSpriteState: 0
   finalImageState: {fileID: 21300000, guid: 52e6bc3b2c6be4f07ba39b82c9f05dee, type: 3}
   finalCookedImageStates:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  motionsToStateChange: 1
   myRequired: 1
   sliceToolSound: {fileID: 8300000, guid: 7ad6c1d34636947eeadde61f666a6a1b, type: 3}
 --- !u!65 &2250593037638905568
@@ -418,8 +421,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.4335804, y: 3.4788802, z: 0}
-  m_Center: {x: 0.97381496, y: -0.33019006, z: 0}
+  m_Size: {x: 9.239013, y: 3.4788802, z: 0}
+  m_Center: {x: 0.10894346, y: -0.33019006, z: 0}
 --- !u!1 &5388296736009821210
 GameObject:
   m_ObjectHideFlags: 0

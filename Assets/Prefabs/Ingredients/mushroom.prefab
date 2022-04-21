@@ -362,6 +362,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  motionsToStateChange: 3
   myRequired: 1
   sliceToolSound: {fileID: 8300000, guid: 7ad6c1d34636947eeadde61f666a6a1b, type: 3}
 --- !u!65 &2250593037638905568
@@ -375,8 +376,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.603029, y: 6.942525, z: 0}
-  m_Center: {x: 0.26123714, y: 0.025633693, z: 0}
+  m_Size: {x: 9.825026, y: 7.830513, z: 0}
+  m_Center: {x: 0.15023899, y: -0.0060801506, z: 0}
 --- !u!1 &5388296736009821210
 GameObject:
   m_ObjectHideFlags: 0

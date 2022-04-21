@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2241988583864902192, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f59a6cc4dbd0b45918da6dca0cc2a64e, type: 3}
     - target: {fileID: 3078907866179185801, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -107,6 +111,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stick Meter Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4239373099506391901, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000015258789
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839438246053841216, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978829462053410564, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: daf8fe459e9414390a87b76b3d4ce043, type: 3}
+    - target: {fileID: 5978829462053410564, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8126545752121162673, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
       propertyPath: stageColours.Array.data[0].b
       value: 0.31372547
@@ -142,6 +162,34 @@ PrefabInstance:
     - target: {fileID: 8126545752121162673, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
       propertyPath: stageColours.Array.data[2].r
       value: 0.8113208
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126545752121162673, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: stageIndicatorSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: ad94c6d94f07a4c37acb6deba48bcbf9, type: 3}
+    - target: {fileID: 8126545752121162673, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: stageIndicatorSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4443e1bd7588b44b3b14bad301fa3d63, type: 3}
+    - target: {fileID: 8126545752121162673, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: stageIndicatorSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 96ef1b16a25f343a4ba51687d6b778d5, type: 3}
+    - target: {fileID: 8507644434390730084, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad94c6d94f07a4c37acb6deba48bcbf9, type: 3}
+    - target: {fileID: 8507644434390730084, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8507644434390730084, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8507644434390730084, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}

@@ -362,6 +362,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  motionsToStateChange: 3
   myRequired: 1
   sliceToolSound: {fileID: 8300000, guid: 7ad6c1d34636947eeadde61f666a6a1b, type: 3}
 --- !u!65 &2250593037638905568

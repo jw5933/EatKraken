@@ -446,6 +446,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
+      propertyPath: overrideAngle.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
+      propertyPath: overrideAngle.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
+      propertyPath: overrideAngle.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
       propertyPath: overridePosition
       value: 
       objectReference: {fileID: 3375614990684904810}
@@ -558,6 +570,18 @@ PrefabInstance:
     - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
       propertyPath: myType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
+      propertyPath: overrideAngle.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
+      propertyPath: overrideAngle.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
+      propertyPath: overrideAngle.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1048378430043656522, guid: ec2361ad4c5d146a8a9aeb45b900b8ba, type: 3}
       propertyPath: overridePosition

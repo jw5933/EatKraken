@@ -99,9 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myType: 0
   myItem: {fileID: 0}
-  FreedAreaEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  overridePosition: {fileID: 0}
+  overrideScale3: 1
+  overrideAngle: {x: 1, y: 1, z: 1}
+  freeArea: 1
 --- !u!65 &7280871947262852084
 BoxCollider:
   m_ObjectHideFlags: 0
