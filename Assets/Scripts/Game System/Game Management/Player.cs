@@ -89,6 +89,7 @@ public class Player : MonoBehaviour
         //get the type of item player picked up
         heldIngredient = item.GetComponent<Ingredient>();
         if (!holdingIngredient) heldTool = item.GetComponent<Tool>();
+        else heldIngredient.ResetTransform();
         if (!holdingTool) heldBase = item.GetComponent<BaseObject>();
     }
 

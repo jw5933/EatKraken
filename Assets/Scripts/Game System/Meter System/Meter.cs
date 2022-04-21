@@ -11,8 +11,9 @@ public class Meter : MonoBehaviour
     private float totalTime;
     private float stageTime;
     [SerializeField] private bool filler;
-    [SerializeField] private float [] timePerStage;
+    private float [] timePerStage;
     [SerializeField] private Color[] stageColours = new Color[3];
+    [SerializeField] private Sprite[] stageIndicatorSprites = new Sprite[3];
     private RectTransform[] stateImages = new RectTransform[3];
 
     private int currStage;
@@ -25,7 +26,8 @@ public class Meter : MonoBehaviour
     [SerializeField] GameObject indicator;
     RectTransform myTransform;
     RectTransform indicatorTransform;
-    Image indicatorImage;
+    Image indicatorFiller;
+    [SerializeField] Image indicatorImage;
 
     GameManager gm;
     
@@ -37,7 +39,7 @@ public class Meter : MonoBehaviour
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
         myTransform = this.GetComponent<RectTransform>();
         indicatorTransform = indicator.GetComponent<RectTransform>();
-        indicatorImage = indicator.GetComponent<Image>();
+        indicatorFiller = indicator.GetComponent<Image>();
     }
 
     public Timer Init(float t1, float t2, float t3, float tStart, UnityAction newAction){
@@ -56,8 +58,8 @@ public class Meter : MonoBehaviour
         float indicatorPos = 0 - (myTransform.rect.height * indicatorTime);
         
         if (filler) {
-            indicatorImage.fillAmount = 1.0f/totalTime * tStart;
-            timer.AddMeter(indicatorImage, totalTime, HandleAddedTime);
+            indicatorFiller.fillAmount = 1.0f/totalTime * tStart;
+            timer.AddMeter(indicatorFiller, totalTime, HandleAddedTime);
         }
         else{
             //move indicator to position
@@ -71,6 +73,7 @@ public class Meter : MonoBehaviour
         else if((tStart -= t3) < 0) currStage = 2;
 
         stageTime = -(tStart);
+        indicatorImage.sprite = stageIndicatorSprites[currStage];
 
         return timer;
     }
@@ -93,6 +96,9 @@ public class Meter : MonoBehaviour
             cTransform.anchorMax = upperRightAnchor;
             cTransform.anchorMin = upperRightAnchor;
             cTransform.pivot = upperRightAnchor;
+            Vector3 newPos = cTransform.localPosition;
+            newPos.z = 0;
+            cTransform.localPosition = newPos;
             cTransform.Rotate(new Vector3(0, 0, -myTransform.rotation.eulerAngles.z));
             c.GetComponent<Image>().color = stageColours[index];
 
@@ -134,25 +140,22 @@ public class Meter : MonoBehaviour
     }
 
     private void HandleAddedTime(){
-
+        //not using because of scope
     }
 
     private void HandleEndStage(){
         myCallerTime += timer.GetTime();
-        /* myCallerTime = 0;
-        for(int n = 0; n < currStage; n++){
-            myCallerTime += timePerStage[currStage];
-        } */
         callerAction();
         
         if(currStage + 1 < timePerStage.Length){
             currStage++;
+            indicatorImage.sprite = stageIndicatorSprites[currStage];
             timer.Init(timePerStage[currStage], HandleEndStage);
             timer.StartTimer();
         }
     }
 
     public void ResetVars(){
-        indicatorImage.fillAmount = 0;
+        indicatorFiller.fillAmount = 0;
     }
 }

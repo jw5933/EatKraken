@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject theOrderParent;
     public Transform orderParent {get{return theOrderParent.transform;}}
 
-    [SerializeField] private GameObject theIngredientParent;
-    public Transform ingredientParent {get{return theIngredientParent.transform;}}
+    [SerializeField] private GameObject theProteinParent;
+    public Transform proteinParent {get{return theProteinParent.transform;}}
     
     [SerializeField] private GameObject theCustomerView;
     public Transform customerView {get{return theCustomerView.transform;}}

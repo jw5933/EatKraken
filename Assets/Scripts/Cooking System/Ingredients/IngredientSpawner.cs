@@ -11,7 +11,7 @@ public class IngredientSpawner : MonoBehaviour
     private GameObject newIngredient;
 
     private void Awake(){
-        this.transform.SetParent(FindObjectOfType<GameManager>().ingredientParent);
+        //this.transform.SetParent(FindObjectOfType<GameManager>().ingredientParent);
         player = FindObjectOfType<Player>();
         myIngredientName = myIngredientPrefab.name;
     }

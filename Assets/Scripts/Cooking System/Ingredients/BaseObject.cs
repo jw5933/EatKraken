@@ -64,9 +64,9 @@ public class BaseObject : MonoBehaviour
 
     private void UpdateOrderVisual(Vector3 pos, Vector3 angle){
         currIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
-        currIngredient.transform.position = pos;
         currIngredient.transform.Rotate(angle - currIngredient.transform.eulerAngles, Space.World);
         currIngredient.transform.parent = this.transform;
+        currIngredient.transform.localPosition = Vector3.zero;
         currIngredient.transform.localScale = Vector3.one;
         currIngredient = null;
     }

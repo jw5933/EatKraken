@@ -19,8 +19,7 @@ public class SceneButton : MonoBehaviour
     }
 
     private void Click(){
-        myCoroutine = LoadYourAsyncScene();
-        StartCoroutine(myCoroutine);
+        SceneManager.LoadScene("CutScene1", LoadSceneMode.Single);
     }
 
     private void OnMouseUpAsButton(){
@@ -38,7 +37,7 @@ public class SceneButton : MonoBehaviour
     //via Unity Documentation
     IEnumerator LoadYourAsyncScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("New Main", LoadSceneMode.Single);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CutScene1", LoadSceneMode.Single);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

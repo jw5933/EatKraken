@@ -50,7 +50,7 @@ public class Ingredient : MonoBehaviour
     private int cookedImageState;
 
     //player interaction
-    private int motionsToStateChange; //needed number of motions to change state
+    [SerializeField] private int motionsToStateChange; //needed number of motions to change state
     private int myMotionsLeft; //number of motions left until state change -> resets to neededMotions
     public bool hasCutStage {get{return (motionsToStateChange > 0);}}
     public int motionsLeft {get{return myMotionsLeft;}}
@@ -65,6 +65,10 @@ public class Ingredient : MonoBehaviour
 
     //sounds
     [SerializeField] AudioClip sliceToolSound;
+
+    //original transform
+    Vector3 initialScale;
+    Vector3 initialAngle;
 
     //references
     Collider myCollider;
@@ -87,9 +91,12 @@ public class Ingredient : MonoBehaviour
                 t.sound = sliceToolSound;
             }
         }
-        motionsToStateChange = myToolLines.Count;
+        //motionsToStateChange = myToolLines.Count;
         if (myToolLines.Count == 0) isSliced = true;
         InactivateToolLines();
+
+        initialScale = transform.localScale;
+        initialAngle = transform.localEulerAngles;
     }
     private void Start(){
         player = FindObjectOfType<Player>();
@@ -105,7 +112,7 @@ public class Ingredient : MonoBehaviour
         else if (!player.handFree) return;
         else{
             player.PickUpItem(this.gameObject);
-            SetParent(spawner);
+            //SetParent(spawner);
             if (myArea != null){
                 myArea.HandlePickUp();
                 myArea = null;
@@ -208,5 +215,15 @@ public class Ingredient : MonoBehaviour
         InactivateToolLines();
         InvalidateToolLines();
         myCollider.enabled = true;
+    }
+
+    public void ResetTransform(){
+        transform.localScale = initialScale;
+        transform.localEulerAngles = initialAngle;
+    }
+
+    public void SetTransform(Vector3 scale, Vector3 angle){
+        transform.localScale = scale;
+        transform.localEulerAngles = angle;
     }
 }

@@ -111,7 +111,7 @@ public class LevelDesignScript : MonoBehaviour
     public void GoNextLocation(Location l){
         //Debug.Log(l.gameObject.name);
         map.selectedLocation = l;
-        map.goNextLocation();
+        map.GoNextLocation();
     }
 
     public void WakeUpManagers(){

@@ -34,6 +34,12 @@ public class ProteinSelector : MonoBehaviour
         tentacle.SetActive(false);
         planeUpdate.SetActive(false);
     }
+    private void Update(){
+        if (!tentacle.activeSelf) return;
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            CloseSelector();
+        }
+    }
 
     private void OnMouseUpAsButton(){
         if (!player.handFree) return;
@@ -63,7 +69,6 @@ public class ProteinSelector : MonoBehaviour
     private void ActivateProtein(){
         hm.MinusPlayerHearts(1);
         player.DropItem("any");
-        proteinKnife.gameObject.SetActive(false);
         CloseSelector();
         player.PickUpItem(newProtein);
         newProtein.SetActive(true);
@@ -71,10 +76,11 @@ public class ProteinSelector : MonoBehaviour
     }
 
     private void CloseSelector(){
+        proteinKnife.gameObject.SetActive(false);
         planeUpdate.SetActive(false);
         tentacle.SetActive(false);
-        //tentacleAnim.Rebind();
-        //knifeAnim.Rebind();
+        tentacleAnim.Rebind();
+        knifeAnim.Rebind();
         tentacle.transform.localPosition = initialPos;
     }
 }

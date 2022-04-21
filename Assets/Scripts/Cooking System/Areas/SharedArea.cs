@@ -11,6 +11,9 @@ public class SharedArea: MonoBehaviour
 
     [SerializeField] private GameObject myItem;
     [SerializeField] private Transform overridePosition;
+    [SerializeField] private float overrideScale3 = 1;
+    private Vector3 overrideScale;
+    [SerializeField] private Vector3 overrideAngle = Vector3.one;
 
     [SerializeField] private bool freeArea = true;
     public bool free {get{return freeArea;}}
@@ -25,6 +28,7 @@ public class SharedArea: MonoBehaviour
         gm = FindObjectOfType<GameManager>();
         myCollider = GetComponent<Collider>();
         InitialSnapToArea();
+        overrideScale = Vector3.one * overrideScale3;
     }
 
     private void InitialSnapToArea(){
@@ -60,7 +64,8 @@ public class SharedArea: MonoBehaviour
 
             i.ResetVars();
             i.area = this;
-            i.SetParent(this.transform.parent);
+            //i.SetParent(this.transform.parent);
+            i.SetTransform(overrideScale, overrideAngle);
         }
         else if (player.holdingBase && (myType == AreaType.BaseHolder || myType == AreaType.BaseObject)){
             myItem = player.DropItem("base");
@@ -91,17 +96,18 @@ public class SharedArea: MonoBehaviour
     }
 
     public bool CheckSwapIngredient(){
-        Debug.Log("check swap");
+        //Debug.Log("check swap");
         if (!player.holdingIngredient || (myType != AreaType.IngredientOnly && myType != AreaType.CuttingBoard)) return false;
         //see if the player is holding an ingredient
         Ingredient i = player.DropItem("ingredient").GetComponent<Ingredient>();
-        Debug.Log(i.name);
+        //Debug.Log(i.name);
         player.PickUpItem(myItem);
         myItem = i.gameObject;
 
         i.ResetVars();
         i.area = this;
-        i.SetParent(this.transform.parent);
+        //i.SetParent(this.transform.parent);
+        i.SetTransform(overrideScale, overrideAngle);
         myItem.transform.position = (overridePosition != null? overridePosition.position: myCollider.bounds.center);
 
         return true;

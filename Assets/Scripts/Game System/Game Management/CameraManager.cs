@@ -23,6 +23,7 @@ public class CameraManager : MonoBehaviour
     private Player p;
     private GameObject health;
     private Tentacle t;
+    private GameObject book;
 
     // ==============   methods   ==============
     void Start(){
@@ -30,6 +31,7 @@ public class CameraManager : MonoBehaviour
         t = FindObjectOfType<Tentacle>();
         p = FindObjectOfType<Player>();
         cam = FindObjectOfType<Camera>().gameObject;
+        book = FindObjectOfType<InstructionBook>().transform.parent.gameObject;
 
         buttons = new CameraHover[] {leftButton, rightButton};
         camIndex = 1;
@@ -38,7 +40,7 @@ public class CameraManager : MonoBehaviour
     
     void Update()
     {
-        CheckMoveInput();
+        if (!book.activeSelf) CheckMoveInput();
     }
 
     private void CheckMoveInput(){

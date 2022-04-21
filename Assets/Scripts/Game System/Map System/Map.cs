@@ -19,8 +19,8 @@ public class Map : MonoBehaviour, IPointerClickHandler
     [SerializeField] private bool validRelocation; //debug
     private Economy econ;
 
-    [SerializeField]private GameObject locationAnim;
-
+    [SerializeField] private GameObject locationAnim;
+    private InstructionBook book;
 
 
     // ==============   methods   ==============
@@ -28,15 +28,17 @@ public class Map : MonoBehaviour, IPointerClickHandler
         gm = FindObjectOfType<GameManager>();
         econ = FindObjectOfType<Economy>();
         em = FindObjectOfType<EventManager>();
-        locationAnim.GetComponent<UIDeactivate>().AddAction(goNextLocation);
+        book = FindObjectOfType<InstructionBook>();
+        book.action = GoNextLocation;
+        locationAnim.GetComponent<UIDeactivate>().AddAction(OpenBook);
     }
 
     private void Start(){
-        if (nextLocation !=null) playGoNextAnimation();
+        if (nextLocation !=null) PlayGoNextAnimation();
     }
 
-    private void playGoNextAnimation(){ //end of animation will call go next location
-        Debug.Log("anim");
+    private void PlayGoNextAnimation(){ //end of animation will call go next location
+        //Debug.Log("anim");
         //play animation
         if (locationAnim !=null){
             locationAnim.SetActive(true);
@@ -44,8 +46,12 @@ public class Map : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    private void OpenBook(){
+        book.gameObject.SetActive(true);
+    }
+
     //go to the location the player wants
-    public void goNextLocation(){
+    public void GoNextLocation(){
         Debug.Log("next");
         OpenOrCloseMap();
 
@@ -105,7 +111,7 @@ public class Map : MonoBehaviour, IPointerClickHandler
         Debug.Log("delegate entered");
         if (result){ //if player can relocate, go to the next location
             if (validRelocation) 
-                goNextLocation();
+                GoNextLocation();
         }
     }
 

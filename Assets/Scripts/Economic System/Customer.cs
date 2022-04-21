@@ -148,10 +148,12 @@ public class Customer : MonoBehaviour
         meter = Instantiate(gm.meterPrefab, order.transform).GetComponent<Meter>();
         RectTransform meterTransform = meter.gameObject.GetComponent<RectTransform>();
         RectTransform orderTransform = order.gameObject.GetComponent<RectTransform>();
+        RectTransform meterPTransform = meterParent.gameObject.GetComponent<RectTransform>();
         //float offset = 0f;
 
-        meterTransform.sizeDelta = new Vector2 (meterTransform.sizeDelta.x, orderTransform.sizeDelta.x);
+        meterTransform.sizeDelta = new Vector2 (meterPTransform.sizeDelta.y, meterPTransform.sizeDelta.x);
         meter.transform.SetParent(meterParent);
+        meter.transform.SetAsFirstSibling();
         meterTransform.anchoredPosition = Vector2.zero;
         //meterTransform.anchoredPosition = new Vector2(0, -(orderTransform.rect.height + meterTransform.rect.width + offset));
         

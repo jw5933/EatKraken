@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class CutSceneManager : MonoBehaviour
 {
     public Action<int> OnDialogueChange;
+    IEnumerator myCoroutine;
 
     //beginning animation
     [SerializeField] Animator cutSceneAnim;
@@ -20,7 +21,7 @@ public class CutSceneManager : MonoBehaviour
 
     [TextArea]
     [SerializeField] List <string> dialogue = new List<string>(); //the dialogue that will be typed
-    int index = 0; //which line is being typed
+    [SerializeField] int index = 0; //which line is being typed
     bool isTyping; //condition for whether text is curerntly being typed
 
     [SerializeField] int maxLen; //760?
@@ -35,7 +36,7 @@ public class CutSceneManager : MonoBehaviour
 
     //change dialogue if the player presses enter key
     private void Update(){
-        CheckInput();
+        if(Input.GetKeyDown(KeyCode.Return)) CheckInput();
     }
 
     private void ChangeDialogue(){
@@ -43,29 +44,26 @@ public class CutSceneManager : MonoBehaviour
     }
 
     private void BeginDialogue(){
-        StartCoroutine(DisplayDialogue());
+        myCoroutine = DisplayDialogue();
+        StartCoroutine(myCoroutine);
         ChangeDialogue();
     }
 
-    private void CheckInput(){
-        if(Input.GetKeyDown(KeyCode.Return)){
-            //Debug.Log(dialogue.Count);
-            if(isTyping){ // if the dialogue is still being typed, finish typing
-                text.text = dialogue[index];
-                
-                isTyping = false;
-                if(index == dialogue.Count-1){
-                    openText = false;
-                }
-            }
-            else if(index < dialogue.Count-1){
-                index++;
-                StartCoroutine(DisplayDialogue());
-                ChangeDialogue();
-            }
-            else{
-                SceneManager.LoadScene("New Main", LoadSceneMode.Single);
-            }
+    public void CheckInput(){
+        //Debug.Log(dialogue.Count);
+        if(isTyping){ // if the dialogue is still being typed, finish typing
+            StopCoroutine(myCoroutine);
+            text.text = dialogue[index];
+            isTyping = false;
+        }
+        else if(index < dialogue.Count-1){
+            index++;
+            myCoroutine = DisplayDialogue();
+            StartCoroutine(myCoroutine);
+            ChangeDialogue();
+        }
+        else{
+            SceneManager.LoadScene("New Main", LoadSceneMode.Single);
         }
     }
         
@@ -75,18 +73,21 @@ public class CutSceneManager : MonoBehaviour
 	IEnumerator DisplayDialogue(){
         yield return new WaitForEndOfFrame();
         openText = true; //condition: dialogue is now open
-        if (!isTyping) StartCoroutine(TypeDialogue(dialogue[index])); //begin typing the text
+        if (!isTyping){
+            myCoroutine = TypeDialogue(dialogue[index]);
+            StartCoroutine(myCoroutine); //begin typing the text
+        }
     }
 
 	// method to type dialogue
 	IEnumerator TypeDialogue(string str){
         // -------------- typing effect ---------------------
+        isTyping = true;
         text.text="";
 
         //local variables; this resets each time the method is called
         int wordIndex = 0;
         string [] words = str.Split(' ');
-        isTyping = true;
         int len = 0;
         bool firstWord = true;
 
@@ -122,9 +123,9 @@ public class CutSceneManager : MonoBehaviour
                     wordLen += charInfo.advance; //go on to the next character
                 }
                 len += wordLen;
-                Debug.Log("word: "+ words[wordIndex] + ", length: " + wordLen + ", total length: " + len);
+                //Debug.Log("word: "+ words[wordIndex] + ", length: " + wordLen + ", total length: " + len);
 
-                if (len > maxLen){
+                /* if (len > maxLen){
                     Debug.Log("over max: " + len + ", max: " + maxLen);
                     text.text += '\n';
                     // wordIndex++;
@@ -132,7 +133,7 @@ public class CutSceneManager : MonoBehaviour
                     len = 0;
                     if (!firstWord) len -= spaceInfo.advance;
                     continue;
-                }
+                } */
                 //len = 0;
                 //find the font/text info
                 /* foreach(char c in line){

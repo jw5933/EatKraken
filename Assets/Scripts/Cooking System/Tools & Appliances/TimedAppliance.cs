@@ -40,8 +40,10 @@ public class TimedAppliance : Appliance
     }
 
     protected override void HandleEndTimer(){
-        if (am != null) am.StopConstantSFX(audioSourceIndex);
-        //am.PlaySFX(finishedSound); // too loud & mosquito-y
+        if (am != null){
+            am.StopConstantSFX(audioSourceIndex);
+            am.PlaySFX(finishedSound);
+        }
         if (myIngredient != null) myIngredient.ChangeCookedState();
         myIngredient.transform.position = this.transform.position + new Vector3(0,0,- 0.2f);
         myIngredient.gameObject.SetActive(true);

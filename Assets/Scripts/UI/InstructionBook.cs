@@ -6,6 +6,10 @@ using UnityEngine.Events;
 
 public class InstructionBook : MonoBehaviour
 {
+    private bool start = true;
+    private UnityAction myAction;
+    public UnityAction action {set{myAction = value;}}
+    
     int index;
     [SerializeField] private Sprite[] pages;
     Image myImage;
@@ -18,15 +22,15 @@ public class InstructionBook : MonoBehaviour
             switch(c.name){
                 case "left":
                     left = c.gameObject;
-                    left.GetComponent<Button>().AddAction(GoPreviousPage);
+                    left.GetComponent<ColliderButton>().AddAction(GoPreviousPage);
                 break;
                 case "right":
                     right = c.gameObject;
-                    right.GetComponent<Button>().AddAction(GoNextPage);
+                    right.GetComponent<ColliderButton>().AddAction(GoNextPage);
                 break;
                 case "x":
                     x = c.gameObject;
-                    x.GetComponent<Button>().AddAction(CloseBook);
+                    x.GetComponent<ColliderButton>().AddAction(CloseBook);
                 break;
             }
         }
@@ -34,6 +38,12 @@ public class InstructionBook : MonoBehaviour
     private void Update(){
         if (Input.GetKeyDown(KeyCode.Escape)){
             CloseBook();
+        }
+        else if (Input.GetKeyDown(KeyCode.A)){
+            GoPreviousPage();
+        }
+        else if(Input.GetKeyDown(KeyCode.D)){
+            GoNextPage();
         }
     }
 
@@ -50,6 +60,11 @@ public class InstructionBook : MonoBehaviour
     }
 
     private void CloseBook(){
-        this.gameObject.SetActive(false);
+        this.transform.parent.gameObject.SetActive(false);
+        if (start){
+            myAction();
+            action = null;
+            start = false;
+        }
     }
 }

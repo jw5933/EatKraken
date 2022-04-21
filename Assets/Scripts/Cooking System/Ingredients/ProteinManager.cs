@@ -68,7 +68,7 @@ public class ProteinManager : MonoBehaviour
 
     public void CreateProtein(int n){
         if (proteinPrefabs[n] != null && (player.handFree)){
-            GameObject o = Instantiate(proteinPrefabs[n], gm.ingredientParent);
+            GameObject o = Instantiate(proteinPrefabs[n], gm.proteinParent);
             hm.MinusPlayerHearts(1);
             player.PickUpItem(o);
         }
