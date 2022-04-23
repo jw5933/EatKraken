@@ -15,16 +15,28 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject theOrderParent;
     public Transform orderParent {get{return theOrderParent.transform;}}
 
-    [SerializeField] private GameObject theIngredientParent;
-    public Transform ingredientParent {get{return theIngredientParent.transform;}}
+    [SerializeField] private GameObject theProteinParent;
+    public Transform proteinParent {get{return theProteinParent.transform;}}
     
     [SerializeField] private GameObject theCustomerView;
     public Transform customerView {get{return theCustomerView.transform;}}
+
+    [SerializeField] private GameObject theCustomerParent;
+    public Transform customerParent {get{return theCustomerParent.transform;}}
+
+    [SerializeField] private GameObject theMeterParent;
+    public Transform meterParent {get{return theMeterParent.transform;}}
     
     //prefabs
     [Header("Prefabs")]
     [SerializeField] private GameObject theTimerPrefab;
     public GameObject timerPrefab{get{return theTimerPrefab;}}
+    
+    [SerializeField] private GameObject theMeterPrefab;
+    public GameObject meterPrefab{get{return theMeterPrefab;}}
+
+    [SerializeField] private GameObject theStationaryMeterPrefab;
+    public GameObject stationaryMeterPrefab{get{return theStationaryMeterPrefab;}}
 
     [SerializeField] private GameObject thePopUpMessagePrefab;
     public GameObject popUpMessagePrefab{get{return thePopUpMessagePrefab;}}
@@ -39,35 +51,47 @@ public class GameManager : MonoBehaviour
     [Header("Canvas")]
     [SerializeField] private GameObject theGameCanvas;
     public GameObject gameCanvas{get{return theGameCanvas;}}
+    [SerializeField] private GameObject theStationaryCanvas;
+    public GameObject stationaryCanvas{get{return theStationaryCanvas;}}
 
     //other vars
     [Header("Game Variables")]
     [SerializeField] Location firstLocation;
+    //FIX: should update onlocationchange
+    public string currLocation {get{return firstLocation.name;}}
     [SerializeField] private int theMaxIngredients;
     public int maxIngredients {get{return theMaxIngredients;}}
+
+    //end state
+    [Header("End State")]
+    [SerializeField] private Text endText;
+    [SerializeField] private GameObject endImage;
     
 
     // ==============   methods   ==============
     
     void Awake()
     {
-        //set variables before start is called
         FindObjectOfType<Map>().selectedLocation = firstLocation;
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null) am.Activate();
     }
-    
-    void Update()
-    {
+
+    void Update(){
         CheckRestart();
     }
 
     private void CheckRestart(){
         if (Input.GetKeyDown(KeyCode.R)){
-            string n = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene(n);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1;
         }
     }
 
-    public void HandlePlayerDeath(){ //check if the player has died (what conditions? if on no hearts?)
-
+    public IEnumerator HandleEndGame(string endString){ //check if the player has died (what conditions? if on no hearts?)
+        yield return new WaitForSeconds(0.5f);
+        Time.timeScale = 0;
+        endImage.SetActive(true);
+        endText.text = endString;
     }
 }

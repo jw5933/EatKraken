@@ -44,8 +44,8 @@ public class LevelDesignScript : MonoBehaviour
     }
     //economy
     //update the amount of money earned and customers served in current phase
-    private void UpdateOnCoinChange(float made, float max, int phase){
-        Debug.Log(phases.Length);
+    private void UpdateOnCoinChange(Customer c, float made, float max, int phase){
+        //Debug.Log(phases.Length);
         if (made <= 0) phases[phase].customersLeft += 1;
         else phases[phase].customersServed += 1;
 
@@ -72,10 +72,10 @@ public class LevelDesignScript : MonoBehaviour
 
             foreach(Customer c in cs){
                 phases[i].moneyMax += c.maxCoins;
-                Debug.Log(c.gameObject.name + " " + c.maxCoins);
+                //Debug.Log(c.gameObject.name + " " + c.maxCoins);
                 phases[i].customerMax += 1;
             }
-            Debug.Log(phases[i].moneyMax);
+            //Debug.Log(phases[i].moneyMax);
         }
     }
 
@@ -99,7 +99,7 @@ public class LevelDesignScript : MonoBehaviour
     }
     private void HandleTimeSkip(){
         Time.timeScale = timeScale;
-        Debug.Log("time scale reset");
+        //Debug.Log("time scale reset");
     }
 
     //location
@@ -109,9 +109,9 @@ public class LevelDesignScript : MonoBehaviour
     }
 
     public void GoNextLocation(Location l){
-        Debug.Log(l.gameObject.name);
+        //Debug.Log(l.gameObject.name);
         map.selectedLocation = l;
-        map.goNextLocation();
+        map.GoNextLocation();
     }
 
     public void WakeUpManagers(){

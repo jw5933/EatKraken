@@ -9,66 +9,85 @@ public class DayManager : MonoBehaviour
     //time stages
     [HideInInspector][SerializeField] Timer dayTimer;
     private float[] timePerStage;
+    public float[] timeStage {set{timePerStage = value;}}
     [SerializeField] Sprite[] timeStageImages;
-    private int phaseIndex = -1;
+    bool isOvertime;
+    public bool overtime {get{return isOvertime;}}
+    public bool endOfDay {get{return (phaseIndex+1 >= timePerStage.Length);}}
 
+    private int phaseIndex = -1;
     public int phase {get{return phaseIndex;}}
     public int numOfPhases {get{return timePerStage.Length;}}
+    private GameObject phaseButton;
 
-    //FIX: delete
     [SerializeField] SpriteRenderer customerBackground;
-
     [SerializeField] Text timeText;
+
+    //FIX: save to location
+    private int locationDay = 1;
+    public int day{get{return locationDay;}}
 
     GameManager gm;
     EventManager em;
     CustomerManager cm;
     LevelDesignScript ld;
+    Location location;
+    public Location loc {set{location = value;}}
 
     // ==============   methods   ==============
     public void Awake(){
         em = FindObjectOfType<EventManager>();
-        em.OnLocationChange += UpdateOnLocationChange;
+        //em.OnLocationChange += UpdateOnLocationChange;
+
         gm = FindObjectOfType<GameManager>();
         cm = FindObjectOfType<CustomerManager>();
         ld = FindObjectOfType<LevelDesignScript>();
+        phaseButton = FindObjectOfType<PhaseSkipButton>(true).gameObject;
 
         dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
     }
 
-    private void UpdateOnLocationChange(Location next){
-        //Debug.Log("called Update on Location in Day Manager");
-        //update the generator
-        timePerStage = next.timeStages;
-        //ResetVars();
+    public void SkipToNextPhase(){
+        Debug.Log("skip to next phase");
+        dayTimer.StopTimer();
+        HandleDayChange();
     }
 
     private void HandleDayChange(){
         if (phaseIndex+1 >= timePerStage.Length){
-            if (!cm.lineUpIsEmpty) WorkOvertime();
+            if (!cm.lineUpIsEmpty) isOvertime = true;
+            else{
+                StartCoroutine(gm.HandleEndGame(string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", locationDay, cm.coins, cm.served, cm.lost, gm.currLocation)));
+            }
             //FIX: show working overtime
             return;
         }
+        Debug.Log("handle day change");
         phaseIndex++;
         //FIX: change the visuals
         if (phaseIndex < timeStageImages.Length) customerBackground.sprite = timeStageImages[phaseIndex];
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
     }
 
-    private void WorkOvertime(){ //FIX
-        Debug.Log("working overtime");
-    }
-
     private void Init(float time){
+        //Debug.Log("location: " + (location != null) + ", daytimer: " +  (dayTimer != null) + ", phaseButton: " +(phaseButton != null) + ", em: " + (em != null));
+        if (location.customersPerStage[phaseIndex] <= 0){
+            //Debug.Log("timer is a break");
+            dayTimer.Init(time, HandleDayChange);
+            dayTimer.StartTimer();
+            phaseButton.SetActive(true);
+        }
+        else phaseButton.SetActive(false);
         em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
-        //dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-        dayTimer.Init(time, HandleDayChange, timeText);
-        dayTimer.StartTimer();
     }
 
     public void ResetVars(){
         dayTimer.StopTimer();
         phaseIndex = 0;
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
+    }
+
+    private void GoNextDay(){
+        locationDay++;
     }
 }

@@ -43,16 +43,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7778c0e05c55b43cda0f485eea21bcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currScene:
-    m_Handle: 0
   gameIn3d: 1
   theOrderParent: {fileID: 0}
   theIngredientParent: {fileID: 0}
   theCustomerView: {fileID: 0}
   theTimerPrefab: {fileID: 58222843491961582, guid: 76f8ef7c6d4fd42c38ae763aa73d7d67, type: 3}
+  theMeterPrefab: {fileID: 3561063595748626428, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+  theStationaryMeterPrefab: {fileID: 5373816890286979811, guid: 2607ac263705a46d1b6d60664da44fe9, type: 3}
   thePopUpMessagePrefab: {fileID: 6617925635411094471, guid: 805676951ff09475cb343ac0ae9ac895, type: 3}
   theOrderPrefab: {fileID: 6731775414406679952, guid: 46efcab14bb684d199faa2fd819ddec0, type: 3}
   theCustomerSkeleton: {fileID: 6843524618927794072, guid: f6fe5febc62074c81a94a08d7bb2f10c, type: 3}
   theGameCanvas: {fileID: 0}
+  theStationaryCanvas: {fileID: 0}
   firstLocation: {fileID: 0}
   theMaxIngredients: 3
+  endText: {fileID: 0}
+  endImage: {fileID: 0}

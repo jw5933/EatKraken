@@ -11,7 +11,6 @@ public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private Vector3 hoverScale = new Vector3(0.3f,0.3f,0.3f);
 
     // ==============   methods   ==============
-    //indicate hovered location to player
     public virtual void OnPointerEnter(PointerEventData eventData){
         ChangeScale(hoverScale);
     }

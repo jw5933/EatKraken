@@ -5,7 +5,9 @@ using UnityEngine;
 public class Generator : MonoBehaviour
 {
     // ==============   variables   ==============
+    private Sprite baseObjectSprite;
     private List <Ingredient> baseIngredientPrefabs;
+    private List <Ingredient> carbIngredientPrefabs;
     private List <Ingredient> ingredientPrefabs;
     private List <Ingredient> proteinPrefabs;
     
@@ -22,60 +24,109 @@ public class Generator : MonoBehaviour
     private int customersSpawned;
     private int maxCustomers;
     private float timeUntilCustomer;
+    private int currPhase;
+    private int customersLeft;
 
-    //constant
+    //times
     private float timeBeforeFirst = 2;
     private float timeAfterLast = 2;
+    [SerializeField] private float rangeStart = 0.5f;
+    [SerializeField] private float rangeEnd = 5f;
     
     GameManager gm;
     DayManager dm;
     CustomerManager cm;
     EventManager em;
     LevelDesignScript ld;
+    Player player;
 
     // ==============   methods   ==============
     void Awake(){
         em = FindObjectOfType<EventManager>(true);
         //subscribe to events
         em.OnTimeChange += UpdateOnTimeChange;
+        em.OnCustomerNeutral += UpdateOnCustomerNeutral;
+        em.OnLocationChange += UpdateOnLocationChange;
+        em.OnCustomerLeave += UpdateOnCustomerLeave;
 
         gm = FindObjectOfType<GameManager>();
         dm = FindObjectOfType<DayManager>();
         cm = FindObjectOfType<CustomerManager>();
         ld = FindObjectOfType<LevelDesignScript>();
+        player = FindObjectOfType<Player>();
 
         timer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
-        em.OnLocationChange += UpdateOnLocationChange;
     }
 
     private void UpdateOnLocationChange(Location next){
         Debug.Log("next: " + next.gameObject.name);
         //update the generator
+        baseObjectSprite = next.baseSprite;
         baseIngredientPrefabs = next.baseIngredients;
+        carbIngredientPrefabs = next.carbIngredients;
         ingredientPrefabs = next.ingredients;
         customerPrefabs = next.customers;
         customersPerStage = next.customersPerStage;
         proteinPrefabs = next.proteins;
-        dm.ResetVars();
+
+        player.hasBaseIngredient = (baseIngredientPrefabs.Count > 0);
+
+        dm.timeStage = next.timeStages;
+        dm.loc = next;
         CreatePCList();
     }
 
+    private void UpdateOnCustomerNeutral(){
+        BeginCustomerTimer();
+    }
+
+    private void UpdateOnCustomerLeave(int x, Customer.Mood mood){
+        customersLeft++;
+        if (customersLeft >= maxCustomers){
+            timer.Init(timeAfterLast, dm.SkipToNextPhase);
+            timer.StartTimer();
+            return;
+        }
+        if (mood == Customer.Mood.Happy) BeginCustomerTimer();
+    }
+
     private void UpdateOnTimeChange(float time, int phase){
+        currPhase = phase;
         maxCustomers = customersPerStage[phase];
         customersSpawned = 0;
+        customersLeft = 0;
 
         //start timer
-        timeUntilCustomer = (time - timeBeforeFirst - timeAfterLast)/maxCustomers;
-        timer.Init(timeBeforeFirst, BeginCustomerTimer);
+        //timeUntilCustomer = (time - timeBeforeFirst - timeAfterLast)/maxCustomers;
+        timer.Init(timeBeforeFirst, SpawnCustomer);
         timer.StartTimer();
     }
 
+    //spawning customers
+    private void SpawnCustomer(){
+        //Debug.Log("currphase: " + currPhase + " custspawned: " + customersSpawned);
+        if (customersSpawned >= maxCustomers) return;
+        //initiate customer
+        Customer newCustomer = phaseCustomerL[currPhase][customersSpawned++];
+        cm.LineupCustomer(newCustomer);
+    }
+
+    private void BeginCustomerTimer(){
+        //start the timer until next player spawn
+        if (customersSpawned >= maxCustomers) return;
+        timeUntilCustomer = Random.Range(rangeStart, rangeEnd);
+        timer.Init(timeUntilCustomer, SpawnCustomer);
+        timer.StartTimer();
+    }
+
+    //creating the customer list (random gen)
     private void CreatePCList(){
-        Debug.Log("creating list");
+        //Debug.Log("creating list");
         for (int phase = 0; phase < customersPerStage.Length; phase++){
             phaseCustomerL.Add(CreateCustomer(phase, customersPerStage[phase]));
         }
-        ld.UpdateInfo(customersPerStage.Length);
+        if (ld !=null) ld.UpdateInfo(customersPerStage.Length);
+        dm.ResetVars();
     }
 
     private List<Customer> CreateCustomer(int phase, int max){ //create a customer with random ingredients
@@ -83,45 +134,43 @@ public class Generator : MonoBehaviour
         
         for (int index = 0; index < max; index++){
             //get a customer profile
-            int c = Random.Range(0, customerPrefabs.Count);
-            Customer newCustomer = Instantiate(customerPrefabs[c], gm.orderParent).GetComponent<Customer>();
-            customerPrefabs.RemoveAt(c);
+            int cs = Random.Range(0, customerPrefabs.Count);
+            Customer newCustomer = Instantiate(customerPrefabs[cs], gm.orderParent).GetComponent<Customer>();
+            customerPrefabs.RemoveAt(cs);
             newCustomer.phase = phase;
+
+            if (baseObjectSprite != null) newCustomer.AddToOrder(baseObjectSprite, null, null, 0);
             
-            //adjust customer: base, protein, ingredient
+            //adjust customer: base, carb, protein, ingredient
             int num = gm.maxIngredients;
-            int b = Random.Range(0, baseIngredientPrefabs.Count);
-            newCustomer.AddToOrder(baseIngredientPrefabs[b].initialSprite, baseIngredientPrefabs[b].name, baseIngredientPrefabs[b].price);
-            num--;
-
-            int p = Random.Range(0, proteinPrefabs.Count);
-            newCustomer.AddToOrder(proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
-            num--;
-
-            for (int n = num; n >= 0; n--){
-                int i = Random.Range(0, ingredientPrefabs.Count);
-                newCustomer.AddToOrder(ingredientPrefabs[i].initialSprite, ingredientPrefabs[i].name, ingredientPrefabs[i].price);
+            if (baseIngredientPrefabs.Count > 0){
+                int b = Random.Range(0, baseIngredientPrefabs.Count);
+                newCustomer.AddToOrder(baseIngredientPrefabs[b].orderSprite,
+                null, baseIngredientPrefabs[b].name, 
+                baseIngredientPrefabs[b].price);
             }
+
+            int c = Random.Range(0, carbIngredientPrefabs.Count);
+            newCustomer.AddToOrder(carbIngredientPrefabs[c].orderSprite,
+            carbIngredientPrefabs[c].initialSprite, carbIngredientPrefabs[c].name, 
+            carbIngredientPrefabs[c].price);
+            num--;
+
+            while (num > 1){
+                num--;
+                int i = Random.Range(0, ingredientPrefabs.Count);
+                newCustomer.AddToOrder(ingredientPrefabs[i].orderSprite,
+                    ingredientPrefabs[i].initialSprite, 
+                ingredientPrefabs[i].name, ingredientPrefabs[i].price);
+            }
+            
+            int p = Random.Range(0, proteinPrefabs.Count);
+            newCustomer.AddToOrder(proteinPrefabs[p].orderSprite,
+            proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
+
             newCustomer.CalculateCoins();
             phaseList.Add(newCustomer);
         }
         return phaseList;
-    }
-
-    private void SpawnCustomer(){
-        //initiate customer
-        Customer newCustomer = phaseCustomerL[dm.phase][customersSpawned++];
-        cm.LineupCustomer(newCustomer);
-        //FIX: delete below; only the cm needs to lineup customer
-        //newCustomer.gameObject.SetActive(true);
-        newCustomer.Init(); 
-    }
-
-    public void BeginCustomerTimer(){
-        if (customersSpawned >= maxCustomers) return;
-        SpawnCustomer();
-        //start the timer until next player spawn
-        timer.Init(timeUntilCustomer, BeginCustomerTimer);
-        timer.StartTimer();
     }
 }

@@ -2822,6 +2822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myType: 2
+  myItem: {fileID: 0}
 --- !u!65 &1020234149
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4720,30 +4721,6 @@ PrefabInstance:
       propertyPath: customerBackground
       value: 
       objectReference: {fileID: 549902778}
-    - target: {fileID: 6540605241996246336, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
-      propertyPath: timeStageImages.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6540605241996246336, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
-      propertyPath: timeStageImages.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 0606067ed1471439ea7763c2a5c4e829, type: 3}
-    - target: {fileID: 6540605241996246336, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
-      propertyPath: timeStageImages.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: ae3a282d4dbaf46379175c66dbcca870, type: 3}
-    - target: {fileID: 6540605241996246336, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
-      propertyPath: timeStageImages.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: db1fa795a74ef47ea9da1daacb6f67b0, type: 3}
-    - target: {fileID: 6540605241996246336, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
-      propertyPath: timeStageImages.Array.data[3]
-      value: 
-      objectReference: {fileID: 21300000, guid: 88b6aa9c30aab4b42ad24ed6942ad3fd, type: 3}
-    - target: {fileID: 6540605241996246336, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
-      propertyPath: timeStageImages.Array.data[4]
-      value: 
-      objectReference: {fileID: 21300000, guid: 79f470765c6144f38ad46f60be246d7f, type: 3}
     - target: {fileID: 6540605242105865638, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: coinsText
       value: 
