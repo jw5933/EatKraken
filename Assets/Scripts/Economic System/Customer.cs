@@ -27,6 +27,7 @@ public class Customer : MonoBehaviour
     //order vars
     [SerializeField] private List<string> myOrder = new List<string>();
     private float myOrderPrice;
+    public float orderPrice{get{return myOrderPrice;}}
 
     private List<Image> orderUi = new List<Image>();
     [SerializeField] private List<Image> finalOrderUi = new List<Image>();
@@ -199,7 +200,6 @@ public class Customer : MonoBehaviour
 
     private void HandleAfterOrder(int wrongIngredient){
         if (wrongIngredient > myLeniency){
-            myMood = Mood.Angry;
             Debug.Log("Customer will leave without paying anything.");
             em.ChangeCoins(this, 0, coinHappy, myTimePhase);
             Leave();
@@ -262,7 +262,7 @@ public class Customer : MonoBehaviour
     }
 
     private void Leave(){
-        em.FreeCustomer(positionInLine, myMood);
+        em.FreeCustomer(positionInLine, myMood); //em OnCustomerLeave
         Destroy(myCustomerAnim.gameObject);
     }
 }

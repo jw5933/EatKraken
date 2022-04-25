@@ -35,6 +35,7 @@ public class HealthManager : MonoBehaviour
         maxHearts = playerHearts;
         //currentHeart = Mathf.FloorToInt(playerHearts);
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
+        prevHeart = currentHeart;
         myHearts = new Image[Mathf.FloorToInt(playerHearts)];
 
         for (int i = 0; i < myHearts.Length; i++){
@@ -56,8 +57,8 @@ public class HealthManager : MonoBehaviour
     }
 
     private void UpdateHealthUI(){
-        prevHeart = currentHeart;
         int pIndex = prevHeart;
+        prevHeart = currentHeart;
         Debug.Log("previous heart " + pIndex);
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
 
@@ -74,11 +75,13 @@ public class HealthManager : MonoBehaviour
     }
 
     private void nullHearts(int s, int e){
+        if (s < 0) s = 0;
         for (int h = s; h > e; h--){
                 myHearts[h].sprite = nullHeart;
             }
     }
     private void fullHearts(int s, int e){
+        if (s < 0) s = 0;
         for (int h = s; h <= e; h++){
                 myHearts[h].sprite = fullHeart;
             }

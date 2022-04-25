@@ -24,8 +24,10 @@ public class ProteinSelector : MonoBehaviour
         
         planeUpdate = transform.GetChild(1).gameObject;
         tentacle = transform.GetChild(0).gameObject;
+
         tentacleAnim = tentacle.GetComponent<Animator>();
         tentacleAnim.GetComponent<UIActivate>().AddAction(ActivateKnife);
+
         knifeAnim = proteinKnife.GetComponent<Animator>();
         knifeAnim.GetComponent<UIActivate>().AddAction(ActivateProtein);
 
@@ -34,6 +36,7 @@ public class ProteinSelector : MonoBehaviour
         tentacle.SetActive(false);
         planeUpdate.SetActive(false);
     }
+    
     private void Update(){
         if (!tentacle.activeSelf) return;
         if (Input.GetKeyDown(KeyCode.Escape)){
@@ -79,6 +82,7 @@ public class ProteinSelector : MonoBehaviour
         proteinKnife.gameObject.SetActive(false);
         planeUpdate.SetActive(false);
         tentacle.SetActive(false);
+        player.DropItem("any");
         tentacleAnim.Rebind();
         knifeAnim.Rebind();
         tentacle.transform.localPosition = initialPos;

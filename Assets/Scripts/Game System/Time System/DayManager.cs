@@ -50,10 +50,10 @@ public class DayManager : MonoBehaviour
     public void SkipToNextPhase(){
         Debug.Log("skip to next phase");
         dayTimer.StopTimer();
-        HandleDayChange();
+        HandleTimeChange();
     }
 
-    private void HandleDayChange(){
+    private void HandleTimeChange(){
         if (phaseIndex+1 >= timePerStage.Length){
             if (!cm.lineUpIsEmpty) isOvertime = true;
             else{
@@ -73,7 +73,7 @@ public class DayManager : MonoBehaviour
         //Debug.Log("location: " + (location != null) + ", daytimer: " +  (dayTimer != null) + ", phaseButton: " +(phaseButton != null) + ", em: " + (em != null));
         if (location.customersPerStage[phaseIndex] <= 0){
             //Debug.Log("timer is a break");
-            dayTimer.Init(time, HandleDayChange);
+            dayTimer.Init(time, HandleTimeChange);
             dayTimer.StartTimer();
             phaseButton.SetActive(true);
         }
