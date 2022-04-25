@@ -14,9 +14,11 @@ public class InstructionBook : MonoBehaviour
     [SerializeField] private Sprite[] pages;
     Image myImage;
     GameObject left, right, x;
+    GameManager gm;
 
     private void Awake(){
         myImage = GetComponent<Image>();
+        gm = FindObjectOfType<GameManager>();
 
         foreach(Transform c in transform){
             switch(c.name){
@@ -34,6 +36,8 @@ public class InstructionBook : MonoBehaviour
                 break;
             }
         }
+
+        left.SetActive(false);
     }
     private void Update(){
         if (Input.GetKeyDown(KeyCode.Escape)){
@@ -48,15 +52,19 @@ public class InstructionBook : MonoBehaviour
     }
 
     private void GoNextPage(){
-        if (index+1 >= pages.Length) return;
+        if (index+1 >= pages.Length)return;
         index++;
         myImage.sprite = pages[index];
+        if (!left.activeSelf) left.SetActive(true);
+        if (index == pages.Length-1) right.SetActive(false);
     }
 
     private void GoPreviousPage(){
         if (index-1 < 0) return;
         index--;
         myImage.sprite = pages[index];
+        if (!right.activeSelf) right.SetActive(true);
+        if (index == 0) left.SetActive(false);
     }
 
     private void CloseBook(){
@@ -66,5 +74,18 @@ public class InstructionBook : MonoBehaviour
             action = null;
             start = false;
         }
+        else if (!gm.paused){
+            AudioListener.pause = false;
+            Time.timeScale = 1;
+        }
+    }
+
+    public void OpenBook(){
+        Debug.Log("openning");
+        if (!gm.paused){
+            AudioListener.pause = true;
+            Time.timeScale = 0;
+        }
+        this.transform.parent.gameObject.SetActive(true);
     }
 }

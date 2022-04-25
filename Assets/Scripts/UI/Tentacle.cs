@@ -50,7 +50,7 @@ public class Tentacle : MonoBehaviour
         for (int i = 1; i <length-1; i++){
             float targetDist = i*segmentFraction*dist;
             targetPoses[i] =  segmentPoses[0] - endToPoint*targetDist;
-            segmentPoses[i] = Vector3.SmoothDamp(segmentPoses[i], targetPoses[i], ref segmentV[i], segmentSpeeds[i]);
+            segmentPoses[i] = Vector3.SmoothDamp(segmentPoses[i], targetPoses[i], ref segmentV[i], segmentSpeeds[i], Mathf.Infinity, Time.unscaledDeltaTime);
         }
         lineRend.SetPositions(segmentPoses);
     }

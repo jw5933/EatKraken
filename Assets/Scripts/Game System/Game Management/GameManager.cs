@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [Header("General")]
     [SerializeField] bool gameIn3d;
     public bool in3d {get{return gameIn3d;}}
+    [SerializeField] private GameObject pauseScreen;
+    public bool paused {get{return pauseScreen.activeSelf;}}
+
     //parents
     [Header("Parents")]
     [SerializeField] private GameObject theOrderParent;
@@ -78,14 +81,47 @@ public class GameManager : MonoBehaviour
     }
 
     void Update(){
-        CheckRestart();
+        CheckInput();
     }
 
-    private void CheckRestart(){
+    private void CheckInput(){
         if (Input.GetKeyDown(KeyCode.R)){
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             Time.timeScale = 1;
+            AudioListener.pause = false;
         }
+        else if (Input.GetKeyDown(KeyCode.Escape)){
+            if (pauseScreen.activeSelf) CheckPause();
+        }
+    }
+
+    public void CheckPause(){
+        if (pauseScreen.activeSelf) UnPauseGame();
+        else PauseGame();
+    }
+
+    private void PauseGame(){
+        pauseScreen.SetActive(true);
+        AudioListener.pause = true;
+        Time.timeScale = 0;
+    }
+
+    private void UnPauseGame(){
+        pauseScreen.SetActive(false);
+        AudioListener.pause = false;
+        Time.timeScale = 1;
+    }
+
+    public void QuitGame(){
+        //FIX: for testing
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
+
+    public void StartScene(){
+        SceneManager.LoadScene("StartScene");
+        Time.timeScale = 1;
+        AudioListener.pause = false;
     }
 
     public IEnumerator HandleEndGame(string endString){ //check if the player has died (what conditions? if on no hearts?)

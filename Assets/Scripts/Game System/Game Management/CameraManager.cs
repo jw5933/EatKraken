@@ -35,12 +35,11 @@ public class CameraManager : MonoBehaviour
 
         buttons = new CameraHover[] {leftButton, rightButton};
         camIndex = 1;
-        
     }
     
     void Update()
     {
-        if (!book.activeSelf) CheckMoveInput();
+        if (!book.activeSelf && Time.timeScale != 0) CheckMoveInput();
     }
 
     private void CheckMoveInput(){
