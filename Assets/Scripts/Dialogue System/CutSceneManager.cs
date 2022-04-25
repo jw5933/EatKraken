@@ -36,7 +36,16 @@ public class CutSceneManager : MonoBehaviour
 
     //change dialogue if the player presses enter key
     private void Update(){
-        if(Input.GetKeyDown(KeyCode.Return)) CheckInput();
+        if(Input.GetKeyDown(KeyCode.Return) | Input.GetKeyDown(KeyCode.Space)){
+            if (cutSceneAnim.gameObject.activeSelf)
+                SkipCutScene();
+            else 
+                CheckInput();
+        }
+    }
+
+    public void SkipCutScene(){
+        cutSceneAnim.GetComponent<UIDeactivate>().StopAnim();
     }
 
     private void ChangeDialogue(){
