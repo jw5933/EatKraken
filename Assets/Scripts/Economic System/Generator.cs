@@ -11,7 +11,8 @@ public class Generator : MonoBehaviour
     private List <Ingredient> ingredientPrefabs;
     private List <Ingredient> proteinPrefabs;
     
-    private List <Customer> customerPrefabs;
+    [SerializeField] private List <CustomerList> customerPrefabs;
+    private int customerPrefabIndex;
 
     //timer vars
     private Timer timer;
@@ -129,14 +130,19 @@ public class Generator : MonoBehaviour
         dm.ResetVars();
     }
 
+    private void UpdateCustomerPrefabIndex(){
+        while (customerPrefabs[customerPrefabIndex].customers.Count == 0) customerPrefabIndex++;
+    }
+
     private List<Customer> CreateCustomers(int phase, int max){ //create a customer with random ingredients
         List <Customer> phaseList = new List<Customer>();
         
         for (int index = 0; index < max; index++){
             //get a customer profile
-            int cs = Random.Range(0, customerPrefabs.Count);
-            Customer newCustomer = Instantiate(customerPrefabs[cs], gm.orderParent).GetComponent<Customer>();
-            customerPrefabs.RemoveAt(cs);
+            UpdateCustomerPrefabIndex();
+            int cs = Random.Range(0, customerPrefabs[customerPrefabIndex].customers.Count);
+            Customer newCustomer = Instantiate(customerPrefabs[customerPrefabIndex].customers[cs], gm.orderParent).GetComponent<Customer>();
+            customerPrefabs[customerPrefabIndex].customers.RemoveAt(cs);
             newCustomer.phase = phase;
 
             if (baseObjectSprite != null) newCustomer.AddToOrder(baseObjectSprite, null, null, 0);

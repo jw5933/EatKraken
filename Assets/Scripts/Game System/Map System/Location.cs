@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
+public class CustomerList{
+    public List<Customer> customers = new List<Customer>();
+}
+
 public class Location : Button
 {
     // ==============   variables   ==============
@@ -20,8 +25,8 @@ public class Location : Button
     public List<Ingredient> proteins {get{return proteinPrefabs;}}
 
     [Header("Customer Settings")]
-    [SerializeField] private List <Customer> customerPrefabs;
-    public List <Customer> customers {get{return customerPrefabs;}}
+    [SerializeField] private List <CustomerList> customerPrefabs;
+    public List <CustomerList> customers {get{return customerPrefabs;}}
     [SerializeField] private int[] myCustomersPerStage;
     public int[] customersPerStage {get{return myCustomersPerStage;}}
     [SerializeField] float[] timePerStage;
