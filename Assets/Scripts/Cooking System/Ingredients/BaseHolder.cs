@@ -93,6 +93,7 @@ public class BaseHolder : Draggable
     }
 
     private void HandlePickUp(){
+        if (baseObject == null) return;
         //if (!hasBase && myArea != null) myArea.HandlePickUp();
         baseObject.PlaySound();
         player.PickUpItem(baseObject.gameObject);

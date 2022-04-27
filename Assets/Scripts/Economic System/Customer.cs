@@ -25,14 +25,14 @@ public class Customer : MonoBehaviour
     public Mood mood {get{return myMood;}}
     
     //order vars
-    [SerializeField] private List<string> myOrder = new List<string>();
+    private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     public float orderPrice{get{return myOrderPrice;}}
 
     private List<Image> orderUi = new List<Image>();
-    [SerializeField] private List<Image> finalOrderUi = new List<Image>();
+    private List<Image> finalOrderUi = new List<Image>();
     private List<Sprite> orderUiSprites = new List<Sprite>();
-    [SerializeField] private List<Sprite> finalOrderUiSprites = new List<Sprite>();
+    private List<Sprite> finalOrderUiSprites = new List<Sprite>();
     private GameObject detailedOrderUi;
     private Transform meterParent;
 
