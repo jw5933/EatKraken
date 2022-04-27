@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 66702947b784449799232bfbc4362689, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,7 +113,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bd8a908796d394af5b62b8e3163d3d1f, type: 3}
   - {fileID: 21300000, guid: 7a738ad8f46a943e184b793b92e61fb1, type: 3}
   - {fileID: 0}
+  motionsToStateChange: 0
   myRequired: 0
+  sliceToolSound: {fileID: 0}
 --- !u!65 &-7040991176229040161
 BoxCollider:
   m_ObjectHideFlags: 0
