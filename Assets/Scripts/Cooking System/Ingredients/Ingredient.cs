@@ -78,10 +78,12 @@ public class Ingredient : MonoBehaviour
     public SharedArea area{set{myArea = value;}}
     private Transform spawner;
     public Transform parent {set{spawner = value;}}
+    private Material material;
 
     // ==============   methods   ==============
     public void Awake(){
         mySpriteRenderer = GetComponent<SpriteRenderer>();
+        material = mySpriteRenderer.material;
         myCollider = GetComponent<Collider>();
 
         foreach (Transform child in transform){

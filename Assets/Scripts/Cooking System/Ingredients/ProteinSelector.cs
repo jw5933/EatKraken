@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProteinSelector : MonoBehaviour
 {
@@ -16,11 +17,13 @@ public class ProteinSelector : MonoBehaviour
     private GameManager gameManager;
     public GameManager gm {get{return gameManager;}}
     HealthManager hm;
+    private Material material;
 
     private void Awake(){
         player = FindObjectOfType<Player>();
         hm = FindObjectOfType<HealthManager>();
         gameManager = FindObjectOfType<GameManager>();
+        material = GetComponent<Image>().material;
         
         planeUpdate = transform.GetChild(1).gameObject;
         tentacle = transform.GetChild(0).gameObject;
@@ -55,6 +58,14 @@ public class ProteinSelector : MonoBehaviour
         //when tentacle moves closer, hand should shake (more vigorously)
         //animate tentacle when clicked -> showing knife/allow interaction after anim
     }
+    
+    private void OnMouseEnter(){
+        material.SetFloat("_Outline", 1);
+    }
+
+    private void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
+    }
 
     //called by tentacle anim uiactivate at end of animation
     public void ActivateKnife(){
@@ -78,7 +89,7 @@ public class ProteinSelector : MonoBehaviour
         newProtein = null;
     }
 
-    private void CloseSelector(){
+    public void CloseSelector(){
         proteinKnife.gameObject.SetActive(false);
         planeUpdate.SetActive(false);
         tentacle.SetActive(false);
