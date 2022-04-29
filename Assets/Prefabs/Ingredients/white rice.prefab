@@ -74,12 +74,12 @@ SpriteRenderer:
   m_SortingLayerID: -1202010163
   m_SortingLayer: 7
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 77fc1c5f10ee3477b9436a83f89ee9f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 078f206e92dcf4f23a70af77563b18e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -105,13 +105,13 @@ MonoBehaviour:
   cookTime: 0
   burntTime: 0
   imageStates:
-  - {fileID: 21300000, guid: 77fc1c5f10ee3477b9436a83f89ee9f4, type: 3}
-  - {fileID: 21300000, guid: 2d54616a1a2044182a593e40d8a0d65c, type: 3}
+  - {fileID: 21300000, guid: 078f206e92dcf4f23a70af77563b18e2, type: 3}
+  - {fileID: 21300000, guid: c837a916b8b3d408a92adf0d2d5b61e0, type: 3}
   perfectSpriteState: 0
-  finalImageState: {fileID: 21300000, guid: 7a738ad8f46a943e184b793b92e61fb1, type: 3}
+  finalImageState: {fileID: 21300000, guid: 3ca94a068527f4ffdaf09e8981b379e2, type: 3}
   finalCookedImageStates:
-  - {fileID: 21300000, guid: bd8a908796d394af5b62b8e3163d3d1f, type: 3}
-  - {fileID: 21300000, guid: 7a738ad8f46a943e184b793b92e61fb1, type: 3}
+  - {fileID: 21300000, guid: f687f98dd42c5471a91614a3dd6ef738, type: 3}
+  - {fileID: 21300000, guid: 3ca94a068527f4ffdaf09e8981b379e2, type: 3}
   - {fileID: 0}
   motionsToStateChange: 0
   myRequired: 0
@@ -127,8 +127,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 9.215089, y: 6.4676585, z: 0}
+  m_Center: {x: 0.054040432, y: -0.049327612, z: 0}
 --- !u!1 &6340542389076864903
 GameObject:
   m_ObjectHideFlags: 0

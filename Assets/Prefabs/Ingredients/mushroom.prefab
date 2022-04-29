@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076294698129360165}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.0007, z: 0}
-  m_LocalScale: {x: 7.4635215, y: 9.187869, z: 1.2588}
+  m_LocalPosition: {x: 0.1329, y: -0.0672, z: 0}
+  m_LocalScale: {x: 7.773568, y: 9.631266, z: 1.2588}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
   m_RootOrder: 2
@@ -150,8 +150,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3193862488332660660}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.0007, z: 0}
-  m_LocalScale: {x: 7.4635215, y: 9.187869, z: 1.2588}
+  m_LocalPosition: {x: 0.1329, y: -0.0672, z: 0}
+  m_LocalScale: {x: 7.773568, y: 9.631266, z: 1.2588}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
   m_RootOrder: 0
@@ -357,7 +357,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 76d44d7b50ca24846bef287c0c443410, type: 3}
   - {fileID: 21300000, guid: d618717118cf744ab981f9ba0530d1c4, type: 3}
   perfectSpriteState: 0
-  finalImageState: {fileID: 21300000, guid: afb1ab810aeb64bef99488cbb14628ba, type: 3}
+  finalImageState: {fileID: 21300000, guid: 159024e62f1bf4619a3b7f5383575f7d, type: 3}
   finalCookedImageStates:
   - {fileID: 0}
   - {fileID: 0}
@@ -376,8 +376,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.825026, y: 7.830513, z: 0}
-  m_Center: {x: 0.15023899, y: -0.0060801506, z: 0}
+  m_Size: {x: 9.647822, y: 7.741911, z: 0}
+  m_Center: {x: 0.10593748, y: -0.050381184, z: 0}
 --- !u!1 &5388296736009821210
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,8 +405,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5388296736009821210}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.0007, z: 0}
-  m_LocalScale: {x: 7.4635215, y: 9.187869, z: 1.2588}
+  m_LocalPosition: {x: 0.1329, y: -0.0672, z: 0}
+  m_LocalScale: {x: 7.773568, y: 9.631266, z: 1.2588}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
   m_RootOrder: 1

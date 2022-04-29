@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076294698129360165}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.0951, y: -1.1733, z: 0}
+  m_LocalPosition: {x: -0.0951, y: 0.03, z: 0}
   m_LocalScale: {x: 2.7379134, y: 9.781027, z: 0.8621237}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3193862488332660660}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.0951, y: -1.1733, z: 0}
+  m_LocalPosition: {x: -0.0951, y: 0.029999971, z: 0}
   m_LocalScale: {x: 2.7379134, y: 9.781027, z: 0.8621237}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
@@ -359,7 +359,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: adace21c1492841aa8ded20c4cf52e39, type: 3}
   - {fileID: 21300000, guid: 0c51c2628de9d4010bf5646d53f2bc89, type: 3}
   perfectSpriteState: 0
-  finalImageState: {fileID: 21300000, guid: a206e07bcf59f4f379f62ea7cb148d85, type: 3}
+  finalImageState: {fileID: 21300000, guid: 947d7177568a94ea4af5964de5ad3e21, type: 3}
   finalCookedImageStates:
   - {fileID: 0}
   - {fileID: 0}
@@ -378,8 +378,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.841353, y: 3.1980736, z: 0}
-  m_Center: {x: -0.072054386, y: -1.1072148, z: 0}
+  m_Size: {x: 9.7983, y: 2.7244692, z: 0}
+  m_Center: {x: -0.0935812, y: 0.033740997, z: 0}
 --- !u!1 &4259708031417523194
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +450,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5388296736009821210}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.0951, y: -1.1733, z: 0}
+  m_LocalPosition: {x: -0.0951, y: 0.029999971, z: 0}
   m_LocalScale: {x: 2.7379134, y: 9.781027, z: 0.8621237}
   m_Children: []
   m_Father: {fileID: 3331925310647921219}
