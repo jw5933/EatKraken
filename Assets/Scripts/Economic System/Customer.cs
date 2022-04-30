@@ -203,6 +203,7 @@ public class Customer : MonoBehaviour
 
     private void HandleAfterOrder(int wrongIngredient){
         if (wrongIngredient > myLeniency){
+            myCustomer.sprite = mySprites[mySprites.Length-1];
             Debug.Log("Customer will leave without paying anything.");
             InitialLeave(0);
         }
@@ -263,7 +264,8 @@ public class Customer : MonoBehaviour
 
     private void InitialLeave(float coins){
         em.ChangeCoins(this, coins, coinHappy, myTimePhase);
-        tipText.text = "+ $" + (coins - orderPrice);
+        float tip = coins - orderPrice;
+        tipText.text = "+ $" + (tip > 0 ? tip : 0);
         myCustomerAnim.SetTrigger("Leave");
     }
 

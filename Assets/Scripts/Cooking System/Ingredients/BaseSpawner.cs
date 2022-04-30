@@ -49,7 +49,7 @@ public class BaseSpawner : MonoBehaviour
             newBase = null;
             return;
         }
-        baseObj.AddToOrder(newBase.transform.eulerAngles);
+        baseObj.AddToOrder();
         player.PickUpItem(newBase);
     }
 

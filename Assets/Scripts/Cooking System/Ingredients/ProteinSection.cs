@@ -8,17 +8,23 @@ public class ProteinSection : MonoBehaviour
     [SerializeField] GameObject proteinPrefab;
     ProteinSelector ps;
     private Material material;
+    private Image image;
+    Color highlightColor = Color.green;
+    Color initialColor = Color.white;
 
     private void Awake(){
         ps = GetComponentInParent<ProteinSelector>();
+        image = GetComponent<Image>();
         //material = GetComponent<Image>().material;
     }
 
     private void OnMouseEnter(){
+        image.color = highlightColor;
         //material.SetFloat("_Outline", 1);
     }
 
     private void OnMouseExit(){
+        image.color = initialColor;
         //material.SetFloat("_Outline", 0);
     }
 

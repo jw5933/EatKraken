@@ -111,6 +111,13 @@ public class Ingredient : MonoBehaviour
             if (myArea != null && myArea.CheckSwapIngredient())
                 myArea = null;
         }
+        else if(player.holdingBase){
+            if (player.baseObject.AddToOrder(this) && myArea != null){
+                myArea.HandlePickUp();
+                myArea = null;
+            }
+
+        }
         else if (!player.handFree) return;
         else{
             player.PickUpItem(this.gameObject);

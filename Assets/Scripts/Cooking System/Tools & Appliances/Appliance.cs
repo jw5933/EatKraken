@@ -13,7 +13,7 @@ public class Appliance : MonoBehaviour
     protected Timer timer;
     [SerializeField] protected Animator myAnimator;
 
-    protected Collider2D myCollider;
+    protected Collider myCollider;
 
     //carb cooker
     protected Ingredient myIngredient;
@@ -32,7 +32,7 @@ public class Appliance : MonoBehaviour
         am = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         gm = FindObjectOfType<GameManager>();
-        myCollider = GetComponent<Collider2D>();
+        myCollider = GetComponent<Collider>();
     }
 
     //if the player presses this object, what should happen?
@@ -49,16 +49,6 @@ public class Appliance : MonoBehaviour
                 StartMeter(false);
             break;
         }
-    }
-
-    //indicate hovered tool to player
-    public void OnMouseOver(){
-        if (myAnimator == null) return;
-        //set start state and play animation
-    }
-    public void OnMouseExit(){
-        if (myAnimator == null) return;
-        //set end state and play animation
     }
 
     // ==============   functions   ==============

@@ -7,6 +7,7 @@ public class MeteredAppliance : Appliance
     private Meter meter;
     private Vector3 meterPosition;
     private Vector3 ingredientPosition;
+    private Material material;
 
     protected override void Awake(){
         base.Awake();
@@ -21,7 +22,26 @@ public class MeteredAppliance : Appliance
                 break;
             }
         }
+        material = GetComponent<SpriteRenderer>().material;
     }
+
+    //indicate whether or not appliance can be used
+    /* public void OnMouseEnter(){
+        if (player.holdingIngredient){
+            if (player.ingredient.hasCookStage){
+                material.SetColor("_Color", Color.green);
+            }
+            else{
+                material.SetColor("_Color", Color.red);
+            }
+            material.SetFloat("_Outline", 1);
+        }
+    }
+
+    public void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
+        material.SetColor("_Color", Color.white);
+    } */
 
     protected override void StartMeter(bool swapped){
         if (!swapped){ //if ingredients were just swapped then there is an ingredient on appliance still
