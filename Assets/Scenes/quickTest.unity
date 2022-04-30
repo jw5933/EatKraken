@@ -716,6 +716,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 282266911}
     m_Modifications:
+    - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
+      propertyPath: timePerStage.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
+      propertyPath: myCustomersPerStage.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
+      propertyPath: customerPrefabs.Array.data[1].customers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5721045096075295724, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
