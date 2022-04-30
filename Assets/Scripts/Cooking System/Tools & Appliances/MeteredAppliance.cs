@@ -86,34 +86,28 @@ public class MeteredAppliance : Appliance
     }
 
     protected override void HandlePickUp(){
-        if (am != null) am.StopConstantSFX(audioSourceIndex);
-        meter.StopMeter();
-        myIngredient.cookedTime = meter.callerTime;
-        meter.ResetVars();
-        
         if (CheckSwap()) StartMeter(true);
-        else{
-            if (player.handFree){
-                player.PickUpItem(myIngredient.gameObject);
-                myIngredient = null;
-            }
+        else if (player.handFree){
+            if (am != null) am.StopConstantSFX(audioSourceIndex);
+            meter.StopMeter();
+            myIngredient.cookedTime = meter.callerTime;
+            meter.ResetVars();
+            player.PickUpItem(myIngredient.gameObject);
+            myIngredient = null;
+            meter.gameObject.SetActive(false);
         }
     }
 
     private bool CheckSwap(){
-        if (player.handFree) return false;
-
-        //see if the player is holding an ingredient
-        GameObject i = player.DropItem("ingredient");
-        if (i == null) return false;
-        Ingredient si = i.GetComponent<Ingredient>();
-        if (si.type != myIngredientType || si.imgState >= si.maxImageState){
-            player.PickUpItem(i);
+        if (player.handFree || (player.holdingIngredient &&(player.ingredient.type != myIngredientType || player.ingredient.imgState >= player.ingredient.maxImageState)))
             return false;
-        }
 
+        meter.StopMeter();
+        myIngredient.cookedTime = meter.callerTime;
+        meter.ResetVars();
+        Ingredient i = player.DropItem("ingredient").GetComponent<Ingredient>();
         player.PickUpItem(myIngredient.gameObject);
-        myIngredient = si;
+        myIngredient = i;
         return true;
     }
 }
