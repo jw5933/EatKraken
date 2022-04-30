@@ -8,6 +8,7 @@ public class DayManager : MonoBehaviour
     // ==============   variables   ==============
     //time stages
     [HideInInspector][SerializeField] Timer dayTimer;
+    private Meter meter;
     private float[] timePerStage;
     public float[] timeStage {set{timePerStage = value;}}
     [SerializeField] Sprite[] timeStageImages;
@@ -44,12 +45,16 @@ public class DayManager : MonoBehaviour
         ld = FindObjectOfType<LevelDesignScript>();
         phaseButton = FindObjectOfType<PhaseSkipButton>(true).gameObject;
 
-        dayTimer = Instantiate(gm.timerPrefab, this.transform).GetComponent<Timer>();
+        meter = Instantiate(gm.meterPrefab, this.transform).GetComponent<Meter>();
+        RectTransform myTransform = this.gameObject.GetComponent<RectTransform>();
+        RectTransform meterTransform = meter.gameObject.GetComponent<RectTransform>();
+        meterTransform.sizeDelta = new Vector2 (myTransform.sizeDelta.y, myTransform.sizeDelta.x);
+        meter.gameObject.SetActive(false);
     }
 
     public void SkipToNextPhase(){
         Debug.Log("skip to next phase");
-        dayTimer.StopTimer();
+        if (meter.gameObject.activeSelf) meter.StopMeter();
         HandleTimeChange();
     }
 
@@ -69,20 +74,30 @@ public class DayManager : MonoBehaviour
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
     }
 
+    private void HandleMeterChange(){
+        if (meter.stage >= 2){ 
+            HandleTimeChange();
+        }
+    }
+
     private void Init(float time){
-        //Debug.Log("location: " + (location != null) + ", daytimer: " +  (dayTimer != null) + ", phaseButton: " +(phaseButton != null) + ", em: " + (em != null));
+        //Debug.Log("location: " + (location != null) + ", daytimer: " +  (meter != null) + ", phaseButton: " +(phaseButton != null) + ", em: " + (em != null));
         if (location.customersPerStage[phaseIndex] <= 0){
             //Debug.Log("timer is a break");
-            dayTimer.Init(time, HandleTimeChange);
-            dayTimer.StartTimer();
+            meter.gameObject.SetActive(true);
+            meter.Init(time, 0, 0, 0, HandleMeterChange);
+            meter.StartMeter();
             phaseButton.SetActive(true);
         }
-        else phaseButton.SetActive(false);
+        else{
+            meter.gameObject.SetActive(false);
+            phaseButton.SetActive(false);
+        }
         em.ChangeTime(time, phaseIndex); //let subscribers know time has changed
     }
 
     public void ResetVars(){
-        dayTimer.StopTimer();
+        meter.StopMeter();
         phaseIndex = 0;
         if (phaseIndex < timePerStage.Length) Init(timePerStage[phaseIndex]);
     }
