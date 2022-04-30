@@ -29,6 +29,7 @@ public class Customer : MonoBehaviour
     private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     public float orderPrice{get{return myOrderPrice;}}
+    private Text orderText;
 
     private List<Image> orderUi = new List<Image>();
     private List<Image> finalOrderUi = new List<Image>();
@@ -134,7 +135,8 @@ public class Customer : MonoBehaviour
                     case "final group":
                         foreach(Transform c in i.transform){
                             Image j = c.gameObject.GetComponent<Image>();
-                            finalOrderUi.Add(j);
+                            if (j != null) finalOrderUi.Add(j);
+                            else orderText = c.gameObject.GetComponent<Text>();
                         }
                     break;
                     case "meter":
@@ -232,6 +234,8 @@ public class Customer : MonoBehaviour
     }
 
     private void UpdateOrderUI(){
+        orderText.text = "$" + myOrderPrice;
+        
         int index = 0;
         while (index < orderUi.Count){
             orderUi[index].sprite = orderUiSprites[index];
