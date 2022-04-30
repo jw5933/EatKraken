@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myName: scallop
-  myPrice: 5
+  myPrice: 6
   myType: 3
   myRequiredCookedState: 1
   rawTime: 5

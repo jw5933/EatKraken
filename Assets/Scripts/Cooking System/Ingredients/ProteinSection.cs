@@ -32,6 +32,7 @@ public class ProteinSection : MonoBehaviour
         //create protein but show tentacle being cut before showing protein
         //show tentacle cutting
         ps.AnimateCutTentacle(CreateProtein());
+        image.color = initialColor;
     }
 
     private GameObject CreateProtein(){
