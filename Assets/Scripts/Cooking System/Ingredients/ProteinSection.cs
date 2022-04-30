@@ -11,15 +11,15 @@ public class ProteinSection : MonoBehaviour
 
     private void Awake(){
         ps = GetComponentInParent<ProteinSelector>();
-        material = GetComponent<Image>().material;
+        //material = GetComponent<Image>().material;
     }
 
     private void OnMouseEnter(){
-        material.SetFloat("_Outline", 1);
+        //material.SetFloat("_Outline", 1);
     }
 
     private void OnMouseExit(){
-        material.SetFloat("_Outline", 0);
+        //material.SetFloat("_Outline", 0);
     }
 
     private void OnMouseUpAsButton(){

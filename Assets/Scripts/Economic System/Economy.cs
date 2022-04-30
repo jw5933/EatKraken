@@ -20,7 +20,7 @@ public class Economy : MonoBehaviour
         tips += (coins - c.orderPrice);
         orderCoins += c.orderPrice;
         playerCoins += coins;
-        coinsText.text = "Balance: $" + playerCoins;
+        coinsText.text = "BANK\n $" + playerCoins;
     }
 
 }

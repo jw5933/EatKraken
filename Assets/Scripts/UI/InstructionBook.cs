@@ -73,6 +73,7 @@ public class InstructionBook : MonoBehaviour
             myAction();
             action = null;
             start = false;
+            Time.timeScale = 1;
         }
         else if (!gm.paused){
             AudioListener.pause = false;
@@ -81,7 +82,6 @@ public class InstructionBook : MonoBehaviour
     }
 
     public void OpenBook(){
-        Debug.Log("openning");
         if (!gm.paused){
             AudioListener.pause = true;
             Time.timeScale = 0;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DropObject : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class DropObject : MonoBehaviour
 
     private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
+    private Material material;
 
     // ==============   methods   ==============
     private void Start(){
@@ -26,6 +28,7 @@ public class DropObject : MonoBehaviour
         cm = FindObjectOfType<CustomerManager>();
         hm = FindObjectOfType<HealthManager>();
         baseHolder = FindObjectOfType<BaseHolder>();
+        material = GetComponent<Image>().material;
     }
 
     public void OnMouseUp(){
@@ -63,5 +66,13 @@ public class DropObject : MonoBehaviour
                 }
             break;
         }
+    }
+
+    private void OnMouseEnter(){
+        material.SetFloat("_Outline", 1);
+    }
+
+    private void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
     }
 }

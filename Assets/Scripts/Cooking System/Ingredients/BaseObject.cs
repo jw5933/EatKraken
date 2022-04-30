@@ -13,6 +13,7 @@ public class BaseObject : MonoBehaviour
     private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
     private Collider myCollider;
+    private Material material;
 
     [SerializeField] AudioClip sound;
     AudioManager am;
@@ -22,6 +23,7 @@ public class BaseObject : MonoBehaviour
         player = FindObjectOfType<Player>();
         am = FindObjectOfType<AudioManager>();
         myCollider = GetComponent<Collider>();
+        material = GetComponent<SpriteRenderer>().material;
     }
 
     //add held ingredient to the order
@@ -62,9 +64,17 @@ public class BaseObject : MonoBehaviour
         }
     }
 
+    private void OnMouseEnter(){
+        material.SetFloat("_Outline", 1);
+    }
+
+    private void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
+    }
+
     private void UpdateOrderVisual(Vector3 pos, Vector3 angle){
         currIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
-        currIngredient.transform.Rotate(angle - currIngredient.transform.eulerAngles, Space.World);
+        //currIngredient.transform.Rotate(angle - currIngredient.transform.eulerAngles, Space.World);
         currIngredient.transform.parent = this.transform;
         currIngredient.transform.localPosition = Vector3.zero;
         currIngredient.transform.localScale = Vector3.one;

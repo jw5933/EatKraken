@@ -126,6 +126,7 @@ public class Ingredient : MonoBehaviour
     
     //check if this ingredient is on a cutting board and accepts the tool held by player
     private void OnMouseEnter(){
+        Outline();
         //Debug.Log("entered ingredient: " + this.name);
         if (AtEndState()) return;
         if (!hovered && myArea !=null && myArea.type == SharedArea.AreaType.CuttingBoard && player.holdingTool){
@@ -138,14 +139,23 @@ public class Ingredient : MonoBehaviour
         }
     }
 
-    public void SetParent(Transform t){
-        transform.SetParent(t);
+    private void OnMouseExit(){
+        DeOutline();
     }
 
+    public void Outline(){
+        material.SetFloat("_Outline", 1);
+    }
+    public void DeOutline(){
+        material.SetFloat("_Outline", 0);
+    }
+
+    // ------------------- tool lines ------------------- 
     public void ValidateToolLines(){ //allows tool lines to be used (green)
         foreach (ToolLine t in myToolLines){
             t.canClick = true;
         }
+        material.SetColor("_Color", Color.green);
     }
 
     private void InvalidateToolLines(){ //invalidates tool lines (red)
@@ -153,6 +163,7 @@ public class Ingredient : MonoBehaviour
             t.canClick = false;
         }
         hovered = false;
+        material.SetColor("_Color", Color.white);
     }
 
     private void ActivateToolLines(){ //show tool lines
@@ -170,9 +181,13 @@ public class Ingredient : MonoBehaviour
 
     public void RemoveToolLine(ToolLine t){
         myToolLines.Remove(t);
-        if (myToolLines.Count == 0) isSliced = true;
+        if (myToolLines.Count == 0){
+            isSliced = true;
+            material.SetColor("_Color", Color.white);
+        }
     }
     
+    // ------------------- visual adjustments ------------------- 
     public void ChangeImageState(){ //check if the image state of the object needs to be changed based on motions used
         if (myImageState >= imageStates.Length) return;
         myMotionsLeft--;
@@ -225,7 +240,11 @@ public class Ingredient : MonoBehaviour
     }
 
     public void SetTransform(Vector3 scale, Vector3 angle){
-        transform.localScale = scale;
-        transform.localEulerAngles = angle;
+        if (myType != Type.Protein) transform.localScale = scale;
+        if (myType == Type.Vegetable) transform.localEulerAngles = angle;
+    }
+
+    public void SetParent(Transform t){
+        transform.SetParent(t);
     }
 }

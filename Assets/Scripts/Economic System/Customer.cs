@@ -17,6 +17,7 @@ public class Customer : MonoBehaviour
     private int currSpriteState;
     private Animator myCustomerAnim; 
     private Image myCustomer;
+    private Text tipText;
     private int positionInLine;
 
     //mood vars
@@ -167,6 +168,8 @@ public class Customer : MonoBehaviour
 
         myCustomer = Instantiate(gm.customerSkeleton, gm.customerParent.GetChild(positionInLine)).GetComponent<Image>();
         myCustomer.gameObject.GetComponent<UIActivate>().AddAction(Activate);
+        myCustomer.gameObject.GetComponent<UIDeactivate>().AddAction(Leave);
+        tipText = myCustomer.transform.GetChild(0).GetComponent<Text>();
         myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
         myCustomer.GetComponent<CustomerCharacter>().customer = this;
@@ -201,8 +204,7 @@ public class Customer : MonoBehaviour
     private void HandleAfterOrder(int wrongIngredient){
         if (wrongIngredient > myLeniency){
             Debug.Log("Customer will leave without paying anything.");
-            em.ChangeCoins(this, 0, coinHappy, myTimePhase);
-            Leave();
+            InitialLeave(0);
         }
         else PayForOrder();
     }
@@ -210,16 +212,15 @@ public class Customer : MonoBehaviour
         Debug.Log("Customer will pay for something.");
         switch(myMood){
             case Mood.Angry:
-                em.ChangeCoins(this, coinAngry, coinHappy, myTimePhase);
+                InitialLeave(coinAngry);
             break;
             case Mood.Neutral:
-                em.ChangeCoins(this, coinNeutral, coinHappy, myTimePhase);
+                InitialLeave(coinNeutral);
             break;
             case Mood.Happy:
-                em.ChangeCoins(this, coinHappy, coinHappy, myTimePhase);
+                InitialLeave(coinHappy);
             break;
         }
-        Leave();
     }
 
     public void AddToOrder(Sprite fs, Sprite s, string i, float p){ //add an ingredient to this order and update the UI
@@ -255,10 +256,15 @@ public class Customer : MonoBehaviour
                 myMood = Mood.Angry;
                 break;
             case Mood.Angry:
-                em.ChangeCoins(this, 0, coinHappy, myTimePhase);
-                Leave();
+                InitialLeave(0);
                 break;
         }
+    }
+
+    private void InitialLeave(float coins){
+        em.ChangeCoins(this, coins, coinHappy, myTimePhase);
+        tipText.text = "+ $" + (coins - orderPrice);
+        myCustomerAnim.SetTrigger("Leave");
     }
 
     private void Leave(){
