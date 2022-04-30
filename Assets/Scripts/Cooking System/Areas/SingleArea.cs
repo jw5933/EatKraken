@@ -13,12 +13,14 @@ public class SingleArea : MonoBehaviour
     private GameManager gm;
 
     Collider myCollider;
+    private Material material;
 
     // ==============   functions   ==============
     private void Awake(){
         player = FindObjectOfType<Player>();
         gm = FindObjectOfType<GameManager>();
         myCollider = GetComponent<Collider>();
+        material = GetComponent<SpriteRenderer>().material;
         freeArea = false;
     }
 
@@ -34,6 +36,14 @@ public class SingleArea : MonoBehaviour
                 HandlePickUp();
             }
         }
+    }
+    
+    private void OnMouseEnter(){
+        material.SetFloat("_Outline", 1);
+    }
+
+    private void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
     }
 
     //shared board
