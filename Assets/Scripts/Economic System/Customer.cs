@@ -109,7 +109,7 @@ public class Customer : MonoBehaviour
         CreateAppearance();
 
         UpdateOrderUI();
-        myCustomerAnim.SetTrigger("MoveToFront");
+        myCustomerAnim.SetTrigger("MoveForward");
     }
 
     public void CalculateCoins(){

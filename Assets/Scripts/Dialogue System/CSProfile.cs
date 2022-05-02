@@ -8,12 +8,10 @@ public class CSProfile : MonoBehaviour
     [SerializeField] private List<int> frames = new List<int>();
     [SerializeField] private List<Sprite> sprites = new List<Sprite>();
     Image myImage;
-    CutSceneManager csm;
     [SerializeField] int endFrame;
 
     private void Awake(){
-        csm = FindObjectOfType<CutSceneManager>();
-        if (sprites.Count != 0) csm.OnDialogueChange += CheckAdjust;
+        if (sprites.Count != 0) FindObjectOfType<EventManager>().OnDialogueChange += CheckAdjust;
         myImage = GetComponent<Image>();
     }
 
