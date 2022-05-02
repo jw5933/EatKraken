@@ -11,7 +11,7 @@ public class ToolLine: Draggable
     public bool canClick {set{iCanClick = value;}}
 
     [SerializeField] private float minPercentOfDist;
-    private Collider2D myCollider;
+    private Collider myCollider;
     private Vector3 initialPos;
 
     Ingredient ingredient;
@@ -23,7 +23,7 @@ public class ToolLine: Draggable
         player = FindObjectOfType<Player>();
 
         mySpriteRend = GetComponent<SpriteRenderer>();
-        myCollider = GetComponent<Collider2D>();
+        myCollider = GetComponent<Collider>();
         ingredient = transform.parent.GetComponent<Ingredient>();
 
         this.minDistance = Mathf.Max(myCollider.bounds.size.y, myCollider.bounds.size.x) * minPercentOfDist;
@@ -31,16 +31,18 @@ public class ToolLine: Draggable
 
     private void OnMouseEnter(){
         if (player.handFree) return;
+        ingredient.Outline();
         //make sure player is moving on this items (parent) plane
-        if (iCanClick){
+        /* if (iCanClick){
             mySpriteRend.color = Color.green;
         }
-        else mySpriteRend.color = Color.red;
+        else mySpriteRend.color = Color.red; */
     }
 
     private void OnMouseExit(){
         if (player.handFree) return;
-        ResetVars();
+        ingredient.DeOutline();
+        //ResetVars();
     }
 
     private void OnMouseDown(){

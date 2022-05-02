@@ -9,12 +9,10 @@ public class CSAnimation : MonoBehaviour
     [SerializeField] private List<int> frames = new List<int>();
     private List<string> triggers = new List<string>{"F1", "F2", "F3", "F4", "F5"};
     Animator myAnimator;
-    CutSceneManager csm;
     [SerializeField] int endFrame;
 
     private void Awake(){
-        csm = FindObjectOfType<CutSceneManager>();
-        if (triggers.Count != 0) csm.OnDialogueChange += CheckAdjust;
+        if (triggers.Count != 0) FindObjectOfType<EventManager>().OnDialogueChange += CheckAdjust;
         myAnimator = GetComponent<Animator>();
     }
 

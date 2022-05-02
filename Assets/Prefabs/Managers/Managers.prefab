@@ -246,7 +246,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6677793563715230017, guid: fe37e614365394e5b87729d854535f03, type: 3}
-      propertyPath: timeText
+      propertyPath: customerBackground
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6677793563715230019, guid: fe37e614365394e5b87729d854535f03, type: 3}

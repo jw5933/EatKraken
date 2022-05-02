@@ -17,6 +17,7 @@ public class Meter : MonoBehaviour
     private RectTransform[] stateImages = new RectTransform[3];
 
     private int currStage;
+    public int stage {get{return currStage;}}
     UnityAction callerAction;
     private float myCallerTime;
     public float callerTime {get{return myCallerTime;}}
@@ -124,6 +125,7 @@ public class Meter : MonoBehaviour
     }
 
     public void StopMeter(){
+        if (timer == null) return;
         timer.StopTimer();
         myCallerTime += timer.GetTime();
     }

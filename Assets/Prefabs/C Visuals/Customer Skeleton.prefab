@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6843524618927794068}
   - component: {fileID: 414092356217105211}
   - component: {fileID: 1333448423566986019}
+  - component: {fileID: 2691057428813338537}
   m_Layer: 0
   m_Name: Customer Skeleton
   m_TagString: Untagged
@@ -122,7 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac09d018e5ac14c59918e33476ce9d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myObject: {fileID: 0}
+  myEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!222 &414092356217105211
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -157,3 +160,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.025064, y: 7.8738856}
   m_EdgeRadius: 0
+--- !u!114 &2691057428813338537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6843524618927794072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b5b8ae4229e44f2b4849d8383c0433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

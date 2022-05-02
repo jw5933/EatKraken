@@ -46,7 +46,7 @@ public class BaseHolder : Draggable
                 baseObject.PlaySound();
             }
             else if (player.holdingIngredient){
-                if (hasBase && baseObject.AddToOrder(this.transform.eulerAngles))
+                if (hasBase && baseObject.AddToOrder())
                     addingObject = true;
             }
         } 

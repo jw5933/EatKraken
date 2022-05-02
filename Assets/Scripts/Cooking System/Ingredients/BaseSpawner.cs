@@ -7,9 +7,11 @@ public class BaseSpawner : MonoBehaviour
     [SerializeField] private GameObject basePrefab;
     private Player player;
     private GameObject newBase;
+    private Material material;
 
     public void Awake(){
         player = FindObjectOfType<Player>();
+        material = GetComponent<SpriteRenderer>().material;
     }
 
     private void OnMouseUp(){
@@ -22,6 +24,14 @@ public class BaseSpawner : MonoBehaviour
         SpawnBase();
         player.PickUpItem(newBase);
         newBase = null;
+    }
+
+    private void OnMouseEnter(){
+        material.SetFloat("_Outline", 1);
+    }
+
+    private void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
     }
 
     private void CheckDespawn(){
@@ -39,7 +49,7 @@ public class BaseSpawner : MonoBehaviour
             newBase = null;
             return;
         }
-        baseObj.AddToOrder(newBase.transform.eulerAngles);
+        baseObj.AddToOrder();
         player.PickUpItem(newBase);
     }
 

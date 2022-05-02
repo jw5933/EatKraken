@@ -17,6 +17,7 @@ public class Customer : MonoBehaviour
     private int currSpriteState;
     private Animator myCustomerAnim; 
     private Image myCustomer;
+    private Text tipText;
     private int positionInLine;
 
     //mood vars
@@ -28,6 +29,7 @@ public class Customer : MonoBehaviour
     private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     public float orderPrice{get{return myOrderPrice;}}
+    private Text orderText;
 
     private List<Image> orderUi = new List<Image>();
     private List<Image> finalOrderUi = new List<Image>();
@@ -107,7 +109,7 @@ public class Customer : MonoBehaviour
         CreateAppearance();
 
         UpdateOrderUI();
-        myCustomerAnim.SetTrigger("MoveToFront");
+        myCustomerAnim.SetTrigger("MoveForward");
     }
 
     public void CalculateCoins(){
@@ -133,7 +135,8 @@ public class Customer : MonoBehaviour
                     case "final group":
                         foreach(Transform c in i.transform){
                             Image j = c.gameObject.GetComponent<Image>();
-                            finalOrderUi.Add(j);
+                            if (j != null) finalOrderUi.Add(j);
+                            else orderText = c.gameObject.GetComponent<Text>();
                         }
                     break;
                     case "meter":
@@ -167,6 +170,8 @@ public class Customer : MonoBehaviour
 
         myCustomer = Instantiate(gm.customerSkeleton, gm.customerParent.GetChild(positionInLine)).GetComponent<Image>();
         myCustomer.gameObject.GetComponent<UIActivate>().AddAction(Activate);
+        myCustomer.gameObject.GetComponent<UIDeactivate>().AddAction(Leave);
+        tipText = myCustomer.transform.GetChild(0).GetComponent<Text>();
         myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
         myCustomer.GetComponent<CustomerCharacter>().customer = this;
@@ -200,9 +205,9 @@ public class Customer : MonoBehaviour
 
     private void HandleAfterOrder(int wrongIngredient){
         if (wrongIngredient > myLeniency){
+            myCustomer.sprite = mySprites[mySprites.Length-1];
             Debug.Log("Customer will leave without paying anything.");
-            em.ChangeCoins(this, 0, coinHappy, myTimePhase);
-            Leave();
+            InitialLeave(0);
         }
         else PayForOrder();
     }
@@ -210,16 +215,15 @@ public class Customer : MonoBehaviour
         Debug.Log("Customer will pay for something.");
         switch(myMood){
             case Mood.Angry:
-                em.ChangeCoins(this, coinAngry, coinHappy, myTimePhase);
+                InitialLeave(coinAngry);
             break;
             case Mood.Neutral:
-                em.ChangeCoins(this, coinNeutral, coinHappy, myTimePhase);
+                InitialLeave(coinNeutral);
             break;
             case Mood.Happy:
-                em.ChangeCoins(this, coinHappy, coinHappy, myTimePhase);
+                InitialLeave(coinHappy);
             break;
         }
-        Leave();
     }
 
     public void AddToOrder(Sprite fs, Sprite s, string i, float p){ //add an ingredient to this order and update the UI
@@ -230,6 +234,8 @@ public class Customer : MonoBehaviour
     }
 
     private void UpdateOrderUI(){
+        orderText.text = "$" + myOrderPrice;
+        
         int index = 0;
         while (index < orderUi.Count){
             orderUi[index].sprite = orderUiSprites[index];
@@ -255,10 +261,16 @@ public class Customer : MonoBehaviour
                 myMood = Mood.Angry;
                 break;
             case Mood.Angry:
-                em.ChangeCoins(this, 0, coinHappy, myTimePhase);
-                Leave();
+                InitialLeave(0);
                 break;
         }
+    }
+
+    private void InitialLeave(float coins){
+        em.ChangeCoins(this, coins, coinHappy, myTimePhase);
+        float tip = coins - orderPrice;
+        tipText.text = "+ $" + (tip > 0 ? tip : 0);
+        myCustomerAnim.SetTrigger("Leave");
     }
 
     private void Leave(){

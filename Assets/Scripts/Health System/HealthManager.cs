@@ -57,10 +57,11 @@ public class HealthManager : MonoBehaviour
     }
 
     private void UpdateHealthUI(){
+        Debug.Log(prevHeart);
         int pIndex = prevHeart;
-        prevHeart = currentHeart;
         Debug.Log("previous heart " + pIndex);
         currentHeart = Mathf.CeilToInt(playerHearts - 1);
+        prevHeart = currentHeart;
 
         if (decrement){ //heart has decremented
             nullHearts(pIndex, currentHeart);

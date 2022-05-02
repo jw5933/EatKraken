@@ -7,10 +7,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7040991176229040161, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
+      propertyPath: m_Size.x
+      value: 9.139349
+      objectReference: {fileID: 0}
+    - target: {fileID: -7040991176229040161, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
+      propertyPath: m_Size.y
+      value: 6.5594854
+      objectReference: {fileID: 0}
+    - target: {fileID: -7040991176229040161, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
+      propertyPath: m_Center.x
+      value: 0.05300808
+      objectReference: {fileID: 0}
+    - target: {fileID: -7040991176229040161, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
+      propertyPath: m_Center.y
+      value: -0.056042075
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670647635598139592, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
+      propertyPath: m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5670647635598139592, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
+      propertyPath: m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5670647635598139592, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 917e12444d0e14e9b87626c8943a6f93, type: 3}
+      objectReference: {fileID: 21300000, guid: e893e26685092409887399e3bd94d074, type: 3}
+    - target: {fileID: 5670647635598139592, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5670647635598139593, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -62,15 +90,15 @@ PrefabInstance:
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: finalImageState
       value: 
-      objectReference: {fileID: 21300000, guid: 85a6f7f4a665d49a79dd43522261f287, type: 3}
+      objectReference: {fileID: 21300000, guid: 3b3e6aa2f0a784b18afde1030e4c87d5, type: 3}
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: imageStates.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 917e12444d0e14e9b87626c8943a6f93, type: 3}
+      objectReference: {fileID: 21300000, guid: e893e26685092409887399e3bd94d074, type: 3}
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: imageStates.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: c5a3ddcb79b334c86a04ab07f1661ea7, type: 3}
+      objectReference: {fileID: 21300000, guid: e6c43fea87b944c1faa6e44b54128377, type: 3}
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: finalImageStates.Array.data[0]
       value: 
@@ -78,11 +106,11 @@ PrefabInstance:
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: finalCookedImageStates.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 2b8024f0b0e4343fe86af74cabfeadd1, type: 3}
+      objectReference: {fileID: 21300000, guid: e51b2df35baf14b8f802a475c72f329b, type: 3}
     - target: {fileID: 5670647635598139595, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: finalCookedImageStates.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: 85a6f7f4a665d49a79dd43522261f287, type: 3}
+      objectReference: {fileID: 21300000, guid: 3b3e6aa2f0a784b18afde1030e4c87d5, type: 3}
     - target: {fileID: 5670647635598139606, guid: 4b38a829cc0bd43a5a3297ee3e7339fb, type: 3}
       propertyPath: m_Name
       value: brown rice

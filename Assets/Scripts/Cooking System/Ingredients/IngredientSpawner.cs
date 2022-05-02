@@ -9,11 +9,13 @@ public class IngredientSpawner : MonoBehaviour
 
     private Player player;
     private GameObject newIngredient;
+    private Material material;
 
     private void Awake(){
         //this.transform.SetParent(FindObjectOfType<GameManager>().ingredientParent);
         player = FindObjectOfType<Player>();
         myIngredientName = myIngredientPrefab.name;
+        material = GetComponent<SpriteRenderer>().material;
     }
 
     private void OnMouseDown(){
@@ -23,6 +25,14 @@ public class IngredientSpawner : MonoBehaviour
         }
         SpawnIngredient();
         player.PickUpItem(newIngredient);
+    }
+
+    private void OnMouseEnter(){
+        material.SetFloat("_Outline", 1);
+    }
+
+    private void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
     }
 
     private void CheckDespawn(){

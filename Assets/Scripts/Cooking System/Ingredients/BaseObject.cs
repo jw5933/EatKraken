@@ -13,6 +13,7 @@ public class BaseObject : MonoBehaviour
     private SharedArea myArea;
     public SharedArea area{set{myArea = value;}}
     private Collider myCollider;
+    private Material material;
 
     [SerializeField] AudioClip sound;
     AudioManager am;
@@ -22,18 +23,22 @@ public class BaseObject : MonoBehaviour
         player = FindObjectOfType<Player>();
         am = FindObjectOfType<AudioManager>();
         myCollider = GetComponent<Collider>();
+        material = GetComponent<SpriteRenderer>().material;
     }
 
     //add held ingredient to the order
-    public bool AddToOrder(Vector3 angle){
-        if (player.holdingIngredient && player.ingredient.AtEndState()){
+    public bool AddToOrder(Ingredient i = null){
+        if ( i == null && player.holdingIngredient)
+            i = player.ingredient;
+        if (i != null && i.AtEndState()){
             //check if the type is accepted, if it is then add the ingredient
-            if (CheckCanAddIngredient(player.ingredient.type, myOrder.Count)){
-                currIngredient = player.DropItem("ingredient").GetComponent<Ingredient>();
+            if (CheckCanAddIngredient(i.type, myOrder.Count)){
+                currIngredient = i;
+                player.DropItem("ingredient");
                 myOrder.Add(currIngredient);
                 currIngredient.GetComponent<Collider>().enabled = false;
                 //Update the visuals to reflect addition of ingredient
-                UpdateOrderVisual(this.transform.position, angle);
+                UpdateOrderVisual(this.transform.position);
                 return true;
             }
         }
@@ -62,9 +67,17 @@ public class BaseObject : MonoBehaviour
         }
     }
 
-    private void UpdateOrderVisual(Vector3 pos, Vector3 angle){
+    private void OnMouseEnter(){
+        material.SetFloat("_Outline", 1);
+    }
+
+    private void OnMouseExit(){
+        material.SetFloat("_Outline", 0);
+    }
+
+    private void UpdateOrderVisual(Vector3 pos){
         currIngredient.HandleAddToOrder(); //tell ingredient to transform its sprites
-        currIngredient.transform.Rotate(angle - currIngredient.transform.eulerAngles, Space.World);
+        currIngredient.transform.Rotate(this.transform.eulerAngles - currIngredient.transform.eulerAngles, Space.World);
         currIngredient.transform.parent = this.transform;
         currIngredient.transform.localPosition = Vector3.zero;
         currIngredient.transform.localScale = Vector3.one;

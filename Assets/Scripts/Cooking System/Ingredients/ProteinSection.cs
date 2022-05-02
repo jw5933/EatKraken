@@ -6,34 +6,33 @@ using UnityEngine.UI;
 public class ProteinSection : MonoBehaviour
 {
     [SerializeField] GameObject proteinPrefab;
-    [SerializeField] Color initialColour = Color.white;
-    [SerializeField] Color highlightColour = Color.green;
-    Image img;
     ProteinSelector ps;
+    private Material material;
+    private Image image;
+    Color highlightColor = Color.green;
+    Color initialColor = Color.white;
 
     private void Awake(){
         ps = GetComponentInParent<ProteinSelector>();
-        img = GetComponent<Image>();
-    }
-
-    private void OnEnable(){
-        img.color = initialColour;
+        image = GetComponent<Image>();
+        //material = GetComponent<Image>().material;
     }
 
     private void OnMouseEnter(){
-        //highlight section
-        img.color = highlightColour;
+        image.color = highlightColor;
+        //material.SetFloat("_Outline", 1);
     }
 
     private void OnMouseExit(){
-        //reset section
-        img.color = initialColour;
+        image.color = initialColor;
+        //material.SetFloat("_Outline", 0);
     }
 
     private void OnMouseUpAsButton(){
         //create protein but show tentacle being cut before showing protein
         //show tentacle cutting
         ps.AnimateCutTentacle(CreateProtein());
+        image.color = initialColor;
     }
 
     private GameObject CreateProtein(){
