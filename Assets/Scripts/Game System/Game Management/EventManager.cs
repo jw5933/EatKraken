@@ -17,6 +17,8 @@ public class EventManager : MonoBehaviour
     public Action<int, Customer.Mood> OnCustomerLeave;
     //action to tell generator to spawn a new custoemr (if there are any left soon)
     public Action OnCustomerNeutral;
+    //dialogue adjustments
+    public Action<int> OnDialogueChange;
 
     // ==============   methods   ==============
     public void ChangeLocation(Location next){
@@ -41,5 +43,9 @@ public class EventManager : MonoBehaviour
 
     public void ChangeCustomerMood(){
         if (OnCustomerNeutral != null) OnCustomerNeutral();
+    }
+
+    public void ChangeDialogue(int index){
+        if (OnDialogueChange != null) OnDialogueChange(index);
     }
 }
