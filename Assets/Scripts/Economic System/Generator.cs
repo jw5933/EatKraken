@@ -81,7 +81,8 @@ public class Generator : MonoBehaviour
         BeginCustomerTimer();
     }
 
-    private void UpdateOnCustomerLeave(int x, Customer.Mood mood){
+    private void UpdateOnCustomerLeave(Customer c, int x, Customer.Mood mood, int nextPhase){
+        if (nextPhase <= currPhase) return;
         customersLeft++;
         if (customersLeft >= maxCustomers){
             timer.Init(timeAfterLast, dm.SkipToNextPhase);
