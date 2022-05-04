@@ -34,6 +34,7 @@ public class AudioManager : MonoBehaviour
         musicSource[musicIndex].Play();
     }
     
+    //this only occurs when the main game starts
     public void Activate(){
         em = FindObjectOfType<EventManager>();
         em.OnTimeChange += UpdateOnTimeChange;
