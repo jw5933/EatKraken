@@ -22,13 +22,17 @@ public class HealthManager : MonoBehaviour
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite halfHeart;
 
+    [SerializeField] AudioClip[] healthSounds = new AudioClip[5];
+
     bool decrement;
 
     GameManager gm;
+    AudioManager am;
     
     // ==============   methods   ==============
     private void Awake(){
         gm = FindObjectOfType<GameManager>();
+        am = FindObjectOfType<AudioManager>();
     }
 
     private void Start(){
@@ -53,7 +57,7 @@ public class HealthManager : MonoBehaviour
         if (playerHearts >= 0) 
             UpdateHealthUI();
         else 
-            StartCoroutine(gm.HandleEndGame("You've overworked yourself and had to call in sick. Your boss didn't like that much, and fired you! Try again... \n Press <R> to retry.")); //check if the player has died
+            StartCoroutine(gm.HandleEndGame(false, "You've overworked yourself and had to call in sick. Your boss didn't like that much, and fired you! Try again... \n Press <R> to retry.")); //check if the player has died
     }
 
     private void UpdateHealthUI(){
@@ -73,6 +77,7 @@ public class HealthManager : MonoBehaviour
         if (playerHearts%(currentHeart+1) > 0){ //half health
             myHearts[currentHeart].sprite = halfHeart;
         }
+        if (decrement && am != null) am.PlaySFX(healthSounds[currentHeart]);
     }
 
     private void nullHearts(int s, int e){

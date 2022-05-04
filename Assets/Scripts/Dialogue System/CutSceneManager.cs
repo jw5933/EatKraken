@@ -11,11 +11,18 @@ public class CutSceneManager : MonoBehaviour
     //beginning animation
     [SerializeField] Animator cutSceneAnim;
     DialogueManager dm;
+    AudioManager am;
+
+    [SerializeField] AudioClip dialogueMusic;
+    [SerializeField] AudioClip cutsceneMusic;
+    bool played;
 
     private void Awake(){
         //maxLen = (int)Mathf.Ceil(text.preferredWidth);
         cutSceneAnim.GetComponent<UIDeactivate>().AddAction(ActivateInput);
         dm = GetComponent<DialogueManager>();
+        am = FindObjectOfType<AudioManager>();
+        if (am != null) am.PlayFadeMusic(dialogueMusic);
     }
 
     //change dialogue if the player presses enter key
@@ -34,6 +41,10 @@ public class CutSceneManager : MonoBehaviour
 
     public void ActivateInput(){
         //Debug.Log(dialogue.Count);
+        if (!played){
+            if (am != null) am.PlayFadeMusic(cutsceneMusic);
+            played = true;
+        }
         if(!dm.GoNextDialogue()){ // if the dialogue is still being typed, finish typing
             SceneManager.LoadScene("New Main", LoadSceneMode.Single);
         }
