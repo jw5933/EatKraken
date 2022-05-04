@@ -15,7 +15,7 @@ public class BaseObject : MonoBehaviour
     private Collider myCollider;
     private Material material;
 
-    [SerializeField] AudioClip sound;
+    [SerializeField] AudioClip dropSound;
     AudioManager am;
 
     // ==============   methods   ==============
@@ -45,8 +45,8 @@ public class BaseObject : MonoBehaviour
         return false;
     }
 
-    public void PlaySound(){
-        if (am != null) am.PlaySFX(sound);
+    private void PlaySound(){
+        if (am != null) am.PlaySFX(dropSound);
     }
     
     private void OnMouseUp(){ //if the player isnt holding anything, pick up this ingredient

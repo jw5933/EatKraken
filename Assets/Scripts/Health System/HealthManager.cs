@@ -27,12 +27,12 @@ public class HealthManager : MonoBehaviour
     bool decrement;
 
     GameManager gm;
-    AudioManager am;
+    //AudioManager am;
     
     // ==============   methods   ==============
     private void Awake(){
         gm = FindObjectOfType<GameManager>();
-        am = FindObjectOfType<AudioManager>();
+        //am = FindObjectOfType<AudioManager>();
     }
 
     private void Start(){
@@ -77,7 +77,7 @@ public class HealthManager : MonoBehaviour
         if (playerHearts%(currentHeart+1) > 0){ //half health
             myHearts[currentHeart].sprite = halfHeart;
         }
-        if (decrement && am != null) am.PlaySFX(healthSounds[currentHeart]);
+        //if (decrement && am != null) am.PlaySFX(healthSounds[currentHeart> 0 ? currentHeart: 0]);
     }
 
     private void nullHearts(int s, int e){

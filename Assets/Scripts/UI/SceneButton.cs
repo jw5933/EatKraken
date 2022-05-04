@@ -12,8 +12,11 @@ public class SceneButton : MonoBehaviour
 
     Image myImage;
     IEnumerator myCoroutine;
+    [SerializeField] AudioClip startSound;
+    AudioManager am;
 
     private void Awake(){
+        am = FindObjectOfType<AudioManager>();
         myImage = GetComponent<Image>();
         initialImg = myImage.sprite;
     }
@@ -26,6 +29,7 @@ public class SceneButton : MonoBehaviour
         this.enabled = false;
         transform.parent.GetComponent<Animator>().SetTrigger("ClickedButton");
         transform.parent.GetComponent<UIActivate>().AddListener(Click);
+        am.PlaySFX(startSound);
     }
     /* public void OnMouseEnter(){
         myImage.sprite = hoverImg;

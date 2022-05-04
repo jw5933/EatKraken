@@ -20,9 +20,14 @@ public class BaseHolder : Draggable
 
     private Animator anim;
 
+    //sounds
+    [SerializeField] AudioClip bowlPickUpSound;
+    AudioManager am;
+
     
     // ==============   functions   ==============
     private void Awake(){
+        am = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         myCollider = GetComponent<Collider>();
         anim = GetComponent<Animator>();
@@ -43,7 +48,7 @@ public class BaseHolder : Draggable
                     baseObject = player.DropItem("base").GetComponent<BaseObject>();
                 baseObject.UnsetCollider();
                 baseObject.transform.position = transform.position;
-                baseObject.PlaySound();
+                if (am != null) am.PlaySFX(bowlPickUpSound);
             }
             else if (player.holdingIngredient){
                 if (hasBase && baseObject.AddToOrder())
@@ -94,8 +99,7 @@ public class BaseHolder : Draggable
 
     private void HandlePickUp(){
         if (baseObject == null) return;
-        //if (!hasBase && myArea != null) myArea.HandlePickUp();
-        baseObject.PlaySound();
+        if (am != null) am.PlaySFX(bowlPickUpSound);
         player.PickUpItem(baseObject.gameObject);
         baseObject = null;
     }
