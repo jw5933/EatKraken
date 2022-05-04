@@ -453,6 +453,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   proteinKnife: {fileID: 0}
+  cutSound: {fileID: 8300000, guid: 0d9f51e78f6f44b14b44863053002561, type: 3}
+  clickSound: {fileID: 8300000, guid: 65c5cc0bffdea4592861a5cd2bbdc50e, type: 3}
 --- !u!1 &3609183497196809820
 GameObject:
   m_ObjectHideFlags: 0
