@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.EventSystems;
 
 /*
@@ -17,7 +18,7 @@ public class Customer : MonoBehaviour
     private int currSpriteState;
     protected Animator myCustomerAnim; 
     private Image myCustomer;
-    private Text tipText;
+    private TextMeshProUGUI tipText;
     protected int positionInLine;
 
     //mood vars
@@ -172,7 +173,7 @@ public class Customer : MonoBehaviour
         myCustomer = Instantiate(gm.customerSkeleton, gm.customerParent.GetChild(positionInLine)).GetComponent<Image>();
         myCustomer.gameObject.GetComponent<UIActivate>().AddAction(Activate);
         myCustomer.gameObject.GetComponent<UIDeactivate>().AddAction(Leave);
-        tipText = myCustomer.transform.GetChild(0).GetComponent<Text>();
+        tipText = myCustomer.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
         myCustomer.GetComponent<CustomerCharacter>().customer = this;
@@ -271,7 +272,7 @@ public class Customer : MonoBehaviour
     protected virtual void InitialLeave(float coins){
         em.ChangeCoins(this, coins, coinHappy, myTimePhase);
         float tip = coins - orderPrice;
-        tipText.text = "+ $" + (tip > 0 ? tip : 0).ToString("0.00");
+        tipText.text = (tip > 0 ? tip : 0).ToString("0.00");
         order.SetActive(false);
         myCustomerAnim.SetTrigger("Leave");
     }

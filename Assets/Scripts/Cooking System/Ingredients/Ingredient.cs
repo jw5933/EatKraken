@@ -222,6 +222,9 @@ public class Ingredient : MonoBehaviour
     }
 
     public bool AtEndState(){ //check if this ingredient has reached its end state
+        if (myType == Type.Carb){
+            return finishedCookedStage;
+        }
         return isSliced;
     }
 
