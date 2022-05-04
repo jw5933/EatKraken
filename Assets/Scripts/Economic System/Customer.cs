@@ -271,7 +271,7 @@ public class Customer : MonoBehaviour
     protected virtual void InitialLeave(float coins){
         em.ChangeCoins(this, coins, coinHappy, myTimePhase);
         float tip = coins - orderPrice;
-        tipText.text = "+ $" + (tip > 0 ? tip : 0);
+        tipText.text = "+ $" + (tip > 0 ? tip : 0).ToString("0.00");
         order.SetActive(false);
         myCustomerAnim.SetTrigger("Leave");
     }
