@@ -109,7 +109,8 @@ MonoBehaviour:
   - customers:
     - {fileID: 4784577158849456681, guid: 88861177e85d24ec98b0cc491c0f2688, type: 3}
     - {fileID: 4784577158849456681, guid: 88861177e85d24ec98b0cc491c0f2688, type: 3}
-  - customers: []
+  - customers:
+    - {fileID: 4269927098991671470, guid: c92b4b854f755423eb41fd93df454495, type: 3}
   - customers:
     - {fileID: 4784577158849456681, guid: 88861177e85d24ec98b0cc491c0f2688, type: 3}
     - {fileID: 4784577158849456681, guid: 88861177e85d24ec98b0cc491c0f2688, type: 3}
@@ -121,7 +122,7 @@ MonoBehaviour:
     - {fileID: 2149216373356943745, guid: 1aa0659a2e0684d109365b467cfdec68, type: 3}
     - {fileID: 2149216373356943745, guid: 1aa0659a2e0684d109365b467cfdec68, type: 3}
     - {fileID: 2149216373356943745, guid: 1aa0659a2e0684d109365b467cfdec68, type: 3}
-  myCustomersPerStage: 0300000000000000050000000400000000000000
+  myCustomersPerStage: 0300000001000000050000000400000000000000
   timePerStage:
   - 100
   - 60

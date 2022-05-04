@@ -22,7 +22,6 @@ public class DayManager : MonoBehaviour
     private GameObject phaseButton;
 
     [SerializeField] SpriteRenderer customerBackground;
-    [SerializeField] Text timeText;
 
     //FIX: save to location
     private int locationDay = 1;
@@ -62,7 +61,7 @@ public class DayManager : MonoBehaviour
         if (phaseIndex+1 >= timePerStage.Length){
             if (!cm.lineUpIsEmpty) isOvertime = true;
             else{
-                StartCoroutine(gm.HandleEndGame(string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", locationDay, cm.coins, cm.served, cm.lost, gm.currLocation)));
+                StartCoroutine(gm.HandleEndGame(true, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", locationDay, cm.coins, cm.served, cm.lost, gm.currLocation)));
             }
             //FIX: show working overtime
             return;
@@ -82,7 +81,7 @@ public class DayManager : MonoBehaviour
 
     private void Init(float time){
         //Debug.Log("location: " + (location != null) + ", daytimer: " +  (meter != null) + ", phaseButton: " +(phaseButton != null) + ", em: " + (em != null));
-        if (location.customersPerStage[phaseIndex] <= 0){
+        if (location.customersPerStage[phaseIndex] <= 1){
             //Debug.Log("timer is a break");
             meter.gameObject.SetActive(true);
             meter.Init(time, 0, 0, 0, HandleMeterChange);

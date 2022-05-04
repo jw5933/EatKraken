@@ -7,7 +7,7 @@ public class CustomerManager : MonoBehaviour
     // ==============   variables   ==============
     private Customer selectedCustomer;
 
-    private List<Customer> lineup = new List<Customer>();
+    [SerializeField] private List<Customer> lineup = new List<Customer>();
     public bool lineUpIsEmpty{get{return lineup.Count == 0;}}
     private int customerShownIndex;
 
@@ -51,25 +51,25 @@ public class CustomerManager : MonoBehaviour
         
     }
 
-    private void UpdateOnCustomerLeave(int position, Customer.Mood x){
+    private void UpdateOnCustomerLeave(Customer customer, int position, Customer.Mood x, int nextPhase){
+        RemoveCustomer(customer, nextPhase);
         freePositions.Enqueue(position);
     }
 
     //update the amount of money earned and customers served in current phase
     private void UpdateOnCoinChange(Customer customer, float made, float max, int phase){
-        RemoveCustomer(customer);
         coinsMade += made;
         if (made <= 0) lostCustomers++;
         else servedCustomers++;
-        if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame("Your customers were unhappy with your service, and complained to your boss. You got fired. Try again... \n Press <R> to retry"));
+        if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame(false, "Your customers were unhappy with your service, and complained to your boss. You got fired. Try again... \n Press <R> to retry"));
     }
 
-    private void RemoveCustomer(Customer c){
+    private void RemoveCustomer(Customer c, int nextPhase){
         lineup.Remove(c);
-        customerShownIndex--;
+        if (customerShownIndex > 0) customerShownIndex--;
         Destroy(c.gameObject);
 
-        if (dm.endOfDay && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
+        if (dm.endOfDay && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(true, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
     }
 
     public bool ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve
@@ -87,5 +87,18 @@ public class CustomerManager : MonoBehaviour
             Debug.Log(pos);
             lineup[customerShownIndex++].Init(pos);
         }
+    }
+
+    public bool TrySwapPosition(int given, int wanted){
+        if (freePositions.Contains(wanted)){
+            freePositions.Enqueue(given);
+            int a = freePositions.Dequeue();
+            while (a != wanted){
+                freePositions.Enqueue(a);
+                a = freePositions.Dequeue();
+            }
+            return true;
+        }
+        return false;
     }
 }

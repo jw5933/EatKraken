@@ -49,3 +49,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 8300000, guid: d7ff3652d997d43fdab501f6779d8604, type: 3}
   - {fileID: 8300000, guid: ac57812d6401f48d1b8a935cdbc1fcc3, type: 3}
+  startClip: {fileID: 8300000, guid: 2dc3f83ebd13b4a5fb6f7f778215cb07, type: 3}

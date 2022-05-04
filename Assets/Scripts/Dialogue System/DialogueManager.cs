@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
     int index = -1; //which line is being typed
 
     [SerializeField] private TextMeshProUGUI tmp;
+    public GameObject textmp {get{return tmp.transform.parent.gameObject;}}
     private EventManager em;
 
     private void Awake(){
@@ -21,6 +22,10 @@ public class DialogueManager : MonoBehaviour
         /* for (int i = 0; i < dialogue.Count; i++){
             dialogue[i] = dialogue[i].ToUpper();
         } */
+    }
+
+    public void AddDialogue(string s){
+        dialogue.Add(s);
     }
 
     private IEnumerator TypeDialogue(string s){
@@ -50,7 +55,7 @@ public class DialogueManager : MonoBehaviour
     public bool GoNextDialogue(){
         if(isTyping){ // if the dialogue is still being typed, finish typing
             StopCoroutine(myCoroutine);
-            tmp.maxVisibleCharacters = tmp.textInfo.characterCount;
+            tmp.maxVisibleCharacters = tmp.text.Length;
             isTyping = false;
             return true;
         }
@@ -63,6 +68,18 @@ public class DialogueManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public bool GoLastDialogue(){
+        if (isTyping){
+            StopCoroutine(myCoroutine);
+        }
+        index = dialogue.Count-1;
+        tmp.maxVisibleCharacters = 0;
+        myCoroutine = TypeDialogue(dialogue[index]);
+        StartCoroutine(myCoroutine);
+        em.ChangeDialogue(index);
+        return true;
     }
 
 }

@@ -69,14 +69,16 @@ public class GameManager : MonoBehaviour
     [Header("End State")]
     [SerializeField] private Text endText;
     [SerializeField] private GameObject endImage;
-    
+    [SerializeField] private AudioClip winSound;
+    [SerializeField] private AudioClip loseSound;
+    AudioManager am;
 
     // ==============   methods   ==============
     
     void Awake()
     {
         FindObjectOfType<Map>().selectedLocation = firstLocation;
-        AudioManager am = FindObjectOfType<AudioManager>();
+        am = FindObjectOfType<AudioManager>();
         if (am != null) am.Activate();
     }
 
@@ -124,10 +126,16 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = false;
     }
 
-    public IEnumerator HandleEndGame(string endString){ //check if the player has died (what conditions? if on no hearts?)
+    public IEnumerator HandleEndGame(bool win, string endString){ //check if the player has died (what conditions? if on no hearts?)
         yield return new WaitForSeconds(0.5f);
         Time.timeScale = 0;
         endImage.SetActive(true);
         endText.text = endString;
+        if (win){
+            if (am != null) am.PlaySFX(winSound);
+        }
+        else{
+           if (am != null) am.PlaySFX(loseSound);
+        }
     }
 }

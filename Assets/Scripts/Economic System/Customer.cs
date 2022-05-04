@@ -15,14 +15,14 @@ public class Customer : MonoBehaviour
     [SerializeField] private List<CustomerSprites> myPossibleSprites;
     private Sprite[] mySprites;
     private int currSpriteState;
-    private Animator myCustomerAnim; 
+    protected Animator myCustomerAnim; 
     private Image myCustomer;
     private Text tipText;
-    private int positionInLine;
+    protected int positionInLine;
 
     //mood vars
     public enum Mood {Angry, Neutral, Happy}
-    private Mood myMood = Mood.Happy;
+    protected Mood myMood = Mood.Happy;
     public Mood mood {get{return myMood;}}
     
     //order vars
@@ -38,7 +38,7 @@ public class Customer : MonoBehaviour
     private GameObject detailedOrderUi;
     private Transform meterParent;
 
-    private int myTimePhase;
+    protected int myTimePhase;
     public int phase{set{myTimePhase = value;}}
 
     private GameObject order;
@@ -64,12 +64,12 @@ public class Customer : MonoBehaviour
 
     //references
     private GameManager gm;
-    private EventManager em;
-    private CustomerManager cm;
+    protected EventManager em;
+    protected CustomerManager cm;
     private Player player;
 
     // ==============   methods   ==============
-    public void Awake(){
+    public virtual void Awake(){
         gm = FindObjectOfType<GameManager>();
         em = FindObjectOfType<EventManager>();
         cm = FindObjectOfType<CustomerManager>();
@@ -93,13 +93,13 @@ public class Customer : MonoBehaviour
         detailedOrderUi.SetActive(!detailedOrderUi.activeSelf);
     }
 
-    private void Activate(){
+    protected virtual void Activate(){
         this.gameObject.SetActive(true);
         order.gameObject.SetActive(true);
         meter.StartMeter();
     }
 
-    public void Init(int posInLine){
+    public virtual void Init(int posInLine){
         positionInLine = posInLine;
         transform.SetParent(gm.orderParent.GetChild(positionInLine));
         transform.localPosition = Vector3.zero;
@@ -148,6 +148,7 @@ public class Customer : MonoBehaviour
         RectTransform r = order.GetComponent<RectTransform>();
         GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
     }
+
     private void CreateMeter(){
         meter = Instantiate(gm.meterPrefab, order.transform).GetComponent<Meter>();
         RectTransform meterTransform = meter.gameObject.GetComponent<RectTransform>();
@@ -164,7 +165,7 @@ public class Customer : MonoBehaviour
         timer = meter.Init(myHappyWaitTime, myNeutralWaitTime, myAngryWaitTime, 0, EndTimerHandler);
     }
 
-    public void CreateAppearance(){
+    public virtual void CreateAppearance(){
         int a = Random.Range(0, myPossibleSprites.Count);
         mySprites = myPossibleSprites[a].sprites;
 
@@ -211,6 +212,7 @@ public class Customer : MonoBehaviour
         }
         else PayForOrder();
     }
+
     private void PayForOrder(){ //only pay for order if the number of wrong/missing ingredients is acceptable to customer
         Debug.Log("Customer will pay for something.");
         switch(myMood){
@@ -266,15 +268,16 @@ public class Customer : MonoBehaviour
         }
     }
 
-    private void InitialLeave(float coins){
+    protected virtual void InitialLeave(float coins){
         em.ChangeCoins(this, coins, coinHappy, myTimePhase);
         float tip = coins - orderPrice;
-        tipText.text = "+ $" + (tip > 0 ? tip : 0);
+        tipText.text = "+ $" + (tip > 0 ? tip : 0).ToString("0.00");
+        order.SetActive(false);
         myCustomerAnim.SetTrigger("Leave");
     }
 
-    private void Leave(){
-        em.FreeCustomer(positionInLine, myMood); //em OnCustomerLeave
+    protected virtual void Leave(){
+        em.FreeCustomer(this, positionInLine, myMood, myTimePhase + 1); //em OnCustomerLeave
         Destroy(myCustomerAnim.gameObject);
     }
 }

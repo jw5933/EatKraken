@@ -16,6 +16,6 @@ public class UIDeactivate : MonoBehaviour
 
     public void StopAnim(){
         gameObject.SetActive(false);
-        action();
+        if (action != null) action();
     }
 }
