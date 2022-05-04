@@ -2789,7 +2789,7 @@
     },
     "m_Name": "Thickness",
     "m_DefaultReferenceName": "Vector1_76ef613af27d4e9aaeb8031886abeea3",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "Thickness",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -4052,9 +4052,9 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
+        "r": 0.7490196228027344,
+        "g": 0.7490196228027344,
+        "b": 0.7490196228027344,
         "a": 1.0
     },
     "m_ColorMode": 1
