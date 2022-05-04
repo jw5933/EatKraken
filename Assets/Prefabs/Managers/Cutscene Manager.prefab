@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3369602543925774388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3369602543925774390}
+  - component: {fileID: 3369602543925774389}
+  - component: {fileID: 3369602543925774391}
+  m_Layer: 0
+  m_Name: Cutscene Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3369602543925774390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369602543925774388}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.30508006, y: 4.6104894, z: -14.7960005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3369602543925774389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369602543925774388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72aba1c00b3924805a3e7b60561cab8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutSceneAnim: {fileID: 0}
+  dialogueMusic: {fileID: 8300000, guid: e840b9d15351b475aa64235ff8bdb93a, type: 3}
+  cutsceneMusic: {fileID: 8300000, guid: 2dc3f83ebd13b4a5fb6f7f778215cb07, type: 3}
+--- !u!114 &3369602543925774391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369602543925774388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfb867d4b8edf4b50b6f367e6fad7085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+  - "Looking good, kid. I\u2019m telling ya, your food is a work of art."
+  - You, my friend, are an artist. Your gift must be shared with the world.
+  - "Oh, you know... I\u2019m just doing my job."
+  - "Hey, don\u2019t be so humble! You\u2019re a real talent, I mean that."
+  - "Listen, I know you\u2019ve been working to save up, pay off your debts, live
+    on your own..."
+  - "I\u2019m gonna really hate to see you go, kid."
+  - "Well, I\u2019m not leaving anytime soon... I\u2019m nowhere close to paying
+    off my debt yet..."
+  - Maybe not yet, but after this next trip, you will be.
+  - Trip?
+  - What was I just saying?
+  - "You\u2019re an artist with a message and that message happens to be food."
+  - It needs to be shared with the world, and I can make that happen.
+  - :O ?!??
+  - "I\u2019m thinking a continental tour! You\u2019re gonna have to pick up some
+    new recipes, learn what\u2019s popular with the locals..."
+  - "It\u2019ll be hard, but I think you can do it."
+  - You get to learn and grow as an artist, and even better, the two of us are going
+    to make so much money!
+  - ... whatcha think?
+  tmp: {fileID: 0}
