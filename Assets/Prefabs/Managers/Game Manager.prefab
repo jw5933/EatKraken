@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1171278613375456124}
   - component: {fileID: 1171278613375456127}
+  - component: {fileID: 5451828034490479970}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -60,5 +61,24 @@ MonoBehaviour:
   theStationaryCanvas: {fileID: 0}
   firstLocation: {fileID: 0}
   theMaxIngredients: 3
-  endText: {fileID: 0}
   endImage: {fileID: 0}
+  endImages:
+  - {fileID: 21300000, guid: 349a8c2116c3042498e7f7acbc4256b6, type: 3}
+  - {fileID: 21300000, guid: fdbbc56b24b4842d295d9eef35c8b623, type: 3}
+  - {fileID: 21300000, guid: 349a8c2116c3042498e7f7acbc4256b6, type: 3}
+  winSound: {fileID: 8300000, guid: db269af79d31542b79edb815e166400c, type: 3}
+  loseSound: {fileID: 8300000, guid: c9886f8e5199a42d4b51e74e4c85bcaf, type: 3}
+--- !u!114 &5451828034490479970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171278613375456125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfb867d4b8edf4b50b6f367e6fad7085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: []
+  tmp: {fileID: 0}
