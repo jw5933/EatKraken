@@ -1037,7 +1037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.74509805}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1966,7 +1966,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3369602543925774391, guid: c397f3eb99ebe432394299f01329d771, type: 3}
       propertyPath: dialogue.Array.data[16]
-      value: ...whatcha think?
+      value: '...
+
+        whatcha think?'
       objectReference: {fileID: 0}
     - target: {fileID: 3369602543925774391, guid: c397f3eb99ebe432394299f01329d771, type: 3}
       propertyPath: dialogue.Array.data[17]
