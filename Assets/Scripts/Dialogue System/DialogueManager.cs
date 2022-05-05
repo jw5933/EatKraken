@@ -47,7 +47,7 @@ public class DialogueManager : MonoBehaviour
             }
 
             counter++;
-            yield return new WaitForSeconds(1f/letterPerSec);
+            yield return new WaitForSecondsRealtime(1f/letterPerSec);
         }
     }
 

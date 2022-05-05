@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomerManager : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class CustomerManager : MonoBehaviour
     public float coins {get{return coinsMade;}}
     public int served {get{return servedCustomers;}}
     public int lost {get{return lostCustomers;}}
+
+    [SerializeField] private Image[] xs = new Image[3];
+    [SerializeField] Color xColor = Color.red;
 
     private GameManager gm;
     private DayManager dm;
@@ -59,9 +63,12 @@ public class CustomerManager : MonoBehaviour
     //update the amount of money earned and customers served in current phase
     private void UpdateOnCoinChange(Customer customer, float made, float max, int phase){
         coinsMade += made;
-        if (made <= 0) lostCustomers++;
+        if (made <= 0){
+            if (lostCustomers < xs.Length) xs[lostCustomers].color = xColor;
+            lostCustomers++;
+        }
         else servedCustomers++;
-        if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame(false, "Your customers were unhappy with your service, and complained to your boss. You got fired. Try again... \n Press <R> to retry"));
+        if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame(false, 2, "Your customers were unhappy with your service, and complained to your boss. You got fired. Try again... \n Press <R> to retry"));
     }
 
     private void RemoveCustomer(Customer c, int nextPhase){
@@ -69,7 +76,7 @@ public class CustomerManager : MonoBehaviour
         if (customerShownIndex > 0) customerShownIndex--;
         Destroy(c.gameObject);
 
-        if (dm.endOfDay && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(true, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
+        if (dm.endOfDay && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(true, 0, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
     }
 
     public bool ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve

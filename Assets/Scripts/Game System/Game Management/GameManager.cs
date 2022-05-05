@@ -67,10 +67,12 @@ public class GameManager : MonoBehaviour
 
     //end state
     [Header("End State")]
-    [SerializeField] private Text endText;
+    bool endgame;
     [SerializeField] private GameObject endImage;
+    [SerializeField] private Sprite[] endImages;
     [SerializeField] private AudioClip winSound;
     [SerializeField] private AudioClip loseSound;
+    DialogueManager dm;
     AudioManager am;
 
     // ==============   methods   ==============
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour
     {
         FindObjectOfType<Map>().selectedLocation = firstLocation;
         am = FindObjectOfType<AudioManager>();
+        dm = GetComponent<DialogueManager>();
         if (am != null) am.Activate();
     }
 
@@ -95,6 +98,17 @@ public class GameManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape)){
             if (pauseScreen.activeSelf) CheckPause();
         }
+        else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)){
+            ActivateDialogue();
+        }
+    }
+
+    public void ActivateDialogue(){
+        if (endgame){
+            if (!dm.GoNextDialogue()){
+                dm.textmp.SetActive(false);
+            }
+        }   
     }
 
     public void CheckPause(){
@@ -126,16 +140,38 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = false;
     }
 
-    public IEnumerator HandleEndGame(bool win, string endString){ //check if the player has died (what conditions? if on no hearts?)
-        yield return new WaitForSeconds(0.5f);
+    public IEnumerator HandleEndGame(bool win, int death, string endString){ //check if the player has died (what conditions? if on no hearts?)
+        endgame = true;
         Time.timeScale = 0;
-        endImage.SetActive(true);
-        endText.text = endString;
+        yield return new WaitForSecondsRealtime(0.5f);
         if (win){
             if (am != null) am.PlaySFX(winSound);
         }
         else{
            if (am != null) am.PlaySFX(loseSound);
+        }
+
+        endImage.GetComponent<Image>().sprite = endImages[death];
+        endImage.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(win ? 0f: 1f);
+        //Debug.Log(dm.textmp.transform.parent.name);
+        dm.textmp.transform.parent.GetChild(0).gameObject.SetActive(true);
+
+        switch(death){
+            case 0: //win -> will be changed to an animation -> daymanager
+                dm.AddDialogue(endString);
+                dm.GoNextDialogue();
+            break;
+            case 1: //death -> healthmanager
+                dm.AddDialogue(endString);
+                dm.GoNextDialogue();
+
+            break;
+            case 2: //replaced -> customer manager
+                dm.AddDialogue(endString);
+                dm.GoNextDialogue();
+            break;
         }
     }
 }

@@ -43,10 +43,10 @@ public class InstructionBook : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)){
             CloseBook();
         }
-        else if (Input.GetKeyDown(KeyCode.A)){
+        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
             GoPreviousPage();
         }
-        else if(Input.GetKeyDown(KeyCode.D)){
+        else if(Input.GetKeyDown(KeyCode.D)|| Input.GetKeyDown(KeyCode.LeftArrow)){
             GoNextPage();
         }
     }

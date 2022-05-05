@@ -57,7 +57,7 @@ public class HealthManager : MonoBehaviour
         if (playerHearts >= 0) 
             UpdateHealthUI();
         else 
-            StartCoroutine(gm.HandleEndGame(false, "You've overworked yourself and had to call in sick. Your boss didn't like that much, and fired you! Try again... \n Press <R> to retry.")); //check if the player has died
+            StartCoroutine(gm.HandleEndGame(false, 1, "You've overworked yourself and had to call in sick. Your boss didn't like that much, and fired you! Try again... \n Press <R> to retry.")); //check if the player has died
     }
 
     private void UpdateHealthUI(){
