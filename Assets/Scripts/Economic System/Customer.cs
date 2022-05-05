@@ -34,8 +34,10 @@ public class Customer : MonoBehaviour
 
     private List<Image> orderUi = new List<Image>();
     private List<Image> finalOrderUi = new List<Image>();
+    private List<Image> orderFlameUi = new List<Image>();
     private List<Sprite> orderUiSprites = new List<Sprite>();
     private List<Sprite> finalOrderUiSprites = new List<Sprite>();
+    private List<bool> orderUiFlameBools = new List<bool>();
     private GameObject detailedOrderUi;
     private Transform meterParent;
 
@@ -130,6 +132,8 @@ public class Customer : MonoBehaviour
                         foreach(Transform c in i.transform){
                             Image j = c.gameObject.GetComponent<Image>();
                             orderUi.Add(j);
+                            j = c.transform.GetChild(0).GetComponent<Image>();
+                            orderFlameUi.Add(j);
                         }
                         detailedOrderUi.SetActive(false);
                     break;
@@ -148,6 +152,31 @@ public class Customer : MonoBehaviour
         }
         RectTransform r = order.GetComponent<RectTransform>();
         GetComponent<RectTransform>().sizeDelta = new Vector2 (r.sizeDelta.x, r.sizeDelta.y);
+    }
+
+    public void AddToOrder(Sprite fs, Sprite s, string i, float p, bool cooked){ //add an ingredient to this order and update the UI
+        if (fs != null) finalOrderUiSprites.Add(fs);
+        if (s != null) orderUiSprites.Add(s);
+        if (i != null) myOrder.Add(i);
+        if (s != null) orderUiFlameBools.Add(cooked);
+        if (p != 0) myOrderPrice += p;
+    }
+
+    private void UpdateOrderUI(){
+        orderText.text = "" + myOrderPrice;
+        
+        int index = 0;
+        while (index < orderUi.Count){
+            orderUi[index].sprite = orderUiSprites[index];
+            orderFlameUi[index].enabled = orderUiFlameBools[index];
+            index++;
+        }
+
+        index = 0;
+        while (index < finalOrderUiSprites.Count){
+            finalOrderUi[index].sprite = finalOrderUiSprites[index];
+            index++;
+        }
     }
 
     private void CreateMeter(){
@@ -226,29 +255,6 @@ public class Customer : MonoBehaviour
             case Mood.Happy:
                 InitialLeave(coinHappy);
             break;
-        }
-    }
-
-    public void AddToOrder(Sprite fs, Sprite s, string i, float p){ //add an ingredient to this order and update the UI
-        if (fs != null) finalOrderUiSprites.Add(fs);
-        if (s != null) orderUiSprites.Add(s);
-        if (i != null) myOrder.Add(i);
-        if (p != 0) myOrderPrice += p;
-    }
-
-    private void UpdateOrderUI(){
-        orderText.text = "$" + myOrderPrice;
-        
-        int index = 0;
-        while (index < orderUi.Count){
-            orderUi[index].sprite = orderUiSprites[index];
-            index++;
-        }
-
-        index = 0;
-        while (index < finalOrderUiSprites.Count){
-            finalOrderUi[index].sprite = finalOrderUiSprites[index];
-            index++;
         }
     }
 

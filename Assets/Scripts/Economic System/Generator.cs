@@ -146,7 +146,7 @@ public class Generator : MonoBehaviour
             customerPrefabs[customerPrefabIndex].customers.RemoveAt(cs);
             newCustomer.phase = phase;
 
-            if (baseObjectSprite != null) newCustomer.AddToOrder(baseObjectSprite, null, null, 0);
+            if (baseObjectSprite != null) newCustomer.AddToOrder(baseObjectSprite, null, null, 0, false);
             
             //adjust customer: base, carb, protein, ingredient
             int num = gm.maxIngredients;
@@ -154,26 +154,33 @@ public class Generator : MonoBehaviour
                 int b = Random.Range(0, baseIngredientPrefabs.Count);
                 newCustomer.AddToOrder(baseIngredientPrefabs[b].orderSprite,
                 null, baseIngredientPrefabs[b].name, 
-                baseIngredientPrefabs[b].price);
+                baseIngredientPrefabs[b].price, 
+                false);
             }
 
             int c = Random.Range(0, carbIngredientPrefabs.Count);
             newCustomer.AddToOrder(carbIngredientPrefabs[c].orderSprite,
             carbIngredientPrefabs[c].initialSprite, carbIngredientPrefabs[c].name, 
-            carbIngredientPrefabs[c].price);
+            carbIngredientPrefabs[c].price,
+            false);
             num--;
 
             while (num > 1){
                 num--;
                 int i = Random.Range(0, ingredientPrefabs.Count);
                 newCustomer.AddToOrder(ingredientPrefabs[i].orderSprite,
-                    ingredientPrefabs[i].initialSprite, 
-                ingredientPrefabs[i].name, ingredientPrefabs[i].price);
+                ingredientPrefabs[i].initialSprite, 
+                ingredientPrefabs[i].name,
+                ingredientPrefabs[i].price,
+                ingredientPrefabs[i].hasCookStage);
             }
             
             int p = Random.Range(0, proteinPrefabs.Count);
             newCustomer.AddToOrder(proteinPrefabs[p].orderSprite,
-            proteinPrefabs[p].initialSprite, proteinPrefabs[p].name, proteinPrefabs[p].price);
+            proteinPrefabs[p].initialSprite, 
+            proteinPrefabs[p].name, 
+            proteinPrefabs[p].price, 
+            proteinPrefabs[p].hasCookStage);
 
             newCustomer.CalculateCoins();
             phaseList.Add(newCustomer);
