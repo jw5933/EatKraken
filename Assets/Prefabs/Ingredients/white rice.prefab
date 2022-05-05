@@ -106,7 +106,7 @@ MonoBehaviour:
   imageStates:
   - {fileID: 21300000, guid: 078f206e92dcf4f23a70af77563b18e2, type: 3}
   - {fileID: 21300000, guid: c837a916b8b3d408a92adf0d2d5b61e0, type: 3}
-  perfectSpriteState: 0
+  perfectSpriteState: 1
   finalImageState: {fileID: 21300000, guid: 3ca94a068527f4ffdaf09e8981b379e2, type: 3}
   finalCookedImageStates:
   - {fileID: 21300000, guid: f687f98dd42c5471a91614a3dd6ef738, type: 3}

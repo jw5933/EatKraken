@@ -109,4 +109,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0756816101cf34148930866c6be3afba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 8300000, guid: 7ad6c1d34636947eeadde61f666a6a1b, type: 3}
+  dropSound: {fileID: 8300000, guid: 1ff3e70dc9b2547dba2919f1bdf89625, type: 3}

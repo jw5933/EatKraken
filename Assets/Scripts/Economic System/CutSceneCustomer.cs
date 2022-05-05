@@ -6,10 +6,12 @@ public class CutSceneCustomer : Customer
 {
     [SerializeField] private int wantedPos = 2;
     DialogueManager dialogueManager;
+    DayManager dm;
     [TextArea(3, 8)]
     [SerializeField] string finalWords = "";
 
     public override void Awake(){
+        dm = FindObjectOfType<DayManager>();
         dialogueManager = GetComponent<DialogueManager>();
         dialogueManager.textmp.SetActive(false);
         base.Awake();
@@ -25,6 +27,7 @@ public class CutSceneCustomer : Customer
     protected override void Activate(){
         dialogueManager.textmp.SetActive(true);
         base.Activate();
+        dm.ShrinkMeter();
         dialogueManager.GoNextDialogue();
     }
 
@@ -59,7 +62,7 @@ public class CutSceneCustomer : Customer
     }
 
     IEnumerator LeaveInTwo(){
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.7f);
         Destroy(myCustomerAnim.gameObject);
         em.FreeCustomer(this, positionInLine, myMood, myTimePhase+1); //em OnCustomerLeave
     }
@@ -71,5 +74,6 @@ public class CutSceneCustomer : Customer
 
     private void Wait(){
         myCustomerAnim.gameObject.SetActive(true);
+        dm.ResizeMeter();
     }
 }

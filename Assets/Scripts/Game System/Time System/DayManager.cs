@@ -8,7 +8,15 @@ public class DayManager : MonoBehaviour
     // ==============   variables   ==============
     //time stages
     [HideInInspector][SerializeField] Timer dayTimer;
+    [SerializeField] GameObject meterPrefab;
+
     private Meter meter;
+    private RectTransform meterController;
+    private Vector2 shrunkSize;
+    private Vector2 normSize;
+    RectTransform meterTransform;
+    RectTransform myTransform;
+
     private float[] timePerStage;
     public float[] timeStage {set{timePerStage = value;}}
     [SerializeField] Sprite[] timeStageImages;
@@ -44,10 +52,17 @@ public class DayManager : MonoBehaviour
         ld = FindObjectOfType<LevelDesignScript>();
         phaseButton = FindObjectOfType<PhaseSkipButton>(true).gameObject;
 
-        meter = Instantiate(gm.meterPrefab, this.transform).GetComponent<Meter>();
-        RectTransform myTransform = this.gameObject.GetComponent<RectTransform>();
-        RectTransform meterTransform = meter.gameObject.GetComponent<RectTransform>();
-        meterTransform.sizeDelta = new Vector2 (myTransform.sizeDelta.y, myTransform.sizeDelta.x);
+        myTransform = this.gameObject.GetComponent<RectTransform>();
+
+        meterController = transform.GetChild(0).GetComponent<RectTransform>();
+        shrunkSize = new Vector2 (meterController.sizeDelta.y, meterController.sizeDelta.x);
+        normSize = new Vector2 (myTransform.sizeDelta.y, myTransform.sizeDelta.x);
+        meterController.sizeDelta = myTransform.sizeDelta;
+
+        meter = Instantiate(meterPrefab, meterController.transform).GetComponent<Meter>();
+        meter.transform.SetSiblingIndex(0);
+        meterTransform = meter.gameObject.GetComponent<RectTransform>();
+        meterTransform.sizeDelta = normSize;
         meter.gameObject.SetActive(false);
     }
 
@@ -61,7 +76,7 @@ public class DayManager : MonoBehaviour
         if (phaseIndex+1 >= timePerStage.Length){
             if (!cm.lineUpIsEmpty) isOvertime = true;
             else{
-                StartCoroutine(gm.HandleEndGame(true, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", locationDay, cm.coins, cm.served, cm.lost, gm.currLocation)));
+                StartCoroutine(gm.HandleEndGame(true, 0, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", locationDay, cm.coins, cm.served, cm.lost, gm.currLocation)));
             }
             //FIX: show working overtime
             return;
@@ -77,6 +92,26 @@ public class DayManager : MonoBehaviour
         if (meter.stage >= 2){ 
             HandleTimeChange();
         }
+    }
+
+    public void ShrinkMeter(){
+        meter.StopMeter();
+        float currTime = meter.callerTime;
+        meterController.sizeDelta = new Vector2(shrunkSize.y, shrunkSize.x);
+        meterTransform.sizeDelta = shrunkSize;
+        meter.SetupVisuals();
+        meter.Init(timePerStage[phaseIndex], 0, 0, currTime, HandleMeterChange);
+        meter.StartMeter();
+    }
+
+    public void ResizeMeter(){
+        meter.StopMeter();
+        float currTime = meter.callerTime;
+        meterController.sizeDelta = new Vector2(normSize.y, normSize.x);
+        meterTransform.sizeDelta = normSize;
+        meter.SetupVisuals();
+        meter.Init(timePerStage[phaseIndex], 0, 0, currTime, HandleMeterChange);
+        meter.StartMeter();
     }
 
     private void Init(float time){

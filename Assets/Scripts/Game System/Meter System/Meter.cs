@@ -107,7 +107,7 @@ public class Meter : MonoBehaviour
         }
     }
 
-    private void SetupVisuals(){ //setup for changes
+    public void SetupVisuals(){ //setup for changes
         Vector2 startPos = Vector2.zero;
 
         for (int index = 0; index < stateImages.Length; index++){

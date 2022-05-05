@@ -14,12 +14,18 @@ public class ProteinSelector : MonoBehaviour
     private GameObject newProtein;
     private GameObject planeUpdate;
 
+    //sound
+    private AudioManager am;
+    [SerializeField] AudioClip cutSound;
+    [SerializeField] AudioClip clickSound;
+
     private GameManager gameManager;
     public GameManager gm {get{return gameManager;}}
     HealthManager hm;
     private Material material;
 
     private void Awake(){
+        am = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         hm = FindObjectOfType<HealthManager>();
         gameManager = FindObjectOfType<GameManager>();
@@ -51,7 +57,9 @@ public class ProteinSelector : MonoBehaviour
         if (!player.handFree) return;
         planeUpdate.SetActive(true);
         tentacle.SetActive(true);
+        if (am != null) am.PlaySFX(clickSound);
         tentacleAnim.SetTrigger("ShowProtein");
+        
         //when player clicks on UI, show tentacle for cutting
         //tentacle has 3 parts -> iamges need to be manually sliced
             //colour of sprite will be changed upon hover
@@ -77,6 +85,7 @@ public class ProteinSelector : MonoBehaviour
         o.SetActive(false);
         newProtein = o;
         knifeAnim.SetTrigger(("CutProtein"));
+        if (am != null) am.PlaySFX(cutSound);
     }
 
     //called by knife anim uiactivate at end of animation
