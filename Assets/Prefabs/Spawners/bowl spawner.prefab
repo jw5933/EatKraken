@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3416204597822588750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.29, y: 1.27, z: 4.76}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalPosition: {x: 5.29, y: 1.157, z: 4.76}
+  m_LocalScale: {x: 0.22903201, y: 0.22903201, z: 0.22903201}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1202010163
   m_SortingLayer: 7
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: a8e39e6fc4f624454b8be7442e710621, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 293f87260de8d4856bdbf5644b1df5a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.0079021, y: 4.0402904, z: 0}
-  m_Center: {x: -0.0093694525, y: 0.01000444, z: -0.0000007762812}
+  m_Size: {x: 9.041385, y: 9.735161, z: 0}
+  m_Center: {x: 0.052197002, y: 0.1177454, z: -0.0000007762812}
 --- !u!114 &2418961581309395318
 MonoBehaviour:
   m_ObjectHideFlags: 0
