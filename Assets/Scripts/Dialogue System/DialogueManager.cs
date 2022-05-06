@@ -28,6 +28,12 @@ public class DialogueManager : MonoBehaviour
         dialogue.Add(s);
     }
 
+    public void ChangeDialogue(List<string> d){
+        dialogue.Clear();
+        dialogue = d;
+        index = -1;
+    }
+
     private IEnumerator TypeDialogue(string s){
         isTyping = true;
         tmp.text = s;

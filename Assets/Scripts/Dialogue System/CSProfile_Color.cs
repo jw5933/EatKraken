@@ -7,7 +7,7 @@ public class CSProfile_Color : MonoBehaviour
 {
     [SerializeField] private List<int> frames = new List<int>();
     [SerializeField] private List<Color> colors = new List<Color>();
-    SpriteRenderer m_SpriteRenderer;
+    Image m_Image;
 
     Color m_NewColor;
     float m_Red, m_Blue, m_Green;
@@ -16,7 +16,7 @@ public class CSProfile_Color : MonoBehaviour
 
     private void Awake(){
         if (colors.Count != 0) FindObjectOfType<EventManager>().OnDialogueChange += CheckAdjust;
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_Image = GetComponent<Image>();
     }
 
     private void CheckAdjust(int frame){
@@ -29,7 +29,7 @@ public class CSProfile_Color : MonoBehaviour
     }
 
     private void AdjustImage(){
-        m_SpriteRenderer.color = colors[0];
+        m_Image.color = colors[0];
         frames.RemoveAt(0);
         colors.RemoveAt(0);
     }

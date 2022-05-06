@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class Dialogue{
+    [TextArea(3, 8)]
+    public List<string> dialogue = new List<string>();
+}
 public class GameManager : MonoBehaviour
 {
     // ==============   variables   ==============
@@ -67,11 +72,17 @@ public class GameManager : MonoBehaviour
 
     //end state
     [Header("End State")]
-    bool endgame;
     [SerializeField] private GameObject endImage;
+    [SerializeField] Animator endAnim;
+    [SerializeField] GameObject theEndButton;
+    [SerializeField] List<Dialogue> endDialogue = new List<Dialogue>();
     [SerializeField] private Sprite[] endImages;
     [SerializeField] private AudioClip winSound;
     [SerializeField] private AudioClip loseSound;
+    private int dIndex;
+    bool endgame;
+    bool won;
+
     DialogueManager dm;
     AudioManager am;
 
@@ -91,9 +102,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckInput(){
         if (Input.GetKeyDown(KeyCode.R)){
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            Time.timeScale = 1;
-            AudioListener.pause = false;
+            RestartGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape)){
             if (pauseScreen.activeSelf) CheckPause();
@@ -104,11 +113,20 @@ public class GameManager : MonoBehaviour
     }
 
     public void ActivateDialogue(){
-        if (endgame){
-            if (!dm.GoNextDialogue()){
+        if (endgame && !dm.GoNextDialogue()){
+            if (won){
+                endAnim.SetTrigger("GoNextAnim");
+                if (dIndex < endDialogue.Count) dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
+            }
+            else{
                 dm.textmp.SetActive(false);
             }
         }   
+    }
+
+    public void CloseEndAnim(){
+        dm.textmp.SetActive(false);
+        theEndButton.SetActive(true);
     }
 
     public void CheckPause(){
@@ -134,6 +152,12 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void RestartGame(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
+        AudioListener.pause = false;
+    }
+
     public void StartScene(){
         SceneManager.LoadScene("StartScene");
         Time.timeScale = 1;
@@ -142,6 +166,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator HandleEndGame(bool win, int death, string endString){ //check if the player has died (what conditions? if on no hearts?)
         endgame = true;
+        won = win;
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(0.5f);
         if (win){
@@ -154,24 +179,18 @@ public class GameManager : MonoBehaviour
         endImage.GetComponent<Image>().sprite = endImages[death];
         endImage.SetActive(true);
 
-        yield return new WaitForSecondsRealtime(win ? 0f: 1f);
+        
         //Debug.Log(dm.textmp.transform.parent.name);
-        dm.textmp.transform.parent.GetChild(0).gameObject.SetActive(true);
-
-        switch(death){
-            case 0: //win -> will be changed to an animation -> daymanager
-                dm.AddDialogue(endString);
-                dm.GoNextDialogue();
-            break;
-            case 1: //death -> healthmanager
-                dm.AddDialogue(endString);
-                dm.GoNextDialogue();
-
-            break;
-            case 2: //replaced -> customer manager
-                dm.AddDialogue(endString);
-                dm.GoNextDialogue();
-            break;
+        
+        if (win){
+            dm.textmp.transform.parent.GetChild(0).gameObject.SetActive(true);
+            endAnim.SetTrigger("GoNextAnim");
+            dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
+        }else{
+            yield return new WaitForSecondsRealtime(win ? 0f: 1f);
+            dm.textmp.transform.parent.GetChild(0).gameObject.SetActive(true);
+            dm.AddDialogue(endString);
+            dm.GoNextDialogue();
         }
     }
 }
