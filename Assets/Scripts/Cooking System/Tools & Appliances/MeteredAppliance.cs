@@ -8,6 +8,7 @@ public class MeteredAppliance : Appliance
     private Vector3 meterPosition;
     private Vector3 ingredientPosition;
     private Material material;
+    [SerializeField] private Ingredient.Type additionalIngredientType;
 
     protected override void Awake(){
         base.Awake();
@@ -55,7 +56,7 @@ public class MeteredAppliance : Appliance
             myIngredient = i.GetComponent<Ingredient>();
         }
 
-        if (myIngredient.type != myIngredientType || !myIngredient.finishedCutStage || myIngredient.imgState >= myIngredient.maxImageState){
+        if ((myIngredient.type != myIngredientType && myIngredient.type != additionalIngredientType) || !myIngredient.finishedCutStage || myIngredient.imgState >= myIngredient.maxImageState){
                 player.PickUpItem(myIngredient.gameObject);
                 myIngredient = null;
                 return;
@@ -67,11 +68,19 @@ public class MeteredAppliance : Appliance
         if (c2 !=null) c2.enabled = false;
 
         myIngredient.transform.position = ingredientPosition;
+        
+        int imgBeforeLast = 0;
+        float start = myIngredient.cookedTime;
+        //get what stage image should be in
+        if ((start -= myIngredient.raw) < 0)     imgBeforeLast = 2; //in stage 1
+        else if((start -= myIngredient.cooked) < 0) imgBeforeLast = 1; //stage 2
+        else imgBeforeLast = 0;
+        myIngredient.SetImageState(myIngredient.maxImageState - imgBeforeLast);
 
         //start meter
         if (meter == null){
             meter = Instantiate(gm.stationaryMeterPrefab, gm.meterParent).GetComponent<Meter>();
-            meter.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+            meter.transform.localScale = new Vector3(0.015f, 0.015f, 0.015f);
             meter.transform.position = meterPosition;
         }
 
@@ -99,7 +108,7 @@ public class MeteredAppliance : Appliance
     }
 
     private bool CheckSwap(){
-        if (player.handFree || (player.holdingIngredient &&(player.ingredient.type != myIngredientType || player.ingredient.imgState >= player.ingredient.maxImageState)))
+        if (player.handFree || !player.holdingIngredient || (player.holdingIngredient &&((myIngredient.type != myIngredientType && myIngredient.type != additionalIngredientType) || player.ingredient.imgState >= player.ingredient.maxImageState)))
             return false;
 
         meter.StopMeter();

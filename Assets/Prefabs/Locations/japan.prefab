@@ -125,7 +125,7 @@ MonoBehaviour:
   myCustomersPerStage: 0300000001000000050000000400000000000000
   timePerStage:
   - 100
-  - 60
+  - 85
   - 180
   - 120
   - 0

@@ -228,6 +228,13 @@ public class Ingredient : MonoBehaviour
         return isSliced;
     }
 
+    public void SetImageState(int i){
+        if (myImageState != i && i < imageStates.Length){
+            mySpriteRenderer.sprite = imageStates[i];
+            myImageState = i;
+        }
+    }
+
     public void HandleAddToOrder(){
         if (hasCookStage){
             mySpriteRenderer.sprite = finalCookedImageStates[cookedImageState];
@@ -256,5 +263,22 @@ public class Ingredient : MonoBehaviour
 
     public void SetParent(Transform t){
         transform.SetParent(t);
+    }
+
+    public void MoveToFront(bool t){
+        switch(myType){
+            case Type.Base:
+                mySpriteRenderer.sortingOrder = t? 5: 0;
+            break;
+            case Type.Carb:
+                mySpriteRenderer.sortingOrder = t? 6: 1;
+            break;
+            case Type.Vegetable:
+                mySpriteRenderer.sortingOrder = t? 7: 2;
+            break;
+            case Type.Protein:
+                mySpriteRenderer.sortingOrder = t? 8: 3;
+            break;
+        }
     }
 }

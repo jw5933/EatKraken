@@ -14,6 +14,7 @@ public class BaseObject : MonoBehaviour
     public SharedArea area{set{myArea = value;}}
     private Collider myCollider;
     private Material material;
+    Renderer myRend;
 
     [SerializeField] AudioClip dropSound;
     AudioManager am;
@@ -24,6 +25,7 @@ public class BaseObject : MonoBehaviour
         am = FindObjectOfType<AudioManager>();
         myCollider = GetComponent<Collider>();
         material = GetComponent<SpriteRenderer>().material;
+        myRend = GetComponent<Renderer>();
     }
 
     //add held ingredient to the order
@@ -36,6 +38,7 @@ public class BaseObject : MonoBehaviour
                 currIngredient = i;
                 player.DropItem("ingredient");
                 myOrder.Add(currIngredient);
+                currIngredient.MoveToFront((myRend.sortingOrder != 0));
                 currIngredient.GetComponent<Collider>().enabled = false;
                 //Update the visuals to reflect addition of ingredient
                 UpdateOrderVisual(this.transform.position);
@@ -109,5 +112,12 @@ public class BaseObject : MonoBehaviour
 
     public void SetCollider(){
         myCollider.enabled = true;
+    }
+
+    public void MoveToFront(bool t){
+        myRend.sortingOrder = t? 5 : 0;
+        foreach(Ingredient i in myOrder){
+            i.MoveToFront(t);
+        }
     }
 }

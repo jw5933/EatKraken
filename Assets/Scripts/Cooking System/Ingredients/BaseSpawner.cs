@@ -44,7 +44,7 @@ public class BaseSpawner : MonoBehaviour
         if (!player.holdingIngredient) return;
         SpawnBase();
         BaseObject baseObj = newBase.GetComponent<BaseObject>();
-        if (!baseObj.CheckCanAddIngredient(player.ingredient.type, 0)){
+        if (!baseObj.AddToOrder()){
             Destroy(newBase);
             newBase = null;
             return;

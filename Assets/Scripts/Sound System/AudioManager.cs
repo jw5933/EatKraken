@@ -96,4 +96,13 @@ public class AudioManager : MonoBehaviour
         sfxSources[index].Stop();
         freeSfxSources.Enqueue(index);
     }
+
+    public void StopAllConstantSFX(){
+        freeSfxSources.Clear();
+        int i = 0;
+        foreach(AudioSource a in sfxSources){
+            a.Stop();
+            freeSfxSources.Enqueue(i++);
+        }
+    }
 }

@@ -167,6 +167,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator HandleEndGame(bool win, int death, string endString){ //check if the player has died (what conditions? if on no hearts?)
         endgame = true;
         won = win;
+        am.StopAllConstantSFX();
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(0.5f);
         if (win){
@@ -178,7 +179,6 @@ public class GameManager : MonoBehaviour
 
         endImage.GetComponent<Image>().sprite = endImages[death];
         endImage.SetActive(true);
-
         
         //Debug.Log(dm.textmp.transform.parent.name);
         

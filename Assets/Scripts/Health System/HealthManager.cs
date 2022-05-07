@@ -97,12 +97,15 @@ public class HealthManager : MonoBehaviour
         //cut or cooked .5
         int i = 0;
         int p = 0;
+        bool hasCarb = false;
         while (order.Count > 0){
             Ingredient o = order[0];
+            if (o.type == Ingredient.Type.Carb) hasCarb = true;
             if ((o.type == Ingredient.Type.Vegetable || o.type == Ingredient.Type.Carb) && ((o.hasCutStage && o.finishedCutStage) || (o.hasCookStage && o.finishedCookedStage))) i++;
             if (o.type == Ingredient.Type.Protein) p++;
             order.RemoveAt(0);
         }
+        if (!hasCarb && p <= 0) i--;
         MinusPlayerHearts(-(i*0.5f));
         /* if (i >= gm.maxIngredients){// 1 heart
             MinusPlayerHearts(-2);

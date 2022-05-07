@@ -102,6 +102,7 @@ MonoBehaviour:
   myAnimator: {fileID: 0}
   myIngredientType: 3
   cookingSound: {fileID: 8300000, guid: f69b0d365e22046689c47791b4c987fb, type: 3}
+  additionalIngredientType: 2
 --- !u!65 &5091598113634142283
 BoxCollider:
   m_ObjectHideFlags: 0
