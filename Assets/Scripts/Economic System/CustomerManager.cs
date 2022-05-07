@@ -79,13 +79,13 @@ public class CustomerManager : MonoBehaviour
         if (dm.endOfDay && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(true, 0, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
     }
 
-    public bool ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve
+    /* public bool ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve
         if (selectedCustomer != null) {
             selectedCustomer.CheckOrder(order);
             return true;
         }
         return false;
-    }
+    } */
 
     public void LineupCustomer(Customer c){ //line up the customer behind the current end one
         lineup.Add(c);

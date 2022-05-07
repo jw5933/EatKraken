@@ -189,7 +189,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8a15f5d937c4b63b9a9ab0b91bdfe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinsText: {fileID: 0}
+  tipsImage: {fileID: 0}
+  tipsImgs:
+  - {fileID: 21300000, guid: 637ed26ed421546c19801bd2870d4e46, type: 3}
+  - {fileID: 21300000, guid: 30200ada10df548c0a0ede7297ebf6f8, type: 3}
+  - {fileID: 21300000, guid: a97e071c9442449e480f3b67be2f25d4, type: 3}
+  - {fileID: 21300000, guid: 082da9e802a21495f8d578c775e0f6d5, type: 3}
+  tipsText: {fileID: 0}
+  bankText: {fileID: 0}
+  lastOrderText: {fileID: 0}
 --- !u!1001 &461808136888296449
 PrefabInstance:
   m_ObjectHideFlags: 0

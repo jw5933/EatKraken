@@ -52,7 +52,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float myNeutralWaitTime;
     [SerializeField] private float myAngryWaitTime;
     private Timer timer;
-    private Meter meter;
+    protected Meter meter;
 
     //econ vars
     [Header("Tipping")]
@@ -81,7 +81,7 @@ public class Customer : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void OnMouseUpAsButton(){ //serve
+    public virtual void OnMouseUpAsButton(){ //serve
         //cm.SelectCustomer(this);
         if (player.holdingBase && player.baseObject.order.Count > 0){
             List<Ingredient> order = new List<Ingredient>(player.baseObject.order);
@@ -121,7 +121,7 @@ public class Customer : MonoBehaviour
         coinHappy = myOrderPrice + myOrderPrice*myGenerousTipPercent;
     }
 
-    public void CreateOrder(){
+    private void CreateOrder(){
         order = Instantiate(gm.orderPrefab, this.transform);
         foreach(Transform child in order.transform){
             Image i = child.gameObject.GetComponent<Image>();
@@ -209,7 +209,7 @@ public class Customer : MonoBehaviour
     }
     
     //check state & ingrdient
-    public void CheckOrder(List<Ingredient> given){
+    private void CheckOrder(List<Ingredient> given){
         int wrongIngredient = myOrder.Count;
         int wrongState = 0;
         List<string> order = new List<string>();
@@ -275,7 +275,7 @@ public class Customer : MonoBehaviour
         }
     }
 
-    protected virtual void InitialLeave(float coins){
+    protected void InitialLeave(float coins){
         em.ChangeCoins(this, coins, coinHappy, myTimePhase);
         float tip = coins - orderPrice;
         tipText.text = (tip > 0 ? tip : 0).ToString("0.00");
