@@ -44,7 +44,7 @@ public class Customer : MonoBehaviour
     protected int myTimePhase;
     public int phase{set{myTimePhase = value;}}
 
-    private GameObject order;
+    protected GameObject order;
     
     //timer vars
     [Header("Wait Times")]

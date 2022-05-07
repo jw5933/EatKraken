@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public class Dialogue{
@@ -73,8 +74,11 @@ public class GameManager : MonoBehaviour
     //end state
     [Header("End State")]
     [SerializeField] private GameObject endImage;
+    [SerializeField] private GameObject krakenImg;
+    [SerializeField] private GameObject winProfiles;
     [SerializeField] Animator endAnim;
     [SerializeField] GameObject theEndButton;
+    [SerializeField] private TextMeshProUGUI winTmp;
     [SerializeField] List<Dialogue> endDialogue = new List<Dialogue>();
     [SerializeField] private Sprite[] endImages;
     [SerializeField] private AudioClip winSound;
@@ -115,17 +119,21 @@ public class GameManager : MonoBehaviour
     public void ActivateDialogue(){
         if (endgame && !dm.GoNextDialogue()){
             if (won){
+                if (krakenImg.activeSelf){
+                    krakenImg.SetActive(false);
+                    winProfiles.SetActive(false);
+                }
                 endAnim.SetTrigger("GoNextAnim");
                 if (dIndex < endDialogue.Count) dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
             }
             else{
-                dm.textmp.SetActive(false);
+                dm.textmp.transform.parent.gameObject.SetActive(false);
             }
         }   
     }
 
     public void CloseEndAnim(){
-        dm.textmp.SetActive(false);
+        dm.textmp.transform.parent.gameObject.SetActive(false);
         theEndButton.SetActive(true);
     }
 
@@ -165,9 +173,10 @@ public class GameManager : MonoBehaviour
     }
 
     public IEnumerator HandleEndGame(bool win, int death, string endString){ //check if the player has died (what conditions? if on no hearts?)
+        // death: 0 -> win, 1 -> by health, 2 -> by customer
         endgame = true;
         won = win;
-        am.StopAllConstantSFX();
+        if (am != null) am.StopAllConstantSFX();
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(0.5f);
         if (win){
@@ -183,12 +192,15 @@ public class GameManager : MonoBehaviour
         //Debug.Log(dm.textmp.transform.parent.name);
         
         if (win){
-            dm.textmp.transform.parent.GetChild(0).gameObject.SetActive(true);
+            dm.textmp = winTmp;
+            krakenImg.SetActive(true);
+            winProfiles.SetActive(true);
+            dm.textmp.transform.parent.gameObject.SetActive(true);
             endAnim.SetTrigger("GoNextAnim");
             dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
         }else{
             yield return new WaitForSecondsRealtime(win ? 0f: 1f);
-            dm.textmp.transform.parent.GetChild(0).gameObject.SetActive(true);
+            dm.textmp.transform.parent.gameObject.SetActive(true);
             dm.AddDialogue(endString);
             dm.GoNextDialogue();
         }

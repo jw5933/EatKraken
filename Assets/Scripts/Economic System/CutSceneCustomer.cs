@@ -13,7 +13,7 @@ public class CutSceneCustomer : Customer
     public override void Awake(){
         dm = FindObjectOfType<DayManager>();
         dialogueManager = GetComponent<DialogueManager>();
-        dialogueManager.textmp.SetActive(false);
+        dialogueManager.textmp.transform.parent.gameObject.SetActive(false);
         base.Awake();
     }
 
@@ -25,9 +25,10 @@ public class CutSceneCustomer : Customer
     }
 
     protected override void Activate(){
-        dialogueManager.textmp.SetActive(true);
+        dialogueManager.textmp.transform.parent.gameObject.SetActive(true);
         base.Activate();
-        dm.ShrinkMeter();
+        //dm.ShrinkMeter();
+        order.SetActive(false);
         dialogueManager.GoNextDialogue();
     }
 
