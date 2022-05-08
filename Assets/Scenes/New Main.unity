@@ -10396,6 +10396,26 @@ PrefabInstance:
       propertyPath: customerBackground
       value: 
       objectReference: {fileID: 549902778}
+    - target: {fileID: 3430261834421804877, guid: 6027a1a4e1ff94574998d23f5370cb34, type: 3}
+      propertyPath: timeStageImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 092d1f63d5a4148d886d7bd4e3b01a01, type: 3}
+    - target: {fileID: 3430261834421804877, guid: 6027a1a4e1ff94574998d23f5370cb34, type: 3}
+      propertyPath: timeStageImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: f873ba691b5f147fe88d39e517173e7d, type: 3}
+    - target: {fileID: 3430261834421804877, guid: 6027a1a4e1ff94574998d23f5370cb34, type: 3}
+      propertyPath: timeStageImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: adcaca179312645b2b53231be8612df1, type: 3}
+    - target: {fileID: 3430261834421804877, guid: 6027a1a4e1ff94574998d23f5370cb34, type: 3}
+      propertyPath: timeStageImages.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: c98ed4a8662a64c5eb05443f42f6c483, type: 3}
+    - target: {fileID: 3430261834421804877, guid: 6027a1a4e1ff94574998d23f5370cb34, type: 3}
+      propertyPath: timeStageImages.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 7299f9222dc34435bb56b5343dade570, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6027a1a4e1ff94574998d23f5370cb34, type: 3}
 --- !u!1001 &3609183496713104387
