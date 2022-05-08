@@ -11,7 +11,7 @@ public class Generator : MonoBehaviour
     private List <Ingredient> ingredientPrefabs;
     private List <Ingredient> proteinPrefabs;
     
-    [SerializeField] private List <CustomerList> customerPrefabs;
+    private List <CustomerList> customerPrefabs;
     private int customerPrefabIndex;
 
     //timer vars

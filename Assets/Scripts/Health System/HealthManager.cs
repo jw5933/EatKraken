@@ -23,6 +23,7 @@ public class HealthManager : MonoBehaviour
     [SerializeField] private Sprite halfHeart;
 
     [SerializeField] AudioClip[] healthSounds = new AudioClip[5];
+    [SerializeField] private GameObject flashScreen;
 
     bool decrement;
 
@@ -53,8 +54,10 @@ public class HealthManager : MonoBehaviour
         else decrement = false;
         playerHearts = Mathf.Min(playerHearts-hearts, maxHearts);
         //Debug.Log("player health: " + playerHearts);
+        if (playerHearts <= 1) flashScreen.SetActive(true);
+        else if (flashScreen.activeSelf) flashScreen.SetActive(false);
         
-        if (playerHearts >= 0) 
+        if (playerHearts > 0) 
             UpdateHealthUI();
         else 
             StartCoroutine(gm.HandleEndGame(false, 1)); //check if the player has died

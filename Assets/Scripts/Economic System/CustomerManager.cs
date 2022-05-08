@@ -8,7 +8,7 @@ public class CustomerManager : MonoBehaviour
     // ==============   variables   ==============
     private Customer selectedCustomer;
 
-    [SerializeField] private List<Customer> lineup = new List<Customer>();
+    private List<Customer> lineup = new List<Customer>();
     public bool lineUpIsEmpty{get{return lineup.Count == 0;}}
     private int customerShownIndex;
 
@@ -65,7 +65,10 @@ public class CustomerManager : MonoBehaviour
     private void UpdateOnCoinChange(Customer customer, float made, float max, int phase){
         coinsMade += made;
         if (made <= 0){
-            if (lostCustomers < xs.Length) xs[lostCustomers].color = xColor;
+            if (lostCustomers < xs.Length){
+                xs[lostCustomers].color = xColor;
+                xs[lostCustomers].GetComponent<Animator>().SetTrigger("AnimateX");
+            }
             lostCustomers++;
         }
         else servedCustomers++;
