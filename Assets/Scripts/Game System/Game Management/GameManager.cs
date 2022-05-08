@@ -73,6 +73,10 @@ public class GameManager : MonoBehaviour
 
     //end state
     [Header("End State")]
+    [TextArea(3, 8)]
+    [SerializeField] private string deathByHealth;
+    [TextArea(3, 8)]
+    [SerializeField] private string deathByCustomer;
     [SerializeField] private GameObject endImage;
     [SerializeField] private GameObject krakenImg;
     [SerializeField] private GameObject winProfiles;
@@ -128,6 +132,7 @@ public class GameManager : MonoBehaviour
             }
             else{
                 dm.textmp.transform.parent.gameObject.SetActive(false);
+                theEndButton.SetActive(true);
             }
         }   
     }
@@ -172,7 +177,7 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = false;
     }
 
-    public IEnumerator HandleEndGame(bool win, int death, string endString){ //check if the player has died (what conditions? if on no hearts?)
+    public IEnumerator HandleEndGame(bool win, int death){ //check if the player has died (what conditions? if on no hearts?)
         // death: 0 -> win, 1 -> by health, 2 -> by customer
         endgame = true;
         won = win;
@@ -201,7 +206,7 @@ public class GameManager : MonoBehaviour
         }else{
             yield return new WaitForSecondsRealtime(win ? 0f: 1f);
             dm.textmp.transform.parent.gameObject.SetActive(true);
-            dm.AddDialogue(endString);
+            dm.AddDialogue(death == 1? deathByHealth: deathByCustomer);
             dm.GoNextDialogue();
         }
     }

@@ -19,6 +19,7 @@ public class Customer : MonoBehaviour
     protected Animator myCustomerAnim; 
     private Image myCustomer;
     private TextMeshProUGUI tipText;
+    private TextMeshProUGUI orderText;
     protected int positionInLine;
 
     //mood vars
@@ -30,7 +31,7 @@ public class Customer : MonoBehaviour
     private List<string> myOrder = new List<string>();
     private float myOrderPrice;
     public float orderPrice{get{return myOrderPrice;}}
-    private Text orderText;
+    private Text orderPriceText;
 
     private List<Image> orderUi = new List<Image>();
     private List<Image> finalOrderUi = new List<Image>();
@@ -141,7 +142,7 @@ public class Customer : MonoBehaviour
                         foreach(Transform c in i.transform){
                             Image j = c.gameObject.GetComponent<Image>();
                             if (j != null) finalOrderUi.Add(j);
-                            else orderText = c.gameObject.GetComponent<Text>();
+                            else orderPriceText = c.gameObject.GetComponent<Text>();
                         }
                     break;
                     case "meter":
@@ -163,7 +164,7 @@ public class Customer : MonoBehaviour
     }
 
     private void UpdateOrderUI(){
-        orderText.text = "" + myOrderPrice;
+        orderPriceText.text = "" + myOrderPrice;
         
         int index = 0;
         while (index < orderUi.Count){
@@ -202,7 +203,8 @@ public class Customer : MonoBehaviour
         myCustomer = Instantiate(gm.customerSkeleton, gm.customerParent.GetChild(positionInLine)).GetComponent<Image>();
         myCustomer.gameObject.GetComponent<UIActivate>().AddAction(Activate);
         myCustomer.gameObject.GetComponent<UIDeactivate>().AddAction(Leave);
-        tipText = myCustomer.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        tipText = myCustomer.gameObject.GetComponent<CustomerCharacter>().tipText;
+        orderText = myCustomer.gameObject.GetComponent<CustomerCharacter>().orderText;
         myCustomer.sprite = mySprites[currSpriteState++];
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
         myCustomer.GetComponent<CustomerCharacter>().customer = this;
@@ -279,6 +281,7 @@ public class Customer : MonoBehaviour
         em.ChangeCoins(this, coins, coinHappy, myTimePhase);
         float tip = coins - orderPrice;
         tipText.text = (tip > 0 ? tip : 0).ToString("0.00");
+        orderText.text = (coins > 0 ? orderPrice : 0).ToString("0.00");
         order.SetActive(false);
         myCustomerAnim.SetTrigger("Leave");
     }

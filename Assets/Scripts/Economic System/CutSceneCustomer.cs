@@ -17,7 +17,6 @@ public class CutSceneCustomer : Customer
         dialogueManager = GetComponent<DialogueManager>();
         dialogueManager.textmp.transform.parent.gameObject.SetActive(false);
         base.Awake();
-        em.OnDialogueChange += HandleEndDialogue;
     }
 
     //change dialogue if the player presses enter key
@@ -37,12 +36,14 @@ public class CutSceneCustomer : Customer
     }
 
     public override void Init(int posInLine){
+        em.OnDialogueChange += HandleEndDialogue;
+        em.OnTimeChange += Leave;
+        
         if (positionInLine != 2){
             if (cm.TrySwapPosition(posInLine, wantedPos)){
                 posInLine = wantedPos;
             }
         }
-        em.OnTimeChange += Leave;
         base.Init(posInLine);
     }
 
@@ -81,7 +82,6 @@ public class CutSceneCustomer : Customer
     //initial leave will do nothing
     private void Leave(float f, int i){
         em.OnTimeChange -= (Leave);
-        em.OnDialogueChange -= HandleEndDialogue;
         if (finalWords != "") dialogueManager.AddDialogue(finalWords);
         else Debug.Log("no final words");
 
@@ -94,6 +94,7 @@ public class CutSceneCustomer : Customer
 
     IEnumerator LeaveInTwo(){
         yield return new WaitForSeconds(1.7f);
+        em.OnDialogueChange -= (HandleEndDialogue);
         Destroy(myCustomerAnim.gameObject);
         em.FreeCustomer(this, positionInLine, myMood, myTimePhase+1); //em OnCustomerLeave
     }
