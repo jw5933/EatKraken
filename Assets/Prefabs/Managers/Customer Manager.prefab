@@ -44,13 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e962a9d167f44914be23af7ba8019b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineup: []
   maxLostCustomers: 3
   xs:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  xColor: {r: 0.8980393, g: 0.4431373, b: 0.3137255, a: 1}
+  xColor: {r: 0.9433962, g: 0.2816928, b: 0.09344962, a: 1}
 --- !u!114 &4807230167176973866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +62,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc38d698d939402c9684e622e62fd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerPrefabs: []
   rangeStart: 0.5
-  rangeEnd: 5
+  rangeEnd: 4.5

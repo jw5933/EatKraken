@@ -73,7 +73,9 @@ public class DayManager : MonoBehaviour
     }
 
     private void HandleTimeChange(){
-        if (phaseIndex+1 >= timePerStage.Length){
+        if (phaseIndex+1 > timePerStage.Length) return;
+        if (phaseIndex+1 == timePerStage.Length){
+            phaseIndex++;
             if (!cm.lineUpIsEmpty) isOvertime = true;
             else{
                 StartCoroutine(gm.HandleEndGame(true, 0));
