@@ -45,13 +45,15 @@ public class AudioManager : MonoBehaviour
     }
     
     public void PlayMusic(AudioClip musicClip){
+        if (musicClip == null) return;
         AudioSource activeSource = musicSource[(musicIndex^=1)];
         activeSource.clip = musicClip;
         activeSource.volume = 1;
         activeSource.Play();
     }
 
-    public void PlayFadeMusic(AudioClip musicClip, float transitionTime = 1.0f){
+    public void PlayFadeMusic(AudioClip musicClip, float transitionTime = 2.0f){
+        if (musicClip == null) return;
         AudioSource activeSource = musicSource[(musicIndex^=1)];
         StartCoroutine(FadeMusic(musicClip, transitionTime));
     }
@@ -69,16 +71,19 @@ public class AudioManager : MonoBehaviour
     }
 
     public void PlaySFX(AudioClip sfx){
+        if (sfx == null) return;
         sfxSource.volume = 1;
         sfxSource.PlayOneShot(sfx);
     }
 
     public void PlaySFX(AudioClip sfx, float volume){
+        if (sfx == null) return;
         sfxSource.volume = volume;
         sfxSource.PlayOneShot(sfx);
     }
 
     public int PlayConstantSFX(AudioClip newClip, float newVolume = 1.0f){
+        if (newClip == null) return -1;
         if (freeSfxSources.Count <= 0){
             sfxSources.Add(this.gameObject.AddComponent<AudioSource>());
             sfxSources[sfxSources.Count-1].loop = true;
@@ -93,6 +98,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public void StopConstantSFX(int index){
+        if (index < 0 || index >= sfxSources.Count) return;
         sfxSources[index].Stop();
         freeSfxSources.Enqueue(index);
     }
