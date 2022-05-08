@@ -338,8 +338,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-  - hello again
-  - how's it going
+  - Break time!
+  - Make sure you get some food in ya, recover from the day's work.
+  - The customers seem to be loving your cooking! Ain't it how I said?
+  - We're making so much money, kid!
+  - We still got plenty of work to do though, so make sure you get your fuel in.
+  - And don't forget, you still have a lot to earn before you can pay me off!
+  - Speaking of... I may have forgotten to mention...
+  - But I'm gonna need to take a bit out of your wages.
+  - For maintenance fees. They've been going through the roof.
+  - You understand, right kid?
+  - Atta boy. Adios!
   tmp: {fileID: 2355736507367828357}
 --- !u!1 &8805506938605369008
 GameObject:
