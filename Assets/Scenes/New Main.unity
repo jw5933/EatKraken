@@ -9476,9 +9476,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e9dd090369a49b1b1171b7e6b1047d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frames: 
-  colors: []
-  endFrame: 0
+  frames: 00000000010000000200000003000000040000000500000006000000
+  colors:
+  - {r: 1, g: 0, b: 0.027672768, a: 1}
+  - {r: 1, g: 0.65654284, b: 0, a: 1}
+  - {r: 1, g: 0.8135679, b: 0, a: 1}
+  - {r: 0.27607453, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0.8484955, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0.94642854, a: 1}
+  - {r: 0, g: 0.3012905, b: 1, a: 1}
+  endFrame: 7
 --- !u!114 &2073530143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9492,7 +9499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39412054, g: 0.8018868, b: 0.25342646, a: 1}
+  m_Color: {r: 0.5760298, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
