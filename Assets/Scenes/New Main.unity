@@ -9476,16 +9476,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e9dd090369a49b1b1171b7e6b1047d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frames: 00000000010000000200000003000000040000000500000006000000
+  frames: 0000000001000000020000000300000004000000000000000100000002000000030000000400000005000000060000000000000001000000020000000000000001000000020000000300000004000000000000000100000000000000010000000200000003000000000000000100000002000000030000000400000000000000010000000200000003000000
   colors:
-  - {r: 1, g: 0, b: 0.027672768, a: 1}
-  - {r: 1, g: 0.65654284, b: 0, a: 1}
-  - {r: 1, g: 0.8135679, b: 0, a: 1}
-  - {r: 0.27607453, g: 1, b: 0, a: 1}
-  - {r: 0, g: 0.8484955, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0.94642854, a: 1}
-  - {r: 0, g: 0.3012905, b: 1, a: 1}
-  endFrame: 7
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.70980394, g: 0.92941177, b: 0.91764706, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.70980394, g: 0.9294118, b: 0.9176471, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  - {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
+  endFrame: 35
 --- !u!114 &2073530143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9499,7 +9527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5760298, g: 0, b: 1, a: 1}
+  m_Color: {r: 0.92941177, g: 0.76862746, b: 0.70980394, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10057,24 +10085,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[6].dialogue.Array.data[2]
-      value: Without me, you would be nothing but a sad, old Kraken.
+      value: Without me, you would be nothing but a sad, old Kraken!
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[6].dialogue.Array.data[3]
       value: Without me, you would be cooking your medicore recipes for yourself
-        and yourself only!
+        and yourself only!!
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[6].dialogue.Array.data[4]
-      value: Without me, you would be nothing!!
+      value: Without me, you would be nothing!!!
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[7].dialogue.Array.data[0]
-      value: No. That's where you got it wrong.
+      value: No. That's where you got it wrong!
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[7].dialogue.Array.data[1]
-      value: Without me, you would be nothing!
+      value: Without me, you would be nothing!!
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[7].dialogue.Array.data[2]
@@ -10082,7 +10110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[7].dialogue.Array.data[3]
-      value: are nothing!!
+      value: are nothing!!!
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[7].dialogue.Array.data[4]
