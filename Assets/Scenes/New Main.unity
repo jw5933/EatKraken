@@ -611,7 +611,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199181649}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -817,19 +817,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
       propertyPath: myCustomersPerStage.Array.data[0]
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
       propertyPath: myCustomersPerStage.Array.data[1]
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
       propertyPath: myCustomersPerStage.Array.data[2]
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
       propertyPath: myCustomersPerStage.Array.data[3]
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5721045096075295724, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
       propertyPath: m_Pivot.x
@@ -2299,7 +2299,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "I can't believe I'm earning so much! \nMy cooking is so much more popular
+    than I thought it ever would be..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d59476c5f225e4d2eae9be48021104ba, type: 2}
   m_sharedMaterial: {fileID: -7938160938107162783, guid: d59476c5f225e4d2eae9be48021104ba, type: 2}
@@ -2326,8 +2327,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 90
+  m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9817,9 +9818,9 @@ PrefabInstance:
       objectReference: {fileID: 479287385}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: deathByHealth
-      value: "Running a kitchen is brutal. You need to put your heart into it...\nBut
-        maybe you overdid it. Looks like you just weren\u2019t cut out for this.\nYou\u2019re
-        DEAD.\nTry Again?"
+      value: "Running a kitchen is brutal. \n\nYou need to put your heart into it...\nBut
+        maybe you overdid it. \nLooks like you just weren't cut out for this.\n\nYou
+        DIED.\nTry Again?"
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: firstLocation
@@ -9843,8 +9844,8 @@ PrefabInstance:
       objectReference: {fileID: 744873862}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: deathByCustomer
-      value: "Your performance was unsatisfactory. Someone better qualified will
-        be taking over. Pack your things. You\u2019re FIRED.  Try Again? "
+      value: "Your performance was unsatisfactory.\n\nSomeone more qualified will
+        be taking over. \nPack your things. \n\nYou got FIRED.  \nTry Again? "
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: theCustomerView
@@ -9871,51 +9872,229 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 884983046}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[0].dialogue.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[1].dialogue.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[2].dialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[3].dialogue.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[4].dialogue.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[5].dialogue.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[6].dialogue.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[7].dialogue.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[8].dialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[0].dialogue.Array.data[0]
-      value: "I can\u2019t believe I\u2019m earning so much! My cooking is so much
-        more popular than I thought it ever would be\u2026 maybe Boss was right about
-        me being a real talent.  "
+      value: maybe you were right about me being a real talent.
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[0].dialogue.Array.data[1]
-      value: "I think I\u2019ve earned just enough to pay off all my debts\u2026
-        a little bit more, and I could even open up my own shop, get my own boat
-        maybe..."
+      value: I think I've earned just enough to pay off all my debts...
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[0].dialogue.Array.data[2]
-      value: "Maybe I should ask Boss about it. I\u2019m sure he\u2019d be happy
-        to help me\u2026 right?"
+      value: 'a little bit more, and I could even open up my own shop...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[0].dialogue.Array.data[3]
+      value: get my own boat...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[0].dialogue.Array.data[4]
+      value: ...how did I do, Boss?
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[1].dialogue.Array.data[0]
-      value: "I can\u2019t believe I\u2019m earning so much! My cooking is so much
-        more popular than I thought it ever would be\u2026 maybe Boss was right about
-        me being a real talent.  "
+      value: "Kid, you're doing great! \nWe're making so much money! "
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[1].dialogue.Array.data[1]
-      value: "I think I\u2019ve earned just enough to pay off all my debts\u2026
-        a little bit more, and I could even open up my own shop, get my own boat
-        maybe..."
+      value: I do need to have a word with you though...
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[1].dialogue.Array.data[2]
-      value: "Maybe I should ask Boss about it. I\u2019m sure he\u2019d be happy
-        to help me\u2026 right?"
+      value: 'This ole boat is wearing down.
+
+        I''m sure you''ve felt how
+        she rattles...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[1].dialogue.Array.data[3]
+      value: The cost of maintenance is going up.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[1].dialogue.Array.data[4]
+      value: "You know how it is. \nThe fees you pay for transport, room, and board..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[1].dialogue.Array.data[5]
+      value: it's gonna be a bit extra now.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[1].dialogue.Array.data[6]
+      value: But at the speed you're going at, shouldn't be a problem, eh?
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[1].dialogue.Array.data[7]
+      value: "But at the speed you're going at, shouldn\u2019t be a problem, eh?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[2].dialogue.Array.data[0]
+      value: 'wh-what...!?
+
+        You''re using my paycheck to pay off the debts
+        of your business?!'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[2].dialogue.Array.data[1]
+      value: But what about my debts?
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[2].dialogue.Array.data[2]
+      value: What about the extra money you were talking about?
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[3].dialogue.Array.data[0]
-      value: 
+      value: 'Woah woah!
+
+        What''s the rush?'
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[3].dialogue.Array.data[1]
-      value: 
+      value: Once you pay off my debt, you'll be able to pay off yours and then you
+        can start saving money for yourself!
       objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: endDialogue.Array.data[3].dialogue.Array.data[2]
-      value: When it comes to actually getting me on my feet... you do nothing but
-        hold me back!
+      value: 'Trust me kid,
+
+        no one gets to the position I''m at overnight.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[3].dialogue.Array.data[3]
+      value: Don't worry!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[3].dialogue.Array.data[4]
+      value: 'In a few years,
+
+        you''ll be able to have everything you want
+        and more...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[4].dialogue.Array.data[0]
+      value: ...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[4].dialogue.Array.data[1]
+      value: You don't actually want me to suceed, do you?
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[5].dialogue.Array.data[0]
+      value: "I'm... \nI'm nothing but an investment to you!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[5].dialogue.Array.data[1]
+      value: You've supported me so much, but only when you get to keep the profit!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[5].dialogue.Array.data[2]
+      value: When it comes to actually helping me...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[5].dialogue.Array.data[3]
+      value: you do nothing but hold me back!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[6].dialogue.Array.data[0]
+      value: "Excuse me??\t"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[6].dialogue.Array.data[1]
+      value: 'I am giving you every chance to succeed!
+
+        You need to learn
+        a little appreciation.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[6].dialogue.Array.data[2]
+      value: Without me, you would be nothing but a sad, old Kraken.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[6].dialogue.Array.data[3]
+      value: Without me, you would be cooking your medicore recipes for yourself
+        and yourself only!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[6].dialogue.Array.data[4]
+      value: Without me, you would be nothing!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[7].dialogue.Array.data[0]
+      value: No. That's where you got it wrong.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[7].dialogue.Array.data[1]
+      value: Without me, you would be nothing!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[7].dialogue.Array.data[2]
+      value: You...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[7].dialogue.Array.data[3]
+      value: are nothing!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[7].dialogue.Array.data[4]
+      value: Without me, you would be nothing.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[8].dialogue.Array.data[0]
+      value: "Excuse me??\t"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[8].dialogue.Array.data[1]
+      value: 'I am giving you every chance to succeed!
+
+        You need to learn
+        a little appreciation.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: endDialogue.Array.data[8].dialogue.Array.data[2]
+      value: Without me, you would be nothing but a sad, old Kraken.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
