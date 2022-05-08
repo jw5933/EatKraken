@@ -58,7 +58,7 @@ MonoBehaviour:
   - {fileID: 8248982002431668835, guid: d571bbe013ba94a3aaed9f5543a9bb39, type: 3}
   myHappyWaitTime: 28
   myNeutralWaitTime: 22
-  myAngryWaitTime: 14
+  myAngryWaitTime: 10
   myTipPercent: 0.1
   myGenerousTipPercent: 0.2
   myLeniency: 0

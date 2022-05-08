@@ -81,7 +81,6 @@ public class CutSceneCustomer : Customer
     //initial leave will do nothing
     private void Leave(float f, int i){
         em.OnTimeChange -= (Leave);
-        em.OnDialogueChange -= HandleEndDialogue;
         if (finalWords != "") dialogueManager.AddDialogue(finalWords);
         else Debug.Log("no final words");
 
@@ -94,6 +93,7 @@ public class CutSceneCustomer : Customer
 
     IEnumerator LeaveInTwo(){
         yield return new WaitForSeconds(1.7f);
+        em.OnDialogueChange -= (HandleEndDialogue);
         Destroy(myCustomerAnim.gameObject);
         em.FreeCustomer(this, positionInLine, myMood, myTimePhase+1); //em OnCustomerLeave
     }

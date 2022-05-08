@@ -13,6 +13,7 @@ public class CameraHover : MonoBehaviour, IPointerEnterHandler
         t = FindObjectOfType<Tentacle>();
     }
     public void OnPointerEnter(PointerEventData eventData){
+        Debug.Log(gameObject.name);
         if (gameObject.name == "left"){
             cam.SwapToCam(cam.camIndex-1 >=0 ? cam.camIndex-1: cam.camIndex);
             t.UpdateEndPos(-1);
