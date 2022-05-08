@@ -73,7 +73,9 @@ public class GameManager : MonoBehaviour
 
     //end state
     [Header("End State")]
+    [TextArea(3, 8)]
     [SerializeField] private string deathByHealth;
+    [TextArea(3, 8)]
     [SerializeField] private string deathByCustomer;
     [SerializeField] private GameObject endImage;
     [SerializeField] private GameObject krakenImg;

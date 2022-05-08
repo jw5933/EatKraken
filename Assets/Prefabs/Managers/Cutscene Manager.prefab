@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutSceneAnim: {fileID: 0}
   dialogueMusic: {fileID: 8300000, guid: e840b9d15351b475aa64235ff8bdb93a, type: 3}
-  cutsceneMusic: {fileID: 8300000, guid: 2dc3f83ebd13b4a5fb6f7f778215cb07, type: 3}
+  cutsceneMusic: {fileID: 8300000, guid: 519699ad832fc4d07af74fa48c3b6e0d, type: 3}
 --- !u!114 &3369602543925774391
 MonoBehaviour:
   m_ObjectHideFlags: 0

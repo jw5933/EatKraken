@@ -17,7 +17,6 @@ public class CutSceneCustomer : Customer
         dialogueManager = GetComponent<DialogueManager>();
         dialogueManager.textmp.transform.parent.gameObject.SetActive(false);
         base.Awake();
-        em.OnDialogueChange += HandleEndDialogue;
     }
 
     //change dialogue if the player presses enter key
@@ -37,12 +36,14 @@ public class CutSceneCustomer : Customer
     }
 
     public override void Init(int posInLine){
+        em.OnDialogueChange += HandleEndDialogue;
+        em.OnTimeChange += Leave;
+        
         if (positionInLine != 2){
             if (cm.TrySwapPosition(posInLine, wantedPos)){
                 posInLine = wantedPos;
             }
         }
-        em.OnTimeChange += Leave;
         base.Init(posInLine);
     }
 

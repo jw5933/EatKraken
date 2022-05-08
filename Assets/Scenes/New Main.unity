@@ -3177,7 +3177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &576527122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9579,6 +9579,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 479287385}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: deathByHealth
+      value: "Running a kitchen is brutal. You need to put your heart into it...\nBut
+        maybe you overdid it. Looks like you just weren\u2019t cut out for this.\nYou\u2019re
+        DEAD.\nTry Again?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: firstLocation
       value: 
       objectReference: {fileID: 1325443367}
@@ -9598,6 +9604,11 @@ PrefabInstance:
       propertyPath: theOrderParent
       value: 
       objectReference: {fileID: 744873862}
+    - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
+      propertyPath: deathByCustomer
+      value: "Your performance was unsatisfactory. Someone better qualified will
+        be taking over. Pack your things. You\u2019re FIRED.  Try Again? "
+      objectReference: {fileID: 0}
     - target: {fileID: 6540605242340362585, guid: ff1259a1a4bb349e0962ec89e52d6b3e, type: 3}
       propertyPath: theCustomerView
       value: 
