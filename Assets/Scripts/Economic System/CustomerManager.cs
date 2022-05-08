@@ -58,6 +58,7 @@ public class CustomerManager : MonoBehaviour
     private void UpdateOnCustomerLeave(Customer customer, int position, Customer.Mood x, int nextPhase){
         RemoveCustomer(customer, nextPhase);
         freePositions.Enqueue(position);
+        LineupCustomer(null);
     }
 
     //update the amount of money earned and customers served in current phase
@@ -68,7 +69,7 @@ public class CustomerManager : MonoBehaviour
             lostCustomers++;
         }
         else servedCustomers++;
-        if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame(false, 2, "Your customers were unhappy with your service, and complained to your boss. You got fired. Try again... \n Press <R> to retry"));
+        if (lostCustomers>= maxLostCustomers) StartCoroutine(gm.HandleEndGame(false, 2));
     }
 
     private void RemoveCustomer(Customer c, int nextPhase){
@@ -76,7 +77,7 @@ public class CustomerManager : MonoBehaviour
         if (customerShownIndex > 0) customerShownIndex--;
         Destroy(c.gameObject);
 
-        if (dm.endOfDay && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(true, 0, string.Format("Congrats! You made it through day {0} in {4}. You have earned {1}, and served {2} customers, losing {3}.", dm.day, coinsMade, servedCustomers, lostCustomers, gm.currLocation)));
+        if (dm.endOfDay && lineUpIsEmpty) StartCoroutine(gm.HandleEndGame(true, 0));
     }
 
     /* public bool ServeCustomer(List<Ingredient> order){ //called by dropobject -> serve
@@ -87,8 +88,8 @@ public class CustomerManager : MonoBehaviour
         return false;
     } */
 
-    public void LineupCustomer(Customer c){ //line up the customer behind the current end one
-        lineup.Add(c);
+    public void LineupCustomer(Customer c){ //line up the customer behind the current end one -> called by generator
+        if (c!= null) lineup.Add(c);
         while (freePositions.Count > 0 && customerShownIndex < lineup.Count){
             int pos = freePositions.Dequeue();
             Debug.Log(pos);
