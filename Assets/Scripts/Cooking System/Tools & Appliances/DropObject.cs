@@ -38,7 +38,7 @@ public class DropObject : MonoBehaviour
         }
         //Debug.Log(this.name);
         switch (myType){
-            case Type.Serve:
+            /* case Type.Serve:
                 if (player.holdingBase && player.baseObject.order.Count > 0){
                     //Debug.Log("serving");
                     
@@ -46,8 +46,7 @@ public class DropObject : MonoBehaviour
                         Destroy(player.DropItem("base"));
                     }
                 }
-            break;
-
+            break; */
             case Type.Consume:
                 if (player.holdingIngredient){
                     Ingredient o = player.DropItem("ingredient").GetComponent<Ingredient>();

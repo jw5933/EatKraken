@@ -20,6 +20,7 @@ public class CSProfile : MonoBehaviour
             this.gameObject.SetActive(false);
             return;
         }
+        if (frames.Count == 0) return;
         if (frames[0] != frame) return;
         AdjustImage();
     }

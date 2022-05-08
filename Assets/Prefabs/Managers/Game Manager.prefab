@@ -62,8 +62,19 @@ MonoBehaviour:
   firstLocation: {fileID: 0}
   theMaxIngredients: 3
   endImage: {fileID: 0}
+  dialogueImages: {fileID: 0}
+  endAnim: {fileID: 0}
+  theEndButton: {fileID: 0}
+  winTmp: {fileID: 0}
+  endDialogue:
+  - dialogue: []
+  - dialogue: []
+  - dialogue: []
+  - dialogue: []
+  - dialogue: []
+  - dialogue: []
   endImages:
-  - {fileID: 21300000, guid: 3d69e0c2eeb3142ffbb28648682aa78a, type: 3}
+  - {fileID: 21300000, guid: 9f3ffa4f8fa044fdfbcdff14fa8765dc, type: 3}
   - {fileID: 21300000, guid: fdbbc56b24b4842d295d9eef35c8b623, type: 3}
   - {fileID: 21300000, guid: 349a8c2116c3042498e7f7acbc4256b6, type: 3}
   winSound: {fileID: 8300000, guid: db269af79d31542b79edb815e166400c, type: 3}

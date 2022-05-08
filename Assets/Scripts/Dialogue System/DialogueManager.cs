@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     int index = -1; //which line is being typed
 
     [SerializeField] private TextMeshProUGUI tmp;
-    public GameObject textmp {get{return tmp.transform.parent.gameObject;}}
+    public TextMeshProUGUI textmp {get{return tmp;} set{tmp = value;}}
     private EventManager em;
 
     private void Awake(){

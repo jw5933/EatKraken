@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5157602160324353240
 RectTransform:
   m_ObjectHideFlags: 0
@@ -324,7 +324,7 @@ MonoBehaviour:
   myLeniency: 30
   serveSfx: {fileID: 8300000, guid: 4003cd0165f134a70b3ca7b5f3165d3f, type: 3}
   wantedPos: 2
-  finalWords: good luck, bye
+  finalWords: Atta boy. Adios!
 --- !u!114 &606088693523135536
 MonoBehaviour:
   m_ObjectHideFlags: 0

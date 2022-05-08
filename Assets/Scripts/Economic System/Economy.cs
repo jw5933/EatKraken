@@ -24,6 +24,28 @@ public class Economy : MonoBehaviour
         float tip = coins - c.orderPrice;
         tips += (tip > 0 ? tip : 0);
         
+        if (tips < 6){
+            tipsImage.sprite = tipsImgs[0];
+        }
+        else if (tips < 15){
+            tipsImage.sprite = tipsImgs[1];
+        }
+        else if (tips < 30){
+            tipsImage.sprite = tipsImgs[2];
+        }
+        else {
+            tipsImage.sprite = tipsImgs[3];
+        }
+
+        playerCoins += (coins-tip > 0? coins - tip: 0);
+        tipsText.text = tips.ToString("0.00");
+        if (bankText != null) bankText.text = playerCoins.ToString("0.00");
+        if (lastOrderText != null) lastOrderText.text = coins.ToString("0.00");
+    }
+
+    public void RemovePlayerCoins(float percent){
+        playerCoins -= (playerCoins * percent);
+        tips -= (tips * percent);
         if (tips < 15){
             tipsImage.sprite = tipsImgs[0];
         }
@@ -36,11 +58,6 @@ public class Economy : MonoBehaviour
         else {
             tipsImage.sprite = tipsImgs[3];
         }
-
-        playerCoins += (coins-tip > 0? coins - tip: 0);
-        tipsText.text = tips.ToString("0.00");
-        if (bankText != null) bankText.text = playerCoins.ToString("0.00");
-        if (lastOrderText != null) lastOrderText.text = coins.ToString("0.00");
     }
 
 }
