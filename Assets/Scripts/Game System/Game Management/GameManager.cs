@@ -123,10 +123,10 @@ public class GameManager : MonoBehaviour
     public void ActivateDialogue(){
         if (endgame && !dm.GoNextDialogue()){
             if (won){
-                if (krakenImg.activeSelf){
+                /* if (krakenImg.activeSelf){
                     krakenImg.SetActive(false);
                     winProfiles.SetActive(false);
-                }
+                } */
                 endAnim.SetTrigger("GoNextAnim");
                 if (dIndex < endDialogue.Count) dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
             }
@@ -198,8 +198,8 @@ public class GameManager : MonoBehaviour
         
         if (win){
             dm.textmp = winTmp;
-            krakenImg.SetActive(true);
-            winProfiles.SetActive(true);
+            /* krakenImg.SetActive(true);
+            winProfiles.SetActive(true); */
             dm.textmp.transform.parent.gameObject.SetActive(true);
             endAnim.SetTrigger("GoNextAnim");
             dm.ChangeDialogue(endDialogue[dIndex++].dialogue);

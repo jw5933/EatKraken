@@ -815,6 +815,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 282266911}
     m_Modifications:
+    - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
+      propertyPath: myCustomersPerStage.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
+      propertyPath: myCustomersPerStage.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
+      propertyPath: myCustomersPerStage.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721045096075295715, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
+      propertyPath: myCustomersPerStage.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5721045096075295724, guid: 2df6acef658bb4c8b80ad342cec191ff, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3291,7 +3307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &576527122
 RectTransform:
   m_ObjectHideFlags: 0

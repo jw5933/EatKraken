@@ -93,6 +93,7 @@ public class Generator : MonoBehaviour
     }
 
     private void UpdateOnTimeChange(float time, int phase){
+        if (phase >= customersPerStage.Length) return;
         currPhase = phase;
         maxCustomers = customersPerStage[phase];
         customersSpawned = 0;
