@@ -112,6 +112,7 @@ public class MeteredAppliance : Appliance
             return false;
 
         meter.StopMeter();
+        if (am != null) am.StopConstantSFX(audioSourceIndex);
         myIngredient.cookedTime = meter.callerTime;
         meter.ResetVars();
         Ingredient i = player.DropItem("ingredient").GetComponent<Ingredient>();

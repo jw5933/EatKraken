@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 {
     // ==============   variables   ==============
     [Header("General")]
+    public bool otherScreenOpen;
     [SerializeField] bool gameIn3d;
     public bool in3d {get{return gameIn3d;}}
     [SerializeField] private GameObject pauseScreen;
@@ -83,10 +84,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animator endAnim;
     [SerializeField] GameObject theEndButton;
     [SerializeField] private TextMeshProUGUI winTmp;
+    [SerializeField] private int numOfEndFrames = 9;
     [SerializeField] List<Dialogue> endDialogue = new List<Dialogue>();
     [SerializeField] private Sprite[] endImages;
     [SerializeField] private AudioClip winSound;
     [SerializeField] private AudioClip loseSound;
+    [SerializeField] private AudioClip happyKrakenSound;
+    [SerializeField] private AudioClip intenseSound;
     private int dIndex;
     bool endgame;
     bool won;
@@ -113,7 +117,9 @@ public class GameManager : MonoBehaviour
             RestartGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape)){
+            if (endgame) return;
             if (pauseScreen.activeSelf) CheckPause();
+            else if(!otherScreenOpen) CheckPause();
         }
         else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)){
             ActivateDialogue();
@@ -128,7 +134,11 @@ public class GameManager : MonoBehaviour
                     winProfiles.SetActive(false);
                 } */
                 endAnim.SetTrigger("GoNextAnim");
-                if (dIndex < endDialogue.Count) dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
+                if (dIndex < endDialogue.Count){
+                    if (dIndex == 6) am.PlayMusic(intenseSound);
+                    dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
+                    dm.GoNextDialogue();
+                }
             }
             else{
                 dm.textmp.transform.parent.gameObject.SetActive(false);
@@ -138,7 +148,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void CloseEndAnim(){
-        dm.textmp.transform.parent.gameObject.SetActive(false);
+        if (dIndex < numOfEndFrames) {
+            dIndex++;
+            dm.textmp.transform.parent.gameObject.SetActive(false);
+            return;
+        }
+        am.PlayMusic(happyKrakenSound);
         theEndButton.SetActive(true);
     }
 
@@ -171,6 +186,11 @@ public class GameManager : MonoBehaviour
         AudioListener.pause = false;
     }
 
+    public IEnumerator ResetActiveScreen(){
+        yield return new WaitForSecondsRealtime (0.1f);
+        otherScreenOpen = false;
+    }
+
     public void StartScene(){
         SceneManager.LoadScene("StartScene");
         Time.timeScale = 1;
@@ -181,11 +201,14 @@ public class GameManager : MonoBehaviour
         // death: 0 -> win, 1 -> by health, 2 -> by customer
         endgame = true;
         won = win;
-        if (am != null) am.StopAllConstantSFX();
+        if (am != null)am.StopAllConstantSFX();
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(0.5f);
         if (win){
-            if (am != null) am.PlaySFX(winSound);
+            if (am != null){
+                am.StopMusic();
+                am.PlaySFX(winSound);
+            }
         }
         else{
            if (am != null) am.PlaySFX(loseSound);
@@ -203,8 +226,11 @@ public class GameManager : MonoBehaviour
             dm.textmp.transform.parent.gameObject.SetActive(true);
             endAnim.SetTrigger("GoNextAnim");
             dm.ChangeDialogue(endDialogue[dIndex++].dialogue);
+            yield return new WaitForSecondsRealtime(2.5f);
+            am.PlayMusic(happyKrakenSound);
+            
         }else{
-            yield return new WaitForSecondsRealtime(win ? 0f: 1f);
+            yield return new WaitForSecondsRealtime(1f);
             dm.textmp.transform.parent.gameObject.SetActive(true);
             dm.AddDialogue(death == 1? deathByHealth: deathByCustomer);
             dm.GoNextDialogue();

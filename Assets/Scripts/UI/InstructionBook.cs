@@ -79,9 +79,11 @@ public class InstructionBook : MonoBehaviour
             AudioListener.pause = false;
             Time.timeScale = 1;
         }
+        gm.ResetActiveScreen();
     }
 
     public void OpenBook(){
+        gm.otherScreenOpen = true;
         if (!gm.paused){
             AudioListener.pause = true;
             Time.timeScale = 0;

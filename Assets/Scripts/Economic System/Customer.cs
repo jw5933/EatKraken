@@ -140,9 +140,12 @@ public class Customer : MonoBehaviour
                     break;
                     case "final group":
                         foreach(Transform c in i.transform){
-                            Image j = c.gameObject.GetComponent<Image>();
-                            if (j != null) finalOrderUi.Add(j);
-                            else orderPriceText = c.gameObject.GetComponent<Text>();
+                            if (c.gameObject.name == "final"){
+                                Image j = c.gameObject.GetComponent<Image>();
+                                finalOrderUi.Add(j);
+                            }
+                            else if (c.gameObject.name == "priceTag")
+                                orderPriceText = c.transform.GetChild(0).gameObject.GetComponent<Text>();
                         }
                     break;
                     case "meter":
@@ -206,6 +209,7 @@ public class Customer : MonoBehaviour
         tipText = myCustomer.gameObject.GetComponent<CustomerCharacter>().tipText;
         orderText = myCustomer.gameObject.GetComponent<CustomerCharacter>().orderText;
         myCustomer.sprite = mySprites[currSpriteState++];
+        myCustomer.enabled = true;
         myCustomerAnim = myCustomer.gameObject.GetComponent<Animator>();
         myCustomer.GetComponent<CustomerCharacter>().customer = this;
     }

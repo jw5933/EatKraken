@@ -30,7 +30,7 @@ public class Map : MonoBehaviour, IPointerClickHandler
         em = FindObjectOfType<EventManager>();
         book = FindObjectOfType<InstructionBook>();
         book.action = GoNextLocation;
-        locationAnim.GetComponent<UIDeactivate>().AddAction(OpenBook);
+        if (locationAnim !=null) locationAnim.GetComponent<UIDeactivate>().AddAction(OpenBook);
     }
 
     private void Start(){
@@ -44,9 +44,13 @@ public class Map : MonoBehaviour, IPointerClickHandler
             locationAnim.SetActive(true);
             locationAnim.GetComponent<Animator>().SetTrigger("MoveLocation");
         }
+        else{
+            OpenBook();
+        }
     }
 
     private void OpenBook(){
+        gm.otherScreenOpen = true;
         book.gameObject.SetActive(true);
     }
 

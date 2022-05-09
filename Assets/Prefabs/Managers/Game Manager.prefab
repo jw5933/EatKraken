@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7778c0e05c55b43cda0f485eea21bcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherScreenOpen: 0
   gameIn3d: 1
   pauseScreen: {fileID: 0}
   theOrderParent: {fileID: 0}
@@ -61,24 +62,90 @@ MonoBehaviour:
   theStationaryCanvas: {fileID: 0}
   firstLocation: {fileID: 0}
   theMaxIngredients: 3
+  deathByHealth: "Running a kitchen is brutal. \n\nYou need to put your heart into
+    it...\nBut maybe you overdid it. \nLooks like you just weren't cut out for this.\n\nYou
+    DIED.\nTry Again?"
+  deathByCustomer: "Your performance was unsatisfactory.\n\nSomeone more qualified
+    will be taking over. \nPack your things. \n\nYou got FIRED.  \nTry Again? "
   endImage: {fileID: 0}
-  dialogueImages: {fileID: 0}
+  krakenImg: {fileID: 0}
+  winProfiles: {fileID: 0}
   endAnim: {fileID: 0}
   theEndButton: {fileID: 0}
   winTmp: {fileID: 0}
+  numOfEndFrames: 9
   endDialogue:
-  - dialogue: []
-  - dialogue: []
-  - dialogue: []
-  - dialogue: []
-  - dialogue: []
-  - dialogue: []
+  - dialogue:
+    - maybe you were right about me being a real talent.
+    - I think I've earned just enough to pay off all my debts...
+    - 'a little bit more, and I could even open up my own shop...
+
+'
+    - get my own boat...
+    - ...how did I do, Boss?
+  - dialogue:
+    - "Kid, you're doing great! \nWe're making so much money! "
+    - I do need to have a word with you though...
+    - 'This ole boat is wearing down.
+
+      I''m sure you''ve felt how she rattles...
+
+'
+    - The cost of maintenance is going up.
+    - "You know how it is. \nThe fees you pay for transport, room, and board..."
+    - it's gonna be a bit extra now.
+    - But at the speed you're going at, shouldn't be a problem, eh?
+  - dialogue:
+    - 'wh-what...!?
+
+      You''re using my paycheck to pay off the debts of your
+      business?!'
+    - But what about my debts?
+    - What about the extra money you were talking about?
+  - dialogue:
+    - 'Woah woah!
+
+      What''s the rush?'
+    - Once you pay off my debt, you'll be able to pay off yours and then you can
+      start saving money for yourself!
+    - 'Trust me kid,
+
+      no one gets to the position I''m at overnight.'
+    - Don't worry!
+    - 'In a few years,
+
+      you''ll be able to have everything you want and more...'
+  - dialogue:
+    - ...
+    - You don't actually want me to suceed, do you?
+  - dialogue:
+    - "I'm... \nI'm nothing but an investment to you!"
+    - You've supported me so much, but only when you get to keep the profit!
+    - When it comes to actually helping me...
+    - you do nothing but hold me back!
+  - dialogue:
+    - "Excuse me??\t"
+    - 'I am giving you every chance to succeed!
+
+      You need to learn a little
+      appreciation.'
+    - Without me, you would be nothing but a sad, old Kraken!
+    - Without me, you would be cooking your medicore recipes for yourself and yourself
+      only!!
+    - Without me, you would be nothing!!!
+  - dialogue:
+    - No. That's where you got it wrong!
+    - Without me, you would be nothing!!
+    - You...
+    - are nothing!!!
   endImages:
   - {fileID: 21300000, guid: 9f3ffa4f8fa044fdfbcdff14fa8765dc, type: 3}
   - {fileID: 21300000, guid: fdbbc56b24b4842d295d9eef35c8b623, type: 3}
   - {fileID: 21300000, guid: 349a8c2116c3042498e7f7acbc4256b6, type: 3}
   winSound: {fileID: 8300000, guid: db269af79d31542b79edb815e166400c, type: 3}
   loseSound: {fileID: 8300000, guid: c9886f8e5199a42d4b51e74e4c85bcaf, type: 3}
+  happyKrakenSound: {fileID: 8300000, guid: 2dc3f83ebd13b4a5fb6f7f778215cb07, type: 3}
+  intenseSound: {fileID: 8300000, guid: 5875efed0413a45aaa0dfda1c6a72bea, type: 3}
 --- !u!114 &5451828034490479970
 MonoBehaviour:
   m_ObjectHideFlags: 0

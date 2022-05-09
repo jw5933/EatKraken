@@ -19,8 +19,8 @@ public class ProteinSelector : MonoBehaviour
     [SerializeField] AudioClip cutSound;
     [SerializeField] AudioClip clickSound;
 
-    private GameManager gameManager;
-    public GameManager gm {get{return gameManager;}}
+    private GameManager gm;
+    public GameManager gameManager {get{return gm;}}
     HealthManager hm;
     private Material material;
 
@@ -28,7 +28,7 @@ public class ProteinSelector : MonoBehaviour
         am = FindObjectOfType<AudioManager>();
         player = FindObjectOfType<Player>();
         hm = FindObjectOfType<HealthManager>();
-        gameManager = FindObjectOfType<GameManager>();
+        gm = FindObjectOfType<GameManager>();
         material = GetComponent<Image>().material;
         
         planeUpdate = transform.GetChild(1).gameObject;
@@ -54,11 +54,7 @@ public class ProteinSelector : MonoBehaviour
     }
 
     private void OnMouseUpAsButton(){
-        if (!player.handFree) return;
-        planeUpdate.SetActive(true);
-        tentacle.SetActive(true);
-        if (am != null) am.PlaySFX(clickSound);
-        tentacleAnim.SetTrigger("ShowProtein");
+        OpenSelector();
         
         //when player clicks on UI, show tentacle for cutting
         //tentacle has 3 parts -> iamges need to be manually sliced
@@ -98,6 +94,15 @@ public class ProteinSelector : MonoBehaviour
         newProtein = null;
     }
 
+    private void OpenSelector(){
+        if (!player.handFree) return;
+        gm.otherScreenOpen = true;
+        planeUpdate.SetActive(true);
+        tentacle.SetActive(true);
+        if (am != null) am.PlaySFX(clickSound);
+        tentacleAnim.SetTrigger("ShowProtein");
+    }
+
     public void CloseSelector(){
         proteinKnife.gameObject.SetActive(false);
         planeUpdate.SetActive(false);
@@ -106,5 +111,6 @@ public class ProteinSelector : MonoBehaviour
         tentacleAnim.Rebind();
         knifeAnim.Rebind();
         tentacle.transform.localPosition = initialPos;
+        gm.ResetActiveScreen();
     }
 }

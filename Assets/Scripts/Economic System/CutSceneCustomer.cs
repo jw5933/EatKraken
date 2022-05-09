@@ -72,7 +72,7 @@ public class CutSceneCustomer : Customer
     }
 
     private IEnumerator GoNextDialogue(){
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(6);
         ActivateInput();
     }
 

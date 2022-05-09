@@ -41,7 +41,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2783637607744610476, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000030517578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2783637607744610476, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -139,12 +139,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: daym meter
       objectReference: {fileID: 0}
+    - target: {fileID: 4239373099506391901, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3.2836304
+      objectReference: {fileID: 0}
     - target: {fileID: 5978829462053410564, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9e319ad59cc6d446e81f3d4dad3ae539, type: 3}
     - target: {fileID: 5978829462053410564, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877835529472718330, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877835529472718330, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877835529472718330, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877835529472718330, guid: 33acdb026771741b3b8fdc01d1f333ac, type: 3}
+      propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

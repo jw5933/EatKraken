@@ -261,6 +261,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Day Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 6677793563715230019, guid: fe37e614365394e5b87729d854535f03, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe37e614365394e5b87729d854535f03, type: 3}
 --- !u!4 &6540605241996246337 stripped
@@ -384,6 +388,14 @@ PrefabInstance:
     - target: {fileID: 8573766629852705841, guid: 4f23ce86b58eb4eb7b509b7b3ccafec4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573766629852705847, guid: 4f23ce86b58eb4eb7b509b7b3ccafec4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573766629852705847, guid: 4f23ce86b58eb4eb7b509b7b3ccafec4, type: 3}
+      propertyPath: proteinCountdown
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f23ce86b58eb4eb7b509b7b3ccafec4, type: 3}

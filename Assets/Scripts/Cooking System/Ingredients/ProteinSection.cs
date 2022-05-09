@@ -37,7 +37,7 @@ public class ProteinSection : MonoBehaviour
 
     private GameObject CreateProtein(){
         if (proteinPrefab != null){
-            return Instantiate(proteinPrefab, ps.gm.proteinParent);
+            return Instantiate(proteinPrefab, ps.gameManager.proteinParent);
         }
         return null;
     }

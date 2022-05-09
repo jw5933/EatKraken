@@ -30,8 +30,7 @@ public class AudioManager : MonoBehaviour
         musicSource[0].loop = true;
         musicSource[1].loop = true;
 
-        musicSource[musicIndex].clip = startClip;
-        musicSource[musicIndex].Play();
+       PlayMusic(startClip);
     }
     
     //this only occurs when the main game starts
@@ -41,18 +40,23 @@ public class AudioManager : MonoBehaviour
     }
 
     private void UpdateOnTimeChange(float x, int phase){
-        if (musicClipPerPhase[phase] != null)PlayFadeMusic(musicClipPerPhase[phase], 1.5f);
+        if (phase < musicClipPerPhase.Length && musicClipPerPhase[phase] != null) PlayMusic(musicClipPerPhase[phase]);
     }
     
     public void PlayMusic(AudioClip musicClip){
         if (musicClip == null) return;
-        AudioSource activeSource = musicSource[(musicIndex^=1)];
+        AudioSource activeSource = musicSource[musicIndex];
         activeSource.clip = musicClip;
         activeSource.volume = 1;
         activeSource.Play();
     }
 
-    public void PlayFadeMusic(AudioClip musicClip, float transitionTime = 2.0f){
+    public void StopMusic(){
+        AudioSource activeSource = musicSource[musicIndex];
+        activeSource.Stop();
+    }
+
+    public void PlayFadeMusic(AudioClip musicClip, float transitionTime = 1.0f){
         if (musicClip == null) return;
         AudioSource activeSource = musicSource[(musicIndex^=1)];
         StartCoroutine(FadeMusic(musicClip, transitionTime));
