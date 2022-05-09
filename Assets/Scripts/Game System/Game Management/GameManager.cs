@@ -182,6 +182,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (am !=null) am.PlayStart();
         Time.timeScale = 1;
         AudioListener.pause = false;
     }

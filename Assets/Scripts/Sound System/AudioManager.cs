@@ -32,6 +32,10 @@ public class AudioManager : MonoBehaviour
 
        PlayMusic(startClip);
     }
+
+    public void PlayStart(){
+        PlayMusic(startClip);
+    }
     
     //this only occurs when the main game starts
     public void Activate(){
