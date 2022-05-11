@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     // ==============   variables   ==============
     [Header("General")]
     public bool otherScreenOpen;
+    private IEnumerator myCoroutine;
     [SerializeField] bool gameIn3d;
     public bool in3d {get{return gameIn3d;}}
     [SerializeField] private GameObject pauseScreen;
@@ -118,8 +119,8 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape)){
             if (endgame) return;
-            if (pauseScreen.activeSelf) CheckPause();
-            else if(!otherScreenOpen) CheckPause();
+            if (pauseScreen.activeSelf && !otherScreenOpen) CheckPause(); //close w/ esc
+            else if(!otherScreenOpen) CheckPause(); //open with esc
         }
         else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)){
             ActivateDialogue();
@@ -181,18 +182,32 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame(){
+        if (am != null){
+            am.StopAllConstantSFX();
+            am.StopMusic();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        if (am !=null) am.PlayStart();
         Time.timeScale = 1;
         AudioListener.pause = false;
     }
 
-    public IEnumerator ResetActiveScreen(){
+    public void ResetActiveScreen(){
+        if (myCoroutine != null) StopCoroutine(myCoroutine);
+        myCoroutine = ResetActiveScreenCoroutine();
+        StartCoroutine(myCoroutine);
+    }
+    
+    public IEnumerator ResetActiveScreenCoroutine(){
         yield return new WaitForSecondsRealtime (0.1f);
         otherScreenOpen = false;
     }
 
     public void StartScene(){
+        if (am != null){
+            am.StopAllConstantSFX();
+            am.StopMusic();
+            am.PlayStart();
+        }
         SceneManager.LoadScene("StartScene");
         Time.timeScale = 1;
         AudioListener.pause = false;

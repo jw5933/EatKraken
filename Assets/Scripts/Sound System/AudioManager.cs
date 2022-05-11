@@ -30,7 +30,7 @@ public class AudioManager : MonoBehaviour
         musicSource[0].loop = true;
         musicSource[1].loop = true;
 
-       PlayMusic(startClip);
+       PlayStart();
     }
 
     public void PlayStart(){

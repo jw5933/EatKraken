@@ -24,13 +24,13 @@ public class Economy : MonoBehaviour
         float tip = coins - c.orderPrice;
         tips += (tip > 0 ? tip : 0);
         
-        if (tips < 2){
+        if (tips < 4){
             tipsImage.sprite = tipsImgs[0];
         }
-        else if (tips >= 2 && tips < 8){
+        else if (tips >= 4 && tips < 10){
             tipsImage.sprite = tipsImgs[1];
         }
-        else if (tips >= 8 && tips < 15){
+        else if (tips >= 10 && tips < 15){
             tipsImage.sprite = tipsImgs[2];
         }
         else {
@@ -46,13 +46,13 @@ public class Economy : MonoBehaviour
     public void RemovePlayerCoins(float percent){
         playerCoins -= (playerCoins * percent);
         tips -= (tips * percent);
-        if (tips < 2){
+        if (tips < 4){
             tipsImage.sprite = tipsImgs[0];
         }
-        else if (tips >= 2 && tips < 8){
+        else if (tips >= 4 && tips < 10){
             tipsImage.sprite = tipsImgs[1];
         }
-        else if (tips >= 8 && tips < 15){
+        else if (tips >= 10 && tips < 15){
             tipsImage.sprite = tipsImgs[2];
         }
         else {

@@ -50,6 +50,8 @@ public class Map : MonoBehaviour, IPointerClickHandler
     }
 
     private void OpenBook(){
+        AudioManager am = FindObjectOfType<AudioManager>();
+        if (am != null) am.StopMusic();
         gm.otherScreenOpen = true;
         book.gameObject.SetActive(true);
     }

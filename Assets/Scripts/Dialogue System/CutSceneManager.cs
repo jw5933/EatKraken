@@ -22,7 +22,10 @@ public class CutSceneManager : MonoBehaviour
         cutSceneAnim.GetComponent<UIDeactivate>().AddAction(ActivateInput);
         dm = GetComponent<DialogueManager>();
         am = FindObjectOfType<AudioManager>();
-        if (am != null) am.PlayFadeMusic(cutsceneMusic);
+        if (am != null){
+            am.StopMusic();
+            am.PlayMusic(cutsceneMusic);
+        }
     }
 
     //change dialogue if the player presses enter key
@@ -42,7 +45,7 @@ public class CutSceneManager : MonoBehaviour
     public void ActivateInput(){
         //Debug.Log(dialogue.Count);
         if (!played){
-            if (am != null) am.PlayFadeMusic(dialogueMusic);
+            if (am != null) am.PlayMusic(dialogueMusic);
             played = true;
         }
         if(!dm.GoNextDialogue()){ // if the dialogue is still being typed, finish typing

@@ -70,9 +70,9 @@ public class InstructionBook : MonoBehaviour
     private void CloseBook(){
         this.transform.parent.gameObject.SetActive(false);
         if (start){
+            start = false;
             myAction();
             action = null;
-            start = false;
             Time.timeScale = 1;
         }
         else if (!gm.paused){
